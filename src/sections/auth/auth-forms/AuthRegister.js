@@ -2,16 +2,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 // next
-import Image from 'next/image';
+// import Image from 'next/image';
 import NextLink from 'next/link';
 import { signIn } from 'next-auth/react';
 
 // material-ui
 import {
   Box,
-  useMediaQuery,
+  // useMediaQuery,
   Button,
-  Divider,
+  // Divider,
   FormHelperText,
   FormControl,
   Grid,
@@ -28,7 +28,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project import
-import FirebaseSocial from './FirebaseSocial';
+// import FirebaseSocial from './FirebaseSocial';
 import { DEFAULT_PATH } from 'config';
 import IconButton from 'components/@extended/IconButton';
 import AnimateButton from 'components/@extended/AnimateButton';
@@ -37,14 +37,14 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
-const Auth0 = '/assets/images/icons/auth0.svg';
-const Cognito = '/assets/images/icons/aws-cognito.svg';
-const Google = '/assets/images/icons/google.svg';
+// const Auth0 = '/assets/images/icons/auth0.svg';
+// const Cognito = '/assets/images/icons/aws-cognito.svg';
+// const Google = '/assets/images/icons/google.svg';
 
 // ============================|| AWS CONNITO - LOGIN ||============================ //
 
-const AuthRegister = ({ providers, csrfToken }) => {
-  const matchDownSM = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+const AuthRegister = ({ csrfToken }) => {
+  // const matchDownSM = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const [level, setLevel] = React.useState();
   const [showPassword, setShowPassword] = React.useState(false);
