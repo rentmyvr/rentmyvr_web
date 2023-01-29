@@ -17,10 +17,10 @@ import MainCard from 'components/MainCard';
 import Avatar from 'components/@extended/Avatar';
 import IconButton from 'components/@extended/IconButton';
 import ProfileTab from './ProfileTab';
-import { facebookColor, linkedInColor, twitterColor } from 'config';
+// import { facebookColor, linkedInColor, twitterColor } from 'config';
 
 // assets
-import { FacebookFilled, LinkedinFilled, MoreOutlined, TwitterSquareFilled, CameraOutlined } from '@ant-design/icons';
+import { MoreOutlined, CameraOutlined } from '@ant-design/icons';
 
 // ==============================|| USER PROFILE - TAB CONTENT ||============================== //
 

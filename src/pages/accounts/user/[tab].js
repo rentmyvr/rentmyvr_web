@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { useRouter } from 'next/router';
 
 // material-ui
-import { Grid, MainCard } from '@mui/material';
+import { Grid } from '@mui/material';
 
 // project import
 import Layout from 'layout';
@@ -12,7 +12,7 @@ import Page from 'components/Page';
 import ProfileCard from 'sections/user/ProfileCard';
 import ProfileTabs from 'sections/user/ProfileTabs';
 import ProfileDetail from 'sections/user/ProfileDetail';
-import TabPersonal from 'sections/user/TabPersonal';
+// import TabPersonal from 'sections/user/TabPersonal';
 import TabPayment from 'sections/user/TabPayment';
 import TabPassword from 'sections/user/TabPassword';
 import TabSettings from 'sections/user/TabSettings';

@@ -6,7 +6,7 @@ import { Box, useMediaQuery } from '@mui/material';
 
 // project import
 import Search from './Search';
-import Message from './Message';
+// import Message from './Message';
 import Profile from './Profile';
 import Notification from './Notification';
 import MobileSection from './MobileSection';
@@ -18,7 +18,7 @@ const HeaderContent = () => {
   const matchesXs = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const megaMenu = useMemo(() => <MegaMenuSection />, []);
+  // const megaMenu = useMemo(() => <MegaMenuSection />, []);
 
   return (
     <>
