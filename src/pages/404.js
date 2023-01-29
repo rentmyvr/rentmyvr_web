@@ -96,15 +96,15 @@ function ComingSoon() {
   return (
     <Page
       title="Rent My VR: Coming Soon"
-      style={{ backgroundImage: `url(${bg_image})`, backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundSize: 'cover' }}
+      sx={{ backgroundImage: `url(${bg_image})`, backgroundPositionX: '11%', backgroundPositionY: '-100px', backgroundSize: 'cover' }}
     >
       <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" sx={{ minHeight: '100vh', py: 2 }}>
             <Grid item xs={12}>
               <Stack direction="row" spacing={2}>
-                <Grid item xs={12} md={2}></Grid>
-                <Grid item xs={12} md={8} pt={15} mt={10} pb={3}>
+                <Grid item sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }} md={2}></Grid>
+                <Grid item xs={12} md={8} pt={20} mt={10} pb={3}>
                   <Card sx={{ backgroundColor: 'transparent' }}>
                     <CardContent>
                       <Typography variant="h5" align="center">
@@ -118,7 +118,7 @@ function ComingSoon() {
                     </CardContent>
                   </Card>
                 </Grid>
-                <Grid item xs={12} md={2}></Grid>
+                <Grid item sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }} md={2}></Grid>
               </Stack>
             </Grid>
             <Grid item xs={12}>
