@@ -12,7 +12,7 @@ export const DEFAULT_PATH = '/dashboard/';
 
 // ==============================|| FRONT URLs  ||============================== //
 export const ACCOUNT_URL = {
-  LOGIN: '/login-/',
+  LOGIN: '/login/',
   LOGOUT: '/accounts/logout/',
   REGISTER: '/register/',
   FORGOT_PASSWORD_FORM: '/forgot-password/',
