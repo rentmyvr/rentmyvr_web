@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 import { Box, Button, Card, CardContent, Grid, Stack, TextField, Typography, useMediaQuery } from '@mui/material';
 
 // third party
@@ -55,7 +55,7 @@ TimerBox.propTypes = {
 // ==============================|| COMING SOON - MAIN ||============================== //
 
 function ComingSoon() {
-  const theme = useTheme();
+  // const theme = useTheme();
   const dispatch = useDispatch();
   // const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 

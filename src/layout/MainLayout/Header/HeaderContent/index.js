@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+// import { useMemo } from 'react';
 
 // material-ui
 
@@ -10,7 +10,7 @@ import Search from './Search';
 import Profile from './Profile';
 import Notification from './Notification';
 import MobileSection from './MobileSection';
-import MegaMenuSection from './MegaMenuSection';
+// import MegaMenuSection from './MegaMenuSection';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
