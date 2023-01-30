@@ -47,7 +47,8 @@ export const ACCOUNT_EP = {
   ME: '/accounts/me/',
   LOGIN: '/accounts/login/',
   LOGOUT: '/accounts/logout/',
-  REGISTER: '/accounts/registration/',
+  REGISTER: '/accounts/user/',
+  // REGISTER: '/accounts/registration/',
   PASSWORD_RESET: '/accounts/password/reset/',
   PASSWORD_CHANGE: '/accounts/password/change/'
 };

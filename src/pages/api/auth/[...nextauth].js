@@ -113,7 +113,10 @@ export default NextAuth({
           })
           .catch((err) => {
             console.log('----Error----');
-            // console.log("Error: ", err.response)
+            console.log('err.response: ', err.response);
+            console.log('err.code: ', err.code);
+            console.log('err.response.data: ', err.response.data);
+
             // console.log("Error: ", err.response.data)
             // console.log("-----------------------      00000000    -----------------------")
             // console.log("Error: ", err.response.text)

@@ -63,7 +63,7 @@ const AuthLogin = ({ csrfToken }) => {
   const [capsWarning, setCapsWarning] = React.useState(false);
 
   const router = useRouter();
-  const { error } = router.query;
+  const { error, email } = router.query;
   const [msg, setMsg] = useState(error);
   const [open, setOpen] = useState(false);
   const [code, setCode] = useState('');
@@ -94,7 +94,7 @@ const AuthLogin = ({ csrfToken }) => {
     <>
       <Formik
         initialValues={{
-          email: '',
+          email: email || '',
           password: '',
           submit: null
         }}
@@ -205,11 +205,9 @@ const AuthLogin = ({ csrfToken }) => {
                         Caps lock on!
                       </Typography>
                     )}
-                    {touched.password && errors.password && (
-                      <FormHelperText error id="standard-weight-helper-text-password-login">
-                        {errors.password}
-                      </FormHelperText>
-                    )}
+                    <FormHelperText error id="standard-weight-helper-text-password-login">
+                      {touched.password && errors.password}
+                    </FormHelperText>
                   </Stack>
                 </Grid>
 

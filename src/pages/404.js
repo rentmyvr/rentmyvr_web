@@ -22,7 +22,8 @@ import { CORE_EP, fetcher, successProcessor, errorProcessor } from 'config';
 
 // assets
 // const coming = '/assets/images/maintenance/coming-soon-1.png';
-const bg_image = '/assets/images/girl-wall.png';
+const bg_image_md = '/assets/images/coming-soon-bg.png';
+const bg_image_sm = '/assets/images/coming-soon-bg-sm.png';
 // const bg_image = '/assets/images/rent-my-vr.png';
 
 // ==============================|| COMING SOON - TIMER ||============================== //
@@ -30,7 +31,6 @@ const bg_image = '/assets/images/girl-wall.png';
 const TimerBox = ({ count, label }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
-
   return (
     <MainCard content={false} sx={{ width: { xs: 60, sm: 80 } }}>
       <Stack justifyContent="center" alignItems="center">
@@ -55,9 +55,9 @@ TimerBox.propTypes = {
 // ==============================|| COMING SOON - MAIN ||============================== //
 
 function ComingSoon() {
-  // const theme = useTheme();
+  const theme = useTheme();
   const dispatch = useDispatch();
-  // const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
   const time = new Date(Date.parse('03/01/2023'));
   time.setSeconds(time.getSeconds());
@@ -96,7 +96,12 @@ function ComingSoon() {
   return (
     <Page
       title="Rent My VR: Coming Soon"
-      sx={{ backgroundImage: `url(${bg_image})`, backgroundPositionX: '11%', backgroundPositionY: '-100px', backgroundSize: 'cover' }}
+      sx={{
+        backgroundImage: `url(${matchDownSM ? bg_image_sm : bg_image_md})`,
+        // backgroundPositionX: '11%',
+        backgroundPositionY: matchDownSM ? '0px' : '-100px',
+        backgroundSize: 'cover'
+      }}
     >
       <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -104,7 +109,7 @@ function ComingSoon() {
             <Grid item xs={12}>
               <Stack direction="row" spacing={2}>
                 <Grid item sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }} md={2}></Grid>
-                <Grid item xs={12} md={8} pt={20} mt={10} pb={3}>
+                <Grid item xs={12} md={8} pt={matchDownSM ? 5 : 20} mt={10} pb={3}>
                   <Card sx={{ backgroundColor: 'transparent' }}>
                     <CardContent>
                       <Typography variant="h5" align="center">
@@ -123,7 +128,7 @@ function ComingSoon() {
             </Grid>
             <Grid item xs={12}>
               <Stack spacing={1} justifyContent="center" alignItems="center" sx={{ mt: 0 }}>
-                <Typography variant="h1" align="center">
+                <Typography variant={matchDownSM ? 'h2' : 'h1'} align="center">
                   Rent My VR is Coming
                 </Typography>
                 {/* <Typography color="textSecondary" align="center">

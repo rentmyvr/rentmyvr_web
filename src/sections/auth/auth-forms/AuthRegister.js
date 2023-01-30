@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 // next
 // import Image from 'next/image';
 import NextLink from 'next/link';
-import { signIn } from 'next-auth/react';
+// import { signIn } from 'next-auth/react';
 
 // material-ui
 import {
@@ -20,16 +21,18 @@ import {
   InputLabel,
   OutlinedInput,
   Stack,
+  TextField,
   Typography
 } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import { openSnackbar } from 'store/reducers/snackbar';
 
 // project import
 // import FirebaseSocial from './FirebaseSocial';
-import { DEFAULT_PATH } from 'config';
+import { ACCOUNT_EP, ACCOUNT_URL, fetcher, errorProcessor, successProcessor } from 'config';
 import IconButton from 'components/@extended/IconButton';
 import AnimateButton from 'components/@extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
@@ -37,16 +40,13 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 
-// const Auth0 = '/assets/images/icons/auth0.svg';
-// const Cognito = '/assets/images/icons/aws-cognito.svg';
-// const Google = '/assets/images/icons/google.svg';
-
 // ============================|| AWS CONNITO - LOGIN ||============================ //
 
 const AuthRegister = ({ csrfToken }) => {
   // const matchDownSM = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
   const [level, setLevel] = React.useState();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -69,75 +69,96 @@ const AuthRegister = ({ csrfToken }) => {
     <>
       <Formik
         initialValues={{
-          name: '',
+          first_name: '',
+          last_name: '',
           email: '',
+          phone: '',
           password: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
-          name: Yup.string().max(255).required('Name is required'),
+          first_name: Yup.string().max(255).required('First Name is required'),
+          last_name: Yup.string().max(255).required('Last Name is required'),
+          phone: Yup.string().max(25).required('Phone is required'),
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           password: Yup.string().max(255).required('Password is required')
         })}
         onSubmit={(values, { setErrors, setSubmitting }) => {
-          signIn('register', {
-            redirect: false,
-            name: values.name,
-            email: values.email,
-            password: values.password,
-            callbackUrl: DEFAULT_PATH
-          }).then((res) => {
-            if (res?.error) {
-              setErrors({ submit: res.error });
+          console.log(values);
+          // eslint-disable-next-line
+          fetcher(ACCOUNT_EP.REGISTER, 'post', null, null, {...values, password1: values.password, password2: values.password}, (res) => {
+              console.log(' Success************templates');
+              successProcessor('Worker profile created successfully.', dispatch, openSnackbar);
               setSubmitting(false);
+              // eslint-disable-next-line
+              window.location = `${ACCOUNT_URL.LOGIN}?error=Login to Proceed!!!&email=${values.email}`;
+              // console.log(res.data);
+              // setProfile(Object.assign(res.data, ...res.data.user));
+              // setProfile(res.data);
+            },
+            (err) => {
+              console.log(err);
+              setSubmitting(false);
+              errorProcessor(err, setErrors, dispatch, openSnackbar);
             }
-          });
+          );
         }}
       >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+        {({ errors, handleBlur, handleChange, handleSubmit, getFieldProps, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
             <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-            <Grid container spacing={3}>
+            <Grid container spacing={1}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="name-login">Name</InputLabel>
-                  <OutlinedInput
-                    id="name-login"
-                    type="text"
-                    value={values.name}
-                    name="name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Enter your name"
+                  <InputLabel htmlFor="first-name-register">First Name</InputLabel>
+                  <TextField
                     fullWidth
-                    error={Boolean(touched.name && errors.name)}
+                    id="first-name-register"
+                    placeholder="Enter your First Name"
+                    {...getFieldProps('first_name')}
+                    error={Boolean(touched.first_name && errors.first_name)}
+                    helperText={touched.first_name && errors.first_name}
                   />
-                  {touched.name && errors.name && (
-                    <FormHelperText error id="standard-weight-helper-text-name-login">
-                      {errors.name}
-                    </FormHelperText>
-                  )}
                 </Stack>
               </Grid>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="email-login">Email Address</InputLabel>
-                  <OutlinedInput
-                    id="email-login"
-                    type="email"
-                    value={values.email}
-                    name="email"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder="Enter email address"
+                  <InputLabel htmlFor="last-name-register">Last Name</InputLabel>
+                  <TextField
                     fullWidth
-                    error={Boolean(touched.email && errors.email)}
+                    id="last-name-register"
+                    placeholder="Enter your Last Name"
+                    {...getFieldProps('last_name')}
+                    error={Boolean(touched.last_name && errors.last_name)}
+                    helperText={touched.last_name && errors.last_name}
                   />
-                  {touched.email && errors.email && (
-                    <FormHelperText error id="standard-weight-helper-text-email-login">
-                      {errors.email}
-                    </FormHelperText>
-                  )}
+                </Stack>
+              </Grid>
+              <Grid item xs={12}>
+                <Stack spacing={1}>
+                  <InputLabel htmlFor="email-register">Email Address</InputLabel>
+                  <TextField
+                    fullWidth
+                    type="email"
+                    id="email-register"
+                    placeholder="Enter your Email Address"
+                    {...getFieldProps('email')}
+                    error={Boolean(touched.email && errors.email)}
+                    helperText={touched.email && errors.email}
+                  />
+                </Stack>
+              </Grid>
+              <Grid item xs={12}>
+                <Stack spacing={1}>
+                  <InputLabel htmlFor="phone-register">Phone Number</InputLabel>
+                  <TextField
+                    fullWidth
+                    id="phone-register"
+                    placeholder="Enter your Phone Number"
+                    {...getFieldProps('phone')}
+                    error={Boolean(touched.phone && errors.phone)}
+                    helperText={touched.phone && errors.phone}
+                  />
                 </Stack>
               </Grid>
               <Grid item xs={12}>
@@ -170,11 +191,9 @@ const AuthRegister = ({ csrfToken }) => {
                     }
                     placeholder="Enter password"
                   />
-                  {touched.password && errors.password && (
-                    <FormHelperText error id="standard-weight-helper-text-password-login">
-                      {errors.password}
-                    </FormHelperText>
-                  )}
+                  <FormHelperText error id="standard-weight-helper-text-password-login">
+                    {touched.password && errors.password}
+                  </FormHelperText>
                 </Stack>
                 <FormControl fullWidth sx={{ mt: 2 }}>
                   <Grid container spacing={2} alignItems="center">
