@@ -16,7 +16,7 @@ export default function Document() {
           rel="stylesheet"
         />
       </Head>
-      <body>
+      <body id="back-to-top-anchor">
         <Main />
         <NextScript />
       </body>

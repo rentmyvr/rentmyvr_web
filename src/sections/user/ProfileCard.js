@@ -31,12 +31,12 @@ const ProfileCard = ({ focusInput }) => {
         <Grid item>
           <Stack direction="row" spacing={matchDownSM ? 1 : 2} alignItems="center">
             <Box sx={{ ml: { xs: 0, sm: 1 } }}>
-              <ProfileRadialChart rate={30} />
+              <ProfileRadialChart rate={25} />
             </Box>
             <Stack spacing={0.75}>
-              <Typography variant="h5">Edit Your Profile</Typography>
+              <Typography variant="h5">Upgrade my Account</Typography>
               <Typography variant="body2" color="secondary">
-                Complete your profile to unlock all features
+                Upgrade to unlock more features
               </Typography>
             </Stack>
           </Stack>
@@ -44,7 +44,7 @@ const ProfileCard = ({ focusInput }) => {
         <Grid item sx={{ mx: matchDownSM ? 2 : 3, my: matchDownSM ? 1 : 0, mb: matchDownSM ? 2 : 0 }} xs={matchDownSM ? 12 : 'auto'}>
           <NextLink href={ACCOUNT_URL.PROFILE_UPDATE} passHref>
             <Button variant="contained" fullWidth={matchDownSM} onClick={focusInput}>
-              Edit Your Profile
+              Upgrade my Account
             </Button>
           </NextLink>
         </Grid>

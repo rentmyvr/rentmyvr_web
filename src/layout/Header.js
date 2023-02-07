@@ -31,7 +31,7 @@ import {
 import { DEFAULT_PATH, ACCOUNT_URL } from 'config';
 import IconButton from 'components/@extended/IconButton';
 
-import AnimateButton from 'components/@extended/AnimateButton';
+// import AnimateButton from 'components/@extended/AnimateButton';
 import Logo from 'components/logo';
 
 // assets
@@ -49,11 +49,13 @@ function ElevationScroll({ layout, children, window }) {
     target: window ? window() : undefined
   });
 
-  const backColorScroll = theme.palette.mode === 'dark' ? theme.palette.grey[50] : theme.palette.grey[800];
+  const backColorScroll = theme.palette.mode === 'dark' ? theme.palette.grey[50] : theme.palette.grey[50];
+  // const backColorScroll = theme.palette.mode === 'dark' ? theme.palette.grey[50] : theme.palette.grey[800];
   const backColor = layout !== 'landing' ? backColorScroll : 'transparent';
 
   return React.cloneElement(children, {
     style: {
+      // color: '#000',
       backgroundColor: trigger ? backColorScroll : backColor
     }
   });
@@ -74,41 +76,79 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
     setDrawerToggle(open);
   };
 
+  // const theme = createTheme({
+  //   palette: {
+  //     primary: {
+  //       main: "#00ff00"
+  //     }
+  //   }
+  // });
+
   return (
     <ElevationScroll layout={layout} {...others}>
       <AppBar sx={{ bgcolor: 'transparent', color: theme.palette.text.primary, boxShadow: 'none' }}>
         <Container disableGutters={matchDownMd}>
-          <Toolbar sx={{ px: { xs: 1.5, md: 0, lg: 0 }, py: 2 }}>
+          <Toolbar sx={{ px: { xs: 1.5, md: 0, lg: 0 }, py: 0 }}>
             <Stack direction="row" sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }} alignItems="center">
               <Typography component="div" sx={{ textAlign: 'left', display: 'inline-block' }}>
-                <Logo reverse to="/" />
+                <Logo reverse to={session ? DEFAULT_PATH : '/'} />
               </Typography>
             </Stack>
             <Stack
               direction="row"
               sx={{
-                '& .header-link': { px: 1, '&:hover': { color: theme.palette.primary.main } },
+                '& .header-link': { px: 1, color: '#000', fontWeight: 500, '&:hover': { color: theme.palette.primary.main } },
                 display: { xs: 'none', md: 'block' }
               }}
               spacing={2}
             >
-              {session ? (
+              {session && (
                 <NextLink href={DEFAULT_PATH} passHref>
-                  <Link className="header-link" color="white" target="_blank" underline="none">
+                  <Link className="header-link" color="white" underline="none">
                     Dashboard
                   </Link>
                 </NextLink>
-              ) : (
-                <NextLink href={ACCOUNT_URL.LOGIN} passHref>
-                  <Link className="header-link" color="white" target="_blank" underline="none">
-                    Login
-                  </Link>
-                </NextLink>
               )}
-              <Link className="header-link" color="white" href="https://codedthemes.gitbook.io/mantis/" target="_blank" underline="none">
-                Documentation
-              </Link>
-              <Box sx={{ display: 'inline-block' }}>
+              <NextLink href={DEFAULT_PATH} passHref>
+                <Link className="header-link" color="white" underline="none">
+                  Vacation Rentals
+                </Link>
+              </NextLink>
+              <NextLink href={DEFAULT_PATH} passHref>
+                <Link className="header-link" color="white" underline="none">
+                  Vacation Management Companies
+                </Link>
+              </NextLink>
+              <NextLink href={DEFAULT_PATH} passHref>
+                <Link className="header-link" color="white" underline="none">
+                  List Your Rental
+                </Link>
+              </NextLink>
+              <NextLink href={DEFAULT_PATH} passHref>
+                <Link className="header-link" color="white" underline="none">
+                  List Your Company
+                </Link>
+              </NextLink>
+              {/* <NextLink href={DEFAULT_PATH} passHref>
+                <Link className="header-link" color="white" underline="none">
+                  Ad. with Us
+                </Link>
+              </NextLink> */}
+              <NextLink href={DEFAULT_PATH} passHref>
+                <Link className="header-link" color="white" underline="none">
+                  FAQs
+                </Link>
+              </NextLink>
+              {!session && (
+                <>
+                  <NextLink href={ACCOUNT_URL.LOGIN} passHref>
+                    <Link className="header-link" color="white" underline="none">
+                      Login
+                    </Link>
+                  </NextLink>
+                </>
+              )}
+              {/* <Box sx={{ display: 'inline-block' }}>
                 <AnimateButton>
                   <Button
                     component={Link}
@@ -120,7 +160,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                     Purchase Now
                   </Button>
                 </AnimateButton>
-              </Box>
+              </Box> */}
             </Stack>
             <Box
               sx={{
@@ -131,10 +171,10 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
               }}
             >
               <Typography component="div" sx={{ textAlign: 'left', display: 'inline-block' }}>
-                <Logo reverse to="/" />
+                <Logo reverse to={session ? DEFAULT_PATH : '/'} />
               </Typography>
               <Stack direction="row" spacing={2}>
-                {layout === 'component' && (
+                {session && layout === 'component' && (
                   <NextLink href={DEFAULT_PATH} passHref>
                     <Button variant="outlined" size="small" color="warning" sx={{ mt: 0.5, height: 28 }}>
                       Dashboard
@@ -150,9 +190,14 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                 )}
 
                 <IconButton
-                  color="secondary"
+                  color="inherit"
                   {...(layout === 'component' ? { onClick: handleDrawerOpen } : { onClick: drawerToggler(true) })}
-                  sx={{ '&:hover': { bgcolor: theme.palette.mode === 'dark' ? 'secondary.lighter' : 'secondary.dark' } }}
+                  // sx={{ '&:hover': { bgcolor: theme.palette.mode === 'dark' ? 'secondary.lighter' : 'secondary.dark' } }}
+                  sx={{
+                    bgcolor: theme.palette.mode === 'dark' ? 'secondary.lighter' : '#1890ff',
+                    '&>span': '#262626',
+                    '&:hover': { bgcolor: theme.palette.mode === 'dark' ? 'secondary.lighter' : '#096dd9' }
+                  }}
                 >
                   <MenuOutlined style={{ color: theme.palette.mode === 'dark' ? 'inherit' : theme.palette.grey[100] }} />
                 </IconButton>
@@ -176,7 +221,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                   onKeyDown={drawerToggler(false)}
                 >
                   <List>
-                    <Link style={{ textDecoration: 'none' }} href={ACCOUNT_URL.LOGIN} target="_blank">
+                    <Link style={{ textDecoration: 'none' }} href={DEFAULT_PATH}>
                       <ListItemButton component="span">
                         <ListItemIcon>
                           <LineOutlined />
@@ -184,55 +229,87 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                         <ListItemText primary="Dashboard" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                       </ListItemButton>
                     </Link>
-                    <Link style={{ textDecoration: 'none' }} href="/components-overview/buttons" target="_blank">
+                    <Link style={{ textDecoration: 'none' }} href="/components-overview/buttons">
                       <ListItemButton component="span">
                         <ListItemIcon>
                           <LineOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="All Components" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText primary="Vacation Rentals" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                       </ListItemButton>
                     </Link>
-                    <Link
-                      style={{ textDecoration: 'none' }}
-                      href="https://github.com/codedthemes/mantis-free-react-admin-template"
-                      target="_blank"
-                    >
+                    <Link style={{ textDecoration: 'none' }} href="/">
                       <ListItemButton component="span">
                         <ListItemIcon>
                           <LineOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="Free Version" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText
+                          primary="Vacation Management Companies"
+                          primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }}
+                        />
                       </ListItemButton>
                     </Link>
-                    <Link style={{ textDecoration: 'none' }} href="https://codedthemes.gitbook.io/mantis/" target="_blank">
+                    <Link style={{ textDecoration: 'none' }} href="/">
                       <ListItemButton component="span">
                         <ListItemIcon>
                           <LineOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="Documentation" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText primary="List your Rentals" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                       </ListItemButton>
                     </Link>
-                    <Link style={{ textDecoration: 'none' }} href="https://codedthemes.support-hub.io/" target="_blank">
+                    <Link style={{ textDecoration: 'none' }} href="/">
                       <ListItemButton component="span">
                         <ListItemIcon>
                           <LineOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="Support" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText primary="List your Company" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                       </ListItemButton>
                     </Link>
-                    <Link
-                      style={{ textDecoration: 'none' }}
-                      href="https://mui.com/store/items/mantis-react-admin-dashboard-template/"
-                      target="_blank"
-                    >
+                    {/* <Link style={{ textDecoration: 'none' }} href="/">
                       <ListItemButton component="span">
                         <ListItemIcon>
                           <LineOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="Purchase Now" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText primary="Advertise with us" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                      </ListItemButton>
+                    </Link> */}
+                    <Link style={{ textDecoration: 'none' }} href="/">
+                      <ListItemButton component="span">
+                        <ListItemIcon>
+                          <LineOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary="FAQ" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                         <Chip color="primary" label="v1.0" size="small" />
                       </ListItemButton>
                     </Link>
+                    {session ? (
+                      <Link style={{ textDecoration: 'none' }} href="/">
+                        <ListItemButton component="span">
+                          <ListItemIcon>
+                            <LineOutlined />
+                          </ListItemIcon>
+                          <ListItemText primary="Logout" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        </ListItemButton>
+                      </Link>
+                    ) : (
+                      <>
+                        <Link style={{ textDecoration: 'none' }} href={ACCOUNT_URL.LOGIN}>
+                          <ListItemButton component="span">
+                            <ListItemIcon>
+                              <LineOutlined />
+                            </ListItemIcon>
+                            <ListItemText primary="Login" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                          </ListItemButton>
+                        </Link>
+                        <Link style={{ textDecoration: 'none' }} href={ACCOUNT_URL.REGISTER}>
+                          <ListItemButton component="span">
+                            <ListItemIcon>
+                              <LineOutlined />
+                            </ListItemIcon>
+                            <ListItemText primary="Register" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                          </ListItemButton>
+                        </Link>
+                      </>
+                    )}
                   </List>
                 </Box>
               </Drawer>

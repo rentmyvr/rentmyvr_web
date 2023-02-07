@@ -1,13 +1,13 @@
 // material-ui
 // import { useTheme } from '@mui/material/styles';
 import { Box } from '@mui/material';
-const logo_bg_image = '/assets/images/rentmyvr-logo.svg';
+const logo_bg_image = '/assets/images/icon.svg';
 // ==============================|| AUTH BLUR BACK SVG ||============================== //
 
 const AuthBackground = () => {
   // const theme = useTheme();
   return (
-    <Box sx={{ position: 'absolute', filter: 'blur(6px)', zIndex: -1, bottom: '20%', left: '-4%' }}>
+    <Box sx={{ position: 'absolute', filter: 'blur(10px)', zIndex: -1, bottom: '20%', left: '-4%' }}>
       <img style={{ width: '400px' }} src={logo_bg_image} alt="" />
       {/* <svg width="100%" height="calc(100vh - 175px)" viewBox="0 0 405 809" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path

@@ -126,6 +126,7 @@ const AuthLogin = ({ csrfToken }) => {
                 typee = typeof error.type === 'string' ? error.type : error.type[0];
               }
               if (typee === 'Activation Required') {
+                console.log('Details: ', error);
                 setMsg(error.message === 'string' ? error.message : error.message[0]);
                 setOpen(true);
                 setResendURL(error.resend_url === 'string' ? error.resend_url : error.resend_url[0]);
@@ -255,13 +256,7 @@ const AuthLogin = ({ csrfToken }) => {
               </Grid>
             </form>
 
-            <Dialog
-              open={open}
-              TransitionComponent={Transition}
-              keepMounted
-              // maxWidth={'md'}
-              onClose={() => setOpen(false)}
-            >
+            <Dialog open={open} TransitionComponent={Transition} keepMounted onClose={() => setOpen(false)}>
               <DialogTitle>Please enter the Activation Code sent to your Email</DialogTitle>
               <DialogContent>
                 <Grid container spacing={3}>
@@ -298,7 +293,7 @@ const AuthLogin = ({ csrfToken }) => {
                           }
                           // eslint-disable-next-line
                           fetcher(activationURL, 'post', null, null, {token: code}, (res) => {
-                              const actMsg = intl.formatMessage({ id: 'account-feedback-activation' });
+                              const actMsg = 'Account successfully activated, Login to continue!';
                               window.location = `${ACCOUNT_URL.LOGIN}?error=${actMsg}&email=${values.email}`;
                               // successProcessor('Account successfully activated, Login to contiune!', dispatch, openSnackbar);
                               // setOpen(false);
@@ -322,7 +317,10 @@ const AuthLogin = ({ csrfToken }) => {
                       onClick={() => {
                         // eslint-disable-next-line
                         fetcher(resendURL, 'get', null, null, null, res => {
-                            successProcessor('Activation Code re-sent successfully!', dispatch, openSnackbar);
+                            console.log(res.data);
+                            setResendURL(res.data.resend_url);
+                            setActivationURL(res.data.activation_url);
+                            successProcessor(res.data.message, dispatch, openSnackbar);
                           },
                           (err) => {
                             errorProcessor(err, () => {}, dispatch, openSnackbar);

@@ -12,7 +12,7 @@ import { Box, Divider, FormLabel, Grid, TextField, Menu, MenuItem, Stack, Typogr
 import { ACCOUNT_URL } from 'config';
 
 // project import
-import useUser from 'hooks/useUser';
+// import useUser from 'hooks/useUser';
 import MainCard from 'components/MainCard';
 import Avatar from 'components/@extended/Avatar';
 import IconButton from 'components/@extended/IconButton';
@@ -24,18 +24,18 @@ import { MoreOutlined, CameraOutlined } from '@ant-design/icons';
 
 // ==============================|| USER PROFILE - TAB CONTENT ||============================== //
 
-const ProfileTabs = ({ focusInput }) => {
+const ProfileTabs = ({ focusInput, profile, tab, setTab }) => {
   const theme = useTheme();
-  const user = useUser();
+  // const user = useUser();
 
   const [selectedImage, setSelectedImage] = useState(undefined);
-  const [avatar, setAvatar] = useState(user ? user.thumb : '');
+  const [avatar, setAvatar] = useState(profile?.user ? profile.user.thumb : '');
 
   useEffect(() => {
     if (selectedImage) {
       setAvatar(URL.createObjectURL(selectedImage));
     }
-  }, [selectedImage]);
+  }, [selectedImage, profile, tab]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -69,25 +69,15 @@ const ProfileTabs = ({ focusInput }) => {
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
-              MenuListProps={{
-                'aria-labelledby': 'basic-button'
-              }}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
+              MenuListProps={{ 'aria-labelledby': 'basic-button' }}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
               <NextLink href={ACCOUNT_URL.PROFILE_UPDATE} passHref>
                 <MenuItem
                   onClick={() => {
                     handleClose();
-                    setTimeout(() => {
-                      focusInput();
-                    });
+                    setTimeout(() => focusInput());
                   }}
                 >
                   Edit
@@ -100,7 +90,7 @@ const ProfileTabs = ({ focusInput }) => {
           </Stack>
           <Stack spacing={2.5} alignItems="center">
             <FormLabel
-              htmlFor="change-avtar"
+              htmlFor="change-avatar"
               sx={{
                 position: 'relative',
                 borderRadius: '50%',
@@ -109,7 +99,7 @@ const ProfileTabs = ({ focusInput }) => {
                 cursor: 'pointer'
               }}
             >
-              {user && <Avatar alt={user.name} src={avatar} sx={{ width: 124, height: 124, border: '1px dashed' }} />}
+              {profile && <Avatar alt={profile?.user.name} src={avatar} sx={{ width: 124, height: 124, border: '1px dashed' }} />}
               <Box
                 sx={{
                   position: 'absolute',
@@ -132,16 +122,16 @@ const ProfileTabs = ({ focusInput }) => {
             </FormLabel>
             <TextField
               type="file"
-              id="change-avtar"
+              id="change-avatar"
               label="Outlined"
               variant="outlined"
               sx={{ display: 'none' }}
               onChange={(e) => setSelectedImage(e.target.files?.[0])}
             />
-            {user && (
+            {profile?.user && (
               <Stack spacing={0.5} alignItems="center">
-                <Typography variant="h5">{user.name}</Typography>
-                <Typography color="secondary">{user.role}</Typography>
+                <Typography variant="h5">{profile?.user.name}</Typography>
+                <Typography color="secondary">{profile?.user.email}</Typography>
               </Stack>
             )}
             {/* <Stack direction="row" spacing={3} sx={{ '& svg': { fontSize: '1.15rem', cursor: 'pointer' } }}>
@@ -161,17 +151,17 @@ const ProfileTabs = ({ focusInput }) => {
             <Divider orientation="vertical" flexItem />
             <Stack spacing={0.5} alignItems="center">
               <Typography variant="h5">40</Typography>
-              <Typography color="secondary">Project</Typography>
+              <Typography color="secondary">PDLs</Typography>
             </Stack>
             <Divider orientation="vertical" flexItem />
             <Stack spacing={0.5} alignItems="center">
               <Typography variant="h5">4.5K</Typography>
-              <Typography color="secondary">Members</Typography>
+              <Typography color="secondary">Properties</Typography>
             </Stack>
           </Stack>
         </Grid>
         <Grid item xs={12}>
-          <ProfileTab />
+          <ProfileTab tab={tab} setTab={setTab} />
         </Grid>
       </Grid>
     </MainCard>
@@ -179,7 +169,10 @@ const ProfileTabs = ({ focusInput }) => {
 };
 
 ProfileTabs.propTypes = {
-  focusInput: PropTypes.func
+  focusInput: PropTypes.func,
+  profile: PropTypes.any,
+  tab: PropTypes.string,
+  setTab: PropTypes.func
 };
 
 export default ProfileTabs;

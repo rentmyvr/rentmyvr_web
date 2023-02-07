@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -23,6 +24,7 @@ import MainCard from 'components/MainCard';
 import IconButton from 'components/@extended/IconButton';
 import { openSnackbar } from 'store/reducers/snackbar';
 import { isNumber, isLowercaseChar, isUppercaseChar, isSpecialChar, minLength } from 'utils/password-validation';
+import { ACCOUNT_EP, fetcher, errorProcessor, successProcessor } from 'config';
 
 // third party
 import * as Yup from 'yup';
@@ -33,7 +35,7 @@ import { CheckOutlined, EyeOutlined, EyeInvisibleOutlined, LineOutlined } from '
 
 // ==============================|| TAB - PASSWORD CHANGE ||============================== //
 
-const TabPassword = () => {
+const TabPassword = ({ uid, session }) => {
   const dispatch = useDispatch();
 
   const [showOldPassword, setShowOldPassword] = useState(false);
@@ -43,9 +45,11 @@ const TabPassword = () => {
   const handleClickShowOldPassword = () => {
     setShowOldPassword(!showOldPassword);
   };
+
   const handleClickShowNewPassword = () => {
     setShowNewPassword(!showNewPassword);
   };
+
   const handleClickShowConfirmPassword = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
@@ -57,46 +61,33 @@ const TabPassword = () => {
   return (
     <MainCard title="Change Password">
       <Formik
-        initialValues={{
-          old: '',
-          password: '',
-          confirm: '',
-          submit: null
-        }}
+        initialValues={{ old_password: '', new_password1: '', new_password2: '', submit: null }}
         validationSchema={Yup.object().shape({
-          old: Yup.string().required('Old Password is required'),
-          password: Yup.string()
+          old_password: Yup.string().required('Old Password is required'),
+          new_password1: Yup.string()
             .required('New Password is required')
             .matches(
               /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
               'Password must contain at least 8 characters, one uppercase, one number and one special case character'
             ),
-          confirm: Yup.string()
+          new_password2: Yup.string()
             .required('Confirm Password is required')
-            .oneOf([Yup.ref('password'), null], "Passwords don't match.")
+            .oneOf([Yup.ref('new_password1'), null], "Passwords don't match.")
         })}
-        onSubmit={async (values, { resetForm, setErrors, setStatus, setSubmitting }) => {
-          try {
-            dispatch(
-              openSnackbar({
-                open: true,
-                message: 'Password changed successfully.',
-                variant: 'alert',
-                alert: {
-                  color: 'success'
-                },
-                close: false
-              })
-            );
-
-            resetForm();
-            setStatus({ success: false });
-            setSubmitting(false);
-          } catch (err) {
-            setStatus({ success: false });
-            setErrors({ submit: err.message });
-            setSubmitting(false);
-          }
+        onSubmit={async (values, { resetForm, setErrors, setSubmitting }) => {
+          // eslint-disable-next-line
+          fetcher(ACCOUNT_EP.USER_PASSWORD_CHANGE.format(uid), 'post', session, null, values, (res) => {
+              successProcessor('Password has been changed successfully.', dispatch, openSnackbar);
+              console.log(res.data);
+              resetForm();
+              setSubmitting(false);
+            },
+            (err) => {
+              console.log(err);
+              setSubmitting(false);
+              errorProcessor(err, setErrors, dispatch, openSnackbar);
+            }
+          );
         }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
@@ -105,13 +96,13 @@ const TabPassword = () => {
               <Grid item container spacing={3} xs={12} sm={6}>
                 <Grid item xs={12}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="password-old">Old Password</InputLabel>
+                    <InputLabel htmlFor="old-password">Old Password</InputLabel>
                     <OutlinedInput
                       placeholder="Enter Old Password"
-                      id="password-old"
+                      id="old-password"
                       type={showOldPassword ? 'text' : 'password'}
-                      value={values.old}
-                      name="old"
+                      value={values.old_password}
+                      name="old_password"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       endAdornment={
@@ -130,22 +121,20 @@ const TabPassword = () => {
                       }
                       inputProps={{}}
                     />
-                    {touched.old && errors.old && (
-                      <FormHelperText error id="password-old-helper">
-                        {errors.old}
-                      </FormHelperText>
-                    )}
+                    <FormHelperText error id="old-password-helper">
+                      {touched.old_password && errors.old_password}
+                    </FormHelperText>
                   </Stack>
                 </Grid>
                 <Grid item xs={12}>
                   <Stack spacing={1.25}>
-                    <InputLabel htmlFor="password-password">New Password</InputLabel>
+                    <InputLabel htmlFor="new-password1">New Password</InputLabel>
                     <OutlinedInput
                       placeholder="Enter New Password"
-                      id="password-password"
+                      id="new-password1"
                       type={showNewPassword ? 'text' : 'password'}
-                      value={values.password}
-                      name="password"
+                      value={values.new_password1}
+                      name="new_password1"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       endAdornment={
@@ -164,11 +153,9 @@ const TabPassword = () => {
                       }
                       inputProps={{}}
                     />
-                    {touched.password && errors.password && (
-                      <FormHelperText error id="password-password-helper">
-                        {errors.password}
-                      </FormHelperText>
-                    )}
+                    <FormHelperText error id="password-password-helper">
+                      {touched.new_password1 && errors.new_password1}
+                    </FormHelperText>
                   </Stack>
                 </Grid>
                 <Grid item xs={12}>
@@ -177,9 +164,9 @@ const TabPassword = () => {
                     <OutlinedInput
                       placeholder="Enter Confirm Password"
                       id="password-confirm"
-                      type={showConfirmPassword ? 'text' : 'password'}
-                      value={values.confirm}
-                      name="confirm"
+                      type={showConfirmPassword ? 'text' : 'new_password2'}
+                      value={values.new_password2}
+                      name="new_password2"
                       onBlur={handleBlur}
                       onChange={handleChange}
                       endAdornment={
@@ -211,32 +198,32 @@ const TabPassword = () => {
                   <Typography variant="h5">New password must contain:</Typography>
                   <List sx={{ p: 0, mt: 1 }}>
                     <ListItem divider>
-                      <ListItemIcon sx={{ color: minLength(values.password) ? 'success.main' : 'inherit' }}>
-                        {minLength(values.password) ? <CheckOutlined /> : <LineOutlined />}
+                      <ListItemIcon sx={{ color: minLength(values.new_password1) ? 'success.main' : 'inherit' }}>
+                        {minLength(values.new_password1) ? <CheckOutlined /> : <LineOutlined />}
                       </ListItemIcon>
                       <ListItemText primary="At least 8 characters" />
                     </ListItem>
                     <ListItem divider>
-                      <ListItemIcon sx={{ color: isLowercaseChar(values.password) ? 'success.main' : 'inherit' }}>
-                        {isLowercaseChar(values.password) ? <CheckOutlined /> : <LineOutlined />}
+                      <ListItemIcon sx={{ color: isLowercaseChar(values.new_password1) ? 'success.main' : 'inherit' }}>
+                        {isLowercaseChar(values.new_password1) ? <CheckOutlined /> : <LineOutlined />}
                       </ListItemIcon>
                       <ListItemText primary="At least 1 lower letter (a-z)" />
                     </ListItem>
                     <ListItem divider>
-                      <ListItemIcon sx={{ color: isUppercaseChar(values.password) ? 'success.main' : 'inherit' }}>
-                        {isUppercaseChar(values.password) ? <CheckOutlined /> : <LineOutlined />}
+                      <ListItemIcon sx={{ color: isUppercaseChar(values.new_password1) ? 'success.main' : 'inherit' }}>
+                        {isUppercaseChar(values.new_password1) ? <CheckOutlined /> : <LineOutlined />}
                       </ListItemIcon>
                       <ListItemText primary="At least 1 uppercase letter (A-Z)" />
                     </ListItem>
                     <ListItem divider>
-                      <ListItemIcon sx={{ color: isNumber(values.password) ? 'success.main' : 'inherit' }}>
-                        {isNumber(values.password) ? <CheckOutlined /> : <LineOutlined />}
+                      <ListItemIcon sx={{ color: isNumber(values.new_password1) ? 'success.main' : 'inherit' }}>
+                        {isNumber(values.new_password1) ? <CheckOutlined /> : <LineOutlined />}
                       </ListItemIcon>
                       <ListItemText primary="At least 1 number (0-9)" />
                     </ListItem>
                     <ListItem>
-                      <ListItemIcon sx={{ color: isSpecialChar(values.password) ? 'success.main' : 'inherit' }}>
-                        {isSpecialChar(values.password) ? <CheckOutlined /> : <LineOutlined />}
+                      <ListItemIcon sx={{ color: isSpecialChar(values.new_password1) ? 'success.main' : 'inherit' }}>
+                        {isSpecialChar(values.new_password1) ? <CheckOutlined /> : <LineOutlined />}
                       </ListItemIcon>
                       <ListItemText primary="At least 1 special characters" />
                     </ListItem>
@@ -248,7 +235,8 @@ const TabPassword = () => {
                   <Button variant="outlined" color="secondary">
                     Cancel
                   </Button>
-                  <Button disabled={isSubmitting || Object.keys(errors).length !== 0} type="submit" variant="contained">
+                  {/* <Button disabled={isSubmitting || Object.keys(errors).length !== 0} type="submit" variant="contained"> */}
+                  <Button disabled={isSubmitting} type="submit" variant="contained">
                     Save
                   </Button>
                 </Stack>
@@ -259,6 +247,11 @@ const TabPassword = () => {
       </Formik>
     </MainCard>
   );
+};
+
+TabPassword.propTypes = {
+  session: PropTypes.any,
+  uid: PropTypes.string
 };
 
 export default TabPassword;

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+// import { useEffect, useState } from 'react';
 
 // next
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -10,65 +11,50 @@ import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 // assets
 import { CreditCardOutlined, LockOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 
-import { ACCOUNT_URL } from 'config';
-
-function getPathIndex(pathname) {
-  let selectedTab = 0;
-  switch (pathname) {
-    case ACCOUNT_URL.PROFILE_PAYMENT:
-      selectedTab = 1;
-      break;
-    case ACCOUNT_URL.PROFILE_PASSWORD:
-      selectedTab = 2;
-      break;
-    case ACCOUNT_URL.PROFILE_SETTINGS:
-      selectedTab = 3;
-      break;
-    case ACCOUNT_URL.PROFILE_UPDATE:
-    default:
-      selectedTab = 0;
-  }
-  return selectedTab;
-}
+// import { ACCOUNT_URL } from 'config';
 
 // ==============================|| USER PROFILE - TAB ||============================== //
 
-const ProfileTab = () => {
+const ProfileTab = ({ tab, setTab }) => {
   const theme = useTheme();
-  const router = useRouter();
-  const { pathname } = router;
+  // const router = useRouter();
 
-  const [selectedIndex, setSelectedIndex] = useState(getPathIndex(pathname));
-  const handleListItemClick = (index, route) => {
-    setSelectedIndex(index);
-    router.push(route);
-  };
+  // const [selectedTab, setSelectedTab] = useState(tab);
+  // const [selectedTab, setSelectedTab] = useState(getPathIndex(tab));
+  // const handleListItemClick = (t, route) => {
+  //   // setSelectedTab(t);
+  //   if (setTab) {
+  //     setTab(t);
+  //   }
+  //   // router.push(route);
+  // };
 
-  useEffect(() => {
-    setSelectedIndex(getPathIndex(pathname));
-  }, [pathname]);
+  // useEffect(() => {
+  //   setSelectedTab(tab);
+  //   // setSelectedTab(getPathIndex(tab));
+  // }, [tab]);
 
   return (
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32, color: theme.palette.grey[500] } }}>
-      <ListItemButton selected={selectedIndex === 0} onClick={() => handleListItemClick(0, ACCOUNT_URL.PROFILE_UPDATE)}>
+      <ListItemButton selected={tab === 'personal'} onClick={() => setTab('personal')}>
         <ListItemIcon>
           <UserOutlined />
         </ListItemIcon>
         <ListItemText primary="Personal Information" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 1} onClick={() => handleListItemClick(1, ACCOUNT_URL.PROFILE_PAYMENT)}>
+      <ListItemButton selected={tab === 'payment'} onClick={() => setTab('payment')}>
         <ListItemIcon>
           <CreditCardOutlined />
         </ListItemIcon>
         <ListItemText primary="Payment" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 2} onClick={() => handleListItemClick(2, ACCOUNT_URL.PROFILE_PASSWORD)}>
+      <ListItemButton selected={tab === 'password'} onClick={() => setTab('password')}>
         <ListItemIcon>
           <LockOutlined />
         </ListItemIcon>
         <ListItemText primary="Change Password" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 3} onClick={() => handleListItemClick(3, ACCOUNT_URL.PROFILE_SETTINGS)}>
+      <ListItemButton selected={tab === 'settings'} onClick={() => setTab('settings')}>
         <ListItemIcon>
           <SettingOutlined />
         </ListItemIcon>
@@ -76,6 +62,11 @@ const ProfileTab = () => {
       </ListItemButton>
     </List>
   );
+};
+
+ProfileTab.propTypes = {
+  tab: PropTypes.string,
+  setTab: PropTypes.func
 };
 
 export default ProfileTab;

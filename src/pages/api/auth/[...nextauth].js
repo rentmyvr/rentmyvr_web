@@ -9,7 +9,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import axios from 'axios';
 
 // project imports
-import { errorMessage, ACCOUNT_EP, ACCOUNT_URL } from 'config';
+import { ACCOUNT_EP, ACCOUNT_URL, extractMsg } from 'config';
 
 export let users = [
   {
@@ -113,29 +113,28 @@ export default NextAuth({
           })
           .catch((err) => {
             console.log('----Error----');
-            console.log('err.response: ', err.response);
-            console.log('err.code: ', err.code);
-            console.log('err.response.data: ', err.response.data);
-
-            // console.log("Error: ", err.response.data)
-            // console.log("-----------------------      00000000    -----------------------")
-            // console.log("Error: ", err.response.text)
-            if (err.code === 'ECONNREFUSED') {
-              return Promise.reject(new Error('Unable to authenticate because of broken communication link'));
-            } else if (err.response.data) {
-              console.log('\nError Data: ', err.response.data);
-
-              if ('message' in err.response.data) {
-                let message = err.response.data.message;
-                if ('link' in err.response.data) {
-                  message = `${message} <br /> <a href='${err.response.data.link}'>${err.response.data.title}</a>`;
-                  err.response.data.message = message;
-                }
-                return Promise.reject(new Error(JSON.stringify(err.response.data)));
-              }
-              return Promise.reject(new Error(errorMessage(err.response.data)));
+            // console.log('err.response: ', err.response);
+            // console.log('err.code: ', err.code);
+            // console.log('err.response.data: ', err.response.data);
+            if (typeof err === 'string') {
+              return Promise.reject(new Error(err));
             }
-            return Promise.reject(new Error('Authentication failed!'));
+
+            let msg = 'Something went wrong';
+            const data = err.response?.data ? err.response.data : [];
+            msg = extractMsg(err, msg, data);
+            if ('message' in data) {
+              let message = err.response.data.message;
+              if ('link' in err.response.data) {
+                message = `${message} <br /> <a href='${err.response.data.link}'>${err.response.data.title}</a>`;
+                err.response.data.message = message;
+              }
+              return Promise.reject(new Error(JSON.stringify(err.response.data)));
+            }
+            console.log('The message: ', msg);
+            console.log('The data: ', data);
+
+            return Promise.reject(new Error(msg));
           });
       }
     }),

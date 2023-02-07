@@ -31,10 +31,8 @@ export const CORE_URL = {
   CONTACT: '/contact/',
   CONNECT_GMAIL: `${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/google/authorisaction/`,
 
-  CATEGORY_CREATE: '/projects/categories/new',
-  CATEGORY_UPDATE: '/projects/categories/{id}/',
-  CATEGORY_LIST: '/projects/categories/list/',
-  CATEGORY_DETAIL: '/projects/categories/{id}/',
+  PROPERTY_CREATE: '/rental/property/add',
+  PROPERTY_LIST: '/rental/property/list/',
 
   PROFILE_CREATE: '/accounts/user/new',
   PROFILE_UPDATE: '/accounts/user/{id}/',
@@ -50,20 +48,12 @@ export const ACCOUNT_EP = {
   REGISTER: '/accounts/user/',
   // REGISTER: '/accounts/registration/',
   PASSWORD_RESET: '/accounts/password/reset/',
-  PASSWORD_CHANGE: '/accounts/password/change/'
+  PASSWORD_CHANGE: '/accounts/password/change/',
+  USER_PASSWORD_CHANGE: '/accounts/user/{id}/password/change/'
 };
 
 export const CORE_EP = {
   PING: '/core/protected/ping/',
-
-  CATEGORY_CREATE: '/core/category/',
-  CATEGORY_UPDATE: '/core/category/{id}/',
-  CATEGORY_LIST: '/core/category/',
-  CATEGORY_DETAIL: '/core/category/{id}/',
-  CATEGORY_DELETE: '/core/category/{id}/',
-  CATEGORY_ACHIEVE: '/core/category/{id}/achieve/',
-  CATEGORY_REJECT: '/core/category/{id}/disapprove/',
-  CATEGORY_ACCEPT: '/core/category/{id}/approve/',
 
   EMAIL_COLLECT: '/core/interested/email/',
 
@@ -77,6 +67,15 @@ export const CORE_EP = {
   PROFILE_ACHIEVE: '/core/profile/{id}/achieve/'
 };
 
+export const DIRECTORY_EP = {
+  PROPERTY_CREATE: '/directory/property/',
+  PROPERTY_UPDATE: '/directory/property/{id}/',
+  PROPERTY_LIST: '/directory/property/',
+  PROPERTY_DETAIL: '/directory/property/{id}/',
+  PROPERTY_DELETE: '/directory/property/{id}/',
+  PROPERTY_ACHIEVE: '/directory/property/{id}/achieve/'
+};
+
 export const NOTIFICATION_EP = {
   NOTIFICATION_ALL: '/inbox/notifications/all/',
   NOTIFICATION_MINE: '/inbox/notifications/mine/',
@@ -88,6 +87,7 @@ export const NOTIFICATION_EP = {
   NOTIFICATION_MARK_AS_READ: '/inbox/notifications/{id}/mark/as/read/',
   NOTIFICATION_MARK_ALL_AS_READ: '/inbox/notifications/mark/all/as/read/'
 };
+
 // ==============================|| THEME CONFIG  ||============================== //
 
 const config = {
@@ -121,7 +121,7 @@ export const fetcher = async (url, method = 'get', session, params = null, data 
   }
 
   // console.log('Token:    ', session && session.access);
-  if (session) api.defaults.headers.common['Authorization'] = `Token ${session.access}`;
+  if (session) api.defaults.headers.common['Authorization'] = `Token ${session?.tocken?.access}`;
   // console.log('Hearders:   ', api.defaults.headers);
   if (upload) {
     api.defaults.headers['Content-Type'] = 'multipart/form-data';
@@ -210,20 +210,7 @@ export const successProcessor = (msg, dispatch, openSnackbar) => {
   );
 };
 
-export const errorProcessor = (err, setErrors, dispatch, openSnackbar) => {
-  // console.log('err----\n', err);
-  // console.log(err.response);
-  if (typeof err === 'string') {
-    dispatch(openSnackbar({ open: true, message: err, variant: 'alert', alert: { color: 'error' }, close: false }));
-    return;
-  }
-
-  setErrors = typeof setErrors === 'function' ? setErrors : () => {};
-  const data = err.response?.data ? err.response.data : [];
-  // console.log(data);
-  // console.log(err.code);
-  let msg = 'Something went wrong';
-
+export const extractMsg = (err, msg, data) => {
   if (err.code === 'ECONNREFUSED') {
     // console.log('============ ECONNREFUSED ============');
     msg = 'Unable to connect because of broken communication link';
@@ -231,9 +218,6 @@ export const errorProcessor = (err, setErrors, dispatch, openSnackbar) => {
     // console.log('============ ERR_NETWORK ============');
     msg = err.message;
   } else if (err.code === 'ERR_BAD_REQUEST') {
-    // console.log('============ ERR_BAD_REQUEST ============');
-    // console.log(err.response.request.status);
-    // console.log(data);
     msg = err.message;
     if (err.response.request.status === 401) {
       msg = 'Authentication Required!!!';
@@ -257,6 +241,20 @@ export const errorProcessor = (err, setErrors, dispatch, openSnackbar) => {
     // console.log('============ non_field_errors ============');
     msg = data['non_field_errors'][0] || 'Error Occurred';
   }
+  return msg;
+};
+
+export const errorProcessor = (err, setErrors, dispatch, openSnackbar) => {
+  if (typeof err === 'string') {
+    dispatch(openSnackbar({ open: true, message: err, variant: 'alert', alert: { color: 'error' }, close: false }));
+    return;
+  }
+
+  setErrors = typeof setErrors === 'function' ? setErrors : () => {};
+  const data = err.response?.data ? err.response.data : [];
+  let msg = 'Something went wrong';
+
+  msg = extractMsg(err, msg, data);
 
   if (['Array', 'Object'].includes(data.constructor.name)) {
     setErrors(data);

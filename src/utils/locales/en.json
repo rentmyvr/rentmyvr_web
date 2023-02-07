@@ -1,4 +1,12 @@
 {
+
+  "dashboard": "Dashboard",
+  "property": "Property",
+  "properties": "Properties",
+  "property-list": "Property Directory",
+  "property-add": "Add Property",
+  "rental-add": "Add Rental",
+
   "accordion": "Accordion",
   "account-profile": "Account Profile",
   "action-bar": "Action Bar",
@@ -37,7 +45,6 @@
   "contact-us": "Contact US",
   "custom": "Custom",
   "customer": "Customer",
-  "dashboard": "Dashboard",
   "data": "Data",
   "data-display": "Data Display",
   "datatable": "Datatable",

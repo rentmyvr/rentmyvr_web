@@ -21,6 +21,8 @@ import Snackbar from 'components/@extended/Snackbar';
 import { ConfigProvider } from 'contexts/ConfigContext';
 import { store } from 'store';
 import ThemeCustomization from 'themes';
+import 'utils/StringFormating';
+import 'styles/custom.css';
 
 export default function App({ Component, pageProps }) {
   const getLayout = Component.getLayout ?? ((page) => page);

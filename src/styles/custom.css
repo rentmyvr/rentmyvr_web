@@ -1,0 +1,23 @@
+/* https://github.com/jpuri/react-draft-wysiwyg/issues/454 */
+.rdw-editor-toolbar.rich-text__toolbar {
+  display: none;
+}
+
+.rdw-editor-wrapper:focus-within .rich-text__toolbar {
+  display: flex;
+}
+
+.public-DraftStyleDefault-block {
+  padding: 0 5px; 
+}
+
+.wrapperClassName {
+  border: 1px solid #eee;
+  border-radius: 5px;
+}
+
+.MuiFormControl-fullWidth, .MuiAutocomplete-fullWidth{
+  width: 100% !important;
+}
+
+

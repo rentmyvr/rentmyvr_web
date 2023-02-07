@@ -2,11 +2,12 @@
 import { FormattedMessage } from 'react-intl';
 
 // assets
-import { DollarOutlined, LoginOutlined, PhoneOutlined, RocketOutlined } from '@ant-design/icons';
+import { DollarOutlined, LoginOutlined, HomeOutlined, ShopOutlined } from '@ant-design/icons';
 
 // icons
-const icons = { DollarOutlined, LoginOutlined, PhoneOutlined, RocketOutlined };
+const icons = { DollarOutlined, LoginOutlined, HomeOutlined, ShopOutlined };
 
+import { CORE_URL } from 'config';
 // ==============================|| MENU ITEMS - PAGES ||============================== //
 
 const pages = {
@@ -15,46 +16,40 @@ const pages = {
   type: 'group',
   children: [
     {
-      id: 'contact-us',
-      title: <FormattedMessage id="contact-us" />,
+      id: 'dashboard',
+      title: <FormattedMessage id="dashboard" />,
       type: 'item',
-      url: '/contact-us',
-      icon: icons.PhoneOutlined,
-      target: true
+      url: CORE_URL.DASHBOARD,
+      icon: icons.HomeOutlined,
+      target: false
     },
+    // {
+    //   id: 'properties',
+    //   title: <FormattedMessage id="properties" />,
+    //   type: 'item',
+    //   url: CORE_URL.PROPERTY_LIST,
+    //   icon: icons.ShopOutlined,
+    //   target: false
+    // },
     {
-      id: 'maintenance',
-      title: <FormattedMessage id="maintenance" />,
+      id: 'properties',
+      title: <FormattedMessage id="properties" />,
       type: 'collapse',
-      icon: icons.RocketOutlined,
+      icon: icons.ShopOutlined,
       children: [
         {
-          id: 'error-404',
-          title: <FormattedMessage id="error-404" />,
+          id: 'property-list',
+          title: <FormattedMessage id="property-list" />,
           type: 'item',
-          url: '/maintenance/404',
-          target: true
+          url: CORE_URL.PROPERTY_LIST,
+          target: false
         },
         {
-          id: 'error-500',
-          title: <FormattedMessage id="error-500" />,
+          id: 'rental-add',
+          title: <FormattedMessage id="rental-add" />,
           type: 'item',
-          url: '/maintenance/500',
-          target: true
-        },
-        {
-          id: 'coming-soon',
-          title: <FormattedMessage id="coming-soon" />,
-          type: 'item',
-          url: '/maintenance/coming-soon',
-          target: true
-        },
-        {
-          id: 'under-construction',
-          title: <FormattedMessage id="under-construction" />,
-          type: 'item',
-          url: '/maintenance/under-construction',
-          target: true
+          url: CORE_URL.PROPERTY_CREATE,
+          target: false
         }
       ]
     }

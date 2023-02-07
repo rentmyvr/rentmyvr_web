@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+// import { useEffect, useState } from 'react';
 
 // material-ui
 
 import {
-  useMediaQuery,
   Chip,
+  Dialog,
   Divider,
   Grid,
   Link,
@@ -13,23 +15,26 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   Stack,
-  Typography
+  Typography,
+  useMediaQuery
 } from '@mui/material';
 
 // third-party
 import NumberFormat from 'react-number-format';
 
 // project import
+import useUser from 'hooks/useUser';
 import MainCard from 'components/MainCard';
 import Avatar from 'components/@extended/Avatar';
 import LinearWithLabel from 'components/@extended/Progress/LinearWithLabel';
+import ProfileAdd from 'sections/user/ProfileAdd';
 
 // assets
 import { AimOutlined, EnvironmentOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
 
 // ==============================|| ACCOUNT PROFILE - BASIC ||============================== //
 
-const ProfileDetail = ({ is_part }) => {
+const ProfileDetail = ({ is_part, profile }) => {
   const matchDownMD = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
   const matchDownXS = useMediaQuery((theme) => theme.breakpoints.down('xs'));
@@ -37,6 +42,16 @@ const ProfileDetail = ({ is_part }) => {
   const matchDownLG = useMediaQuery((theme) => theme.breakpoints.down('lg'));
   const matchDownXL = useMediaQuery((theme) => theme.breakpoints.down('xl'));
   console.log(`${window.innerWidth} {xs: ${matchDownXS}, sm: ${matchDownSM}, md: ${matchDownMD}, lg: ${matchDownLG}, xl: ${matchDownXL}}`);
+
+  // const [data, setData] = useState({});
+  const user = useUser();
+  const [openProfile, setOpenProfile] = useState(false);
+
+  const handleAdd = (openProfile = false) => {
+    openProfile = Boolean(openProfile);
+    setOpenProfile(openProfile);
+    // if (profile && !openProfile) setProfile(null);
+  };
 
   return (
     <Grid container spacing={3}>
@@ -168,8 +183,8 @@ const ProfileDetail = ({ is_part }) => {
       </Grid>
       <Grid item xs={12} sm={is_part ? 7 : 12} md={is_part ? 8 : 12} lg={is_part ? 9 : 12}>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <MainCard title="About me">
+          <Grid item xs={12} display="none">
+            <MainCard title={`About ${user?.id === profile?.user?.id ? 'Me' : profile?.user?.name}`}>
               <Typography color="secondary">
                 Hello, I’m Anshan Handgun Creative Graphic Designer & User Experience Designer based in Website, I create digital Products a
                 more Beautiful and usable place. Morbid accusant ipsum. Nam nec tellus at.
@@ -184,13 +199,13 @@ const ProfileDetail = ({ is_part }) => {
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
                         <Typography color="secondary">Full Name</Typography>
-                        <Typography>Anshan Handgun</Typography>
+                        <Typography>{profile?.user?.name}</Typography>
                       </Stack>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
-                        <Typography color="secondary">Father Name</Typography>
-                        <Typography>Mr. Deepen Handgun</Typography>
+                        <Typography color="secondary">User Type</Typography>
+                        <Typography>{profile?.user?.position.toTitleCase()}</Typography>
                       </Stack>
                     </Grid>
                   </Grid>
@@ -201,14 +216,14 @@ const ProfileDetail = ({ is_part }) => {
                       <Stack spacing={0.5}>
                         <Typography color="secondary">Phone</Typography>
                         <Typography>
-                          (+1-876) <NumberFormat value={8654239581} displayType="text" type="text" format="#### ### ###" />
+                          (+1) <NumberFormat value={profile?.user?.phone} displayType="text" type="text" format="#### ### ###" />
                         </Typography>
                       </Stack>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
                         <Typography color="secondary">Country</Typography>
-                        <Typography>New York</Typography>
+                        <Typography>{profile?.address?.country || '-'}</Typography>
                       </Stack>
                     </Grid>
                   </Grid>
@@ -218,13 +233,13 @@ const ProfileDetail = ({ is_part }) => {
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
                         <Typography color="secondary">Email</Typography>
-                        <Typography>anshan.dh81@gmail.com</Typography>
+                        <Typography>{profile?.user?.email}</Typography>
                       </Stack>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
                         <Typography color="secondary">Zip Code</Typography>
-                        <Typography>956 754</Typography>
+                        <Typography>{profile?.address?.zip_code || '-'}</Typography>
                       </Stack>
                     </Grid>
                   </Grid>
@@ -232,100 +247,32 @@ const ProfileDetail = ({ is_part }) => {
                 <ListItem>
                   <Stack spacing={0.5}>
                     <Typography color="secondary">Address</Typography>
-                    <Typography>Street 110-B Kalians Bag, Dewan, M.P. New York</Typography>
+                    <Typography>
+                      {`${profile?.address?.street || ''} ${profile?.address?.city || ''}, ${profile?.address?.state || ''} ${
+                        profile?.address?.zip_code || ''
+                      } ${profile?.address?.country || ''}`}
+                    </Typography>
                   </Stack>
                 </ListItem>
               </List>
             </MainCard>
           </Grid>
+
           <Grid item xs={12}>
-            <MainCard title="Education">
+            <MainCard title="Any Other Details or I Remove">
               <List sx={{ py: 0 }}>
                 <ListItem divider>
                   <Grid container spacing={matchDownMD ? 0.5 : 3}>
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
-                        <Typography color="secondary">Master Degree (Year)</Typography>
-                        <Typography>2014-2017</Typography>
+                        <Typography color="secondary">Title</Typography>
+                        <Typography>Detail</Typography>
                       </Stack>
                     </Grid>
                     <Grid item xs={12} md={6}>
                       <Stack spacing={0.5}>
-                        <Typography color="secondary">Institute</Typography>
+                        <Typography color="secondary">Title</Typography>
                         <Typography>-</Typography>
-                      </Stack>
-                    </Grid>
-                  </Grid>
-                </ListItem>
-                <ListItem divider>
-                  <Grid container spacing={matchDownMD ? 0.5 : 3}>
-                    <Grid item xs={12} md={6}>
-                      <Stack spacing={0.5}>
-                        <Typography color="secondary">Bachelor (Year)</Typography>
-                        <Typography>2011-2013</Typography>
-                      </Stack>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Stack spacing={0.5}>
-                        <Typography color="secondary">Institute</Typography>
-                        <Typography>Imperial College London</Typography>
-                      </Stack>
-                    </Grid>
-                  </Grid>
-                </ListItem>
-                <ListItem>
-                  <Grid container spacing={matchDownMD ? 0.5 : 3}>
-                    <Grid item xs={12} md={6}>
-                      <Stack spacing={0.5}>
-                        <Typography color="secondary">School (Year)</Typography>
-                        <Typography>2009-2011</Typography>
-                      </Stack>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Stack spacing={0.5}>
-                        <Typography color="secondary">Higher Secondary Education</Typography>
-                        <Typography>School of London, England</Typography>
-                      </Stack>
-                    </Grid>
-                  </Grid>
-                </ListItem>
-              </List>
-            </MainCard>
-          </Grid>
-          <Grid item xs={12}>
-            <MainCard title="Emplyment">
-              <List sx={{ py: 0 }}>
-                <ListItem divider>
-                  <Grid container spacing={matchDownMD ? 0.5 : 3}>
-                    <Grid item xs={12} md={6}>
-                      <Stack spacing={0.5}>
-                        <Typography color="secondary">Senior UI/UX designer (Year)</Typography>
-                        <Typography>2019-Current</Typography>
-                      </Stack>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Stack spacing={0.5}>
-                        <Typography color="secondary">Job Responsibility</Typography>
-                        <Typography>
-                          Perform task related to project manager with the 100+ team under my observation. Team management is key role in
-                          this company.
-                        </Typography>
-                      </Stack>
-                    </Grid>
-                  </Grid>
-                </ListItem>
-                <ListItem>
-                  <Grid container spacing={matchDownMD ? 0.5 : 3}>
-                    <Grid item xs={12} md={6}>
-                      <Stack spacing={0.5}>
-                        <Typography color="secondary">Trainee cum Project Manager (Year)</Typography>
-                        <Typography>2017-2019</Typography>
-                      </Stack>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Stack spacing={0.5}>
-                        <Typography color="secondary">Job Responsibility</Typography>
-                        <Typography>Team management is key role in this company.</Typography>
                       </Stack>
                     </Grid>
                   </Grid>
@@ -335,12 +282,25 @@ const ProfileDetail = ({ is_part }) => {
           </Grid>
         </Grid>
       </Grid>
+
+      {/* Add Profile Dialog */}
+      <Dialog
+        fullScreen={matchDownSM}
+        maxWidth="md"
+        fullWidth
+        onClose={handleAdd}
+        open={openProfile}
+        sx={{ '& .MuiDialog-paper': { p: 0 } }}
+      >
+        {openProfile && <ProfileAdd profile={profile} onCancel={handleAdd} />}
+      </Dialog>
     </Grid>
   );
 };
 
 ProfileDetail.propTypes = {
-  is_part: PropTypes.bool
+  is_part: PropTypes.bool,
+  profile: PropTypes.object
 };
 
 export default ProfileDetail;

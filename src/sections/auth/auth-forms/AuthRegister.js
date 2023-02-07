@@ -32,7 +32,7 @@ import { openSnackbar } from 'store/reducers/snackbar';
 
 // project import
 // import FirebaseSocial from './FirebaseSocial';
-import { ACCOUNT_EP, ACCOUNT_URL, fetcher, errorProcessor, successProcessor } from 'config';
+import { CORE_EP, ACCOUNT_URL, fetcher, errorProcessor, successProcessor } from 'config';
 import IconButton from 'components/@extended/IconButton';
 import AnimateButton from 'components/@extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
@@ -85,13 +85,14 @@ const AuthRegister = ({ csrfToken }) => {
         })}
         onSubmit={(values, { setErrors, setSubmitting }) => {
           console.log(values);
+          values = { address: null, user: { ...values, password1: values.password, password2: values.password } };
           // eslint-disable-next-line
-          fetcher(ACCOUNT_EP.REGISTER, 'post', null, null, {...values, password1: values.password, password2: values.password}, (res) => {
+          fetcher(CORE_EP.PROFILE_CREATE, 'post', null, null, values, (res) => {
               console.log(' Success************templates');
               successProcessor('Worker profile created successfully.', dispatch, openSnackbar);
               setSubmitting(false);
               // eslint-disable-next-line
-              window.location = `${ACCOUNT_URL.LOGIN}?error=Login to Proceed!!!&email=${values.email}`;
+              window.location = `${ACCOUNT_URL.LOGIN}?error=Login to Proceed!!!&email=${values.user.email}`;
               // console.log(res.data);
               // setProfile(Object.assign(res.data, ...res.data.user));
               // setProfile(res.data);

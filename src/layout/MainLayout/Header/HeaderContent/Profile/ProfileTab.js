@@ -21,7 +21,7 @@ const ProfileTab = ({ handleLogout }) => {
         <ListItemIcon>
           <EditOutlined />
         </ListItemIcon>
-        <ListItemText primary="Edit Profile" />
+        <ListItemText primary="Edit Profile**" />
       </ListItemButton>
       <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)}>
         <ListItemIcon>
