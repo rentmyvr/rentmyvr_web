@@ -53,22 +53,22 @@ let items = [
   {
     name: 'Random Name #1',
     description: 'Probably the most random thing you have ever seen!',
-    img: '/assets/images/slide1.jpg'
+    img: '/assets/images/1300x800/design-28.png'
   },
   {
     name: 'Random Name #2',
     description: 'Hello World 2!',
-    img: '/assets/images/slide2.jpg'
+    img: '/assets/images/1300x800/design-30.png'
   },
   {
     name: 'Random Name #3',
     description: 'Hello World 3!',
-    img: '/assets/images/slide2.jpg'
+    img: '/assets/images/1300x800/design-32.png'
   },
   {
     name: 'Random Name #4',
     description: 'Hello World 4!',
-    img: '/assets/images/slide2.jpg'
+    img: '/assets/images/1300x800/design-33.png'
   }
 ];
 
