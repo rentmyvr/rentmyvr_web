@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { Box, Fade, useScrollTrigger } from '@mui/material';
+// import { Box, Fade, useScrollTrigger } from '@mui/material';
 
 // ==============================|| NAVIGATION - SCROLL TO TOP ||============================== //
 

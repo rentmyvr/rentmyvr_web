@@ -14,16 +14,14 @@ import {
   Button,
   Card,
   CardHeader,
-  CardMedia,
-  CardActions,
   CardContent,
   Chip,
-  Collapse,
+  // Collapse,
   Avatar,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
+  // DialogContentText,
   DialogTitle,
   Divider,
   FormControl,
@@ -37,8 +35,8 @@ import {
   ListItem,
   ListItemText,
   // MenuItem,
-  OutlinedInput,
-  Popover,
+  // OutlinedInput,
+  // Popover,
   Radio,
   RadioGroup,
   Slider,
@@ -50,7 +48,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
+// import { styled } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 
 // third-party
@@ -58,8 +56,8 @@ import * as Yup from 'yup';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { CloseOutlined, PlusOutlined, PlusSquareTwoTone } from '@ant-design/icons';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // project import
 import Layout from 'layout';
@@ -71,12 +69,12 @@ import UploadMultiFile from 'components/third-party/dropzone/MultiFile';
 
 // assets
 // import { UploadOutlined } from '@ant-design/icons';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { filter } from 'lodash';
-import { set } from 'date-fns';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// import { filter } from 'lodash';
+// import { set } from 'date-fns';
 
 // project import
-import { colorTheme, fetcher, CORE_EP, CORE_URL, DIRECTORY_EP, errorProcessor, successProcessor, warningProcessor } from 'config';
+import { fetcher, CORE_EP, DIRECTORY_EP, errorProcessor, successProcessor, warningProcessor } from 'config';
 
 // ==============================|| ADD NEW PRODUCT - MAIN ||============================== //
 
@@ -164,7 +162,7 @@ function PropertyAdd({ property = emptyProperty }) {
   const [services, setServices] = useState([]);
   const [spaces, setSpaces] = useState([]);
   const [essentials, setEssentials] = useState([]);
-  const [pets, setPets] = useState([]);
+  const [pets] = useState([]);
   const [bathrooms, setBathrooms] = useState([]);
   const [kitchens, setKitchens] = useState([]);
   const [poolSpa, setPoolSpa] = useState([]);
@@ -421,9 +419,9 @@ function PropertyAdd({ property = emptyProperty }) {
     });
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  // const handleReset = () => {
+  //   setActiveStep(0);
+  // };
 
   const handleBookingClose = () => {
     setBookingSite(null);
@@ -1171,7 +1169,7 @@ function PropertyAdd({ property = emptyProperty }) {
                           onBlur={handleBlur}
                           onChange={(event, newValue) => setFieldValue('room_type', newValue)}
                           getOptionLabel={(label) => label.label || ''}
-                          isOptionEqualToValue={(option, value) => option.id === value.id }
+                          isOptionEqualToValue={(option, value) => option.id === value.id}
                           renderTags={(value, getTagProps) =>
                             value.map((option, index) => (
                               <span key={index}>

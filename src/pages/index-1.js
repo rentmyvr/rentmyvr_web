@@ -13,7 +13,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Container,
+  // Container,
   Fab,
   Fade,
   Grid,
@@ -43,7 +43,8 @@ import { Rent_1, Rent_2 } from 'components/RentMyVRIcons';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
-import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpSquareFilled } from '@ant-design/icons';
+import { AppleFilled, ShoppingFilled, TagFilled, UpSquareFilled } from '@ant-design/icons';
+// import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpSquareFilled } from '@ant-design/icons';
 // import Image from 'next/image';
 
 // ==============================|| CONTACT US - MAIN ||============================== //

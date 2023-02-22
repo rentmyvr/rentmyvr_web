@@ -117,8 +117,8 @@ function ComingSoon() {
                         has the solution! With Rent My VR, you can view a property’s website, online profiles, social media, and reviews,
                         all in one place. Contact the host and inquire about direct booking options. Search for companies that specialize in
                         managing Short Term/ Vacation Rentals. Rent My VR is the first all inclusive online directory to showcase vacation
-                        rentals for hosts and guests. Rent My VR - Bringing vacation rental sites together to make your search a
-                        little better.
+                        rentals for hosts and guests. Rent My VR - Bringing vacation rental sites together to make your search a little
+                        better.
                       </Typography>
                     </CardContent>
                   </Card>
