@@ -39,7 +39,7 @@ import CountUp from 'react-countup';
 import Layout from 'layout';
 import Page from 'components/Page';
 import ScrollTop from 'components/ScrollTop';
-import { Rent_1 } from 'components/RentMyVRIcons';
+import { Rent_1, Rent_2 } from 'components/RentMyVRIcons';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
@@ -433,8 +433,8 @@ const Index = () => {
               <Grid item sm={12} md={4}>
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    <HomeFilled sx={{ fontSize: 40 }} />
-                    {/* <Rent_1 color="primary" /> */}
+                    {/* <HomeFilled sx={{ fontSize: 40 }} /> */}
+                    <Rent_1 color="primary" />
                   </Avatar>
                   <Typography variant="h3">Search Rental</Typography>
                   <Typography>
@@ -447,7 +447,8 @@ const Index = () => {
               <Grid item sm={12} md={4}>
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    <BankFilled sx={{ fontSize: 40 }} />
+                    {/* <BankFilled sx={{ fontSize: 40 }} /> */}
+                    <Rent_2 color="warning" />
                   </Avatar>
                   <Typography variant="h3">Search Management Companies</Typography>
                   <Typography>
