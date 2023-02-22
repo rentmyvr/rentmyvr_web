@@ -39,7 +39,7 @@ import CountUp from 'react-countup';
 import Layout from 'layout';
 import Page from 'components/Page';
 import ScrollTop from 'components/ScrollTop';
-import ContactForm from 'sections/contact-us/ContactForm';
+import { Rent_1 } from 'components/RentMyVRIcons';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
@@ -236,7 +236,7 @@ const locationOverlayTheme = createTheme({
   }
 });
 
-const ContactUS = () => {
+const Index = () => {
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 800 });
 
   const handleClick = (event) => {
@@ -287,7 +287,7 @@ const ContactUS = () => {
   // const { errors, touched, handleBlur, handleChange, handleSubmit, isSubmitting, getFieldProps, setFieldValue, values } = formik;
 
   return (
-    <Page title="Contact Us">
+    <Page title="Rent MyVR Home">
       <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center">
         <Grid item xs={12}>
           <Carousel
@@ -410,10 +410,10 @@ const ContactUS = () => {
             <Stack spacing={0} justifyContent="center" alignItems="center">
               <Grid item sm={12} md={10}>
                 <Typography display="inline" variant="h2" color="#1890ff">
-                  OUR&nbsp;
+                  THE&nbsp;
                 </Typography>
                 <Typography display="inline" variant="h2">
-                  SERVICES
+                  RENT MY VR WAY
                 </Typography>
               </Grid>
               <ThemeProvider theme={underlineTheme}>
@@ -422,12 +422,9 @@ const ContactUS = () => {
             </Stack>
           </Grid>
           <Grid item sm={12} md={10}>
-            <Stack direction="column" spacing={1.25} pl={4} pr={2}>
+            <Stack direction="column" alignItems="center" spacing={1.25} pl={4} pr={2}>
               <Typography>
-                ***This looks like a bug to me (or at least missing a feature that is reasonable for developers to expect to be there).The
-                issue is that Select doesn&rsquo;t define any styles of its own at the root level, so it doesn&rsquo;t leverage the code
-                (which would be a call to MUI&rsquo;s styled such as here for the select class) that would take care of looking at the theme
-                and applying the corresponding style overrides. I recommend logging an issue.
+                Finally, an online directory that offers you what you have been asking for. With RentMyVR, you can do SO MUCH MORE!
               </Typography>
             </Stack>
           </Grid>
@@ -437,13 +434,13 @@ const ContactUS = () => {
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     <HomeFilled sx={{ fontSize: 40 }} />
+                    {/* <Rent_1 color="primary" /> */}
                   </Avatar>
-                  <Typography variant="h3">Test Message 1</Typography>
+                  <Typography variant="h3">Search Rental</Typography>
                   <Typography>
-                    This looks like a bug to me (or at least missing a feature that is reasonable for developers to expect to be there).The
-                    issue is that Select doesn&rsquo;t define any styles of its own at the root level, so it doesn&rsquo;t leverage the code
-                    (which would be a call to MUI&rsquo;s styled such as here for the select class) that would take care of looking at the
-                    theme and applying the corresponding style overrides. I recommend logging an issue.
+                    Guests can save money when the host offers discounts for direct booking. Search vacation rentals and compare pricing on
+                    the hosts&apos; different booking platforms. Narrow your search by filtering the sites you prefer to book through and
+                    easily check out a property&apos;s photos and reviews on all sites conveniently located on the property profile.
                   </Typography>
                 </Stack>
               </Grid>
@@ -452,12 +449,10 @@ const ContactUS = () => {
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     <BankFilled sx={{ fontSize: 40 }} />
                   </Avatar>
-                  <Typography variant="h3">Test Message 1</Typography>
+                  <Typography variant="h3">Search Management Companies</Typography>
                   <Typography>
-                    This looks like a bug to me (or at least missing a feature that is reasonable for developers to expect to be there).The
-                    issue is that Select doesn&rsquo;t define any styles of its own at the root level, so it doesn&rsquo;t leverage the code
-                    (which would be a call to MUI&rsquo;s styled such as here for the select class) that would take care of looking at the
-                    theme and applying the corresponding style overrides. I recommend logging an issue.
+                    Looking for a professional who specializes in short term rentals in the area you are traveling to? Search our online
+                    directory of Short Term and Vacation Rental Management Companies
                   </Typography>
                 </Stack>
               </Grid>
@@ -466,12 +461,10 @@ const ContactUS = () => {
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     <AppleFilled sx={{ fontSize: 40 }} />
                   </Avatar>
-                  <Typography variant="h3">Test Message 1</Typography>
+                  <Typography variant="h3">Why List With Us</Typography>
                   <Typography>
-                    This looks like a bug to me (or at least missing a feature that is reasonable for developers to expect to be there).The
-                    issue is that Select doesn&rsquo;t define any styles of its own at the root level, so it doesn&rsquo;t leverage the code
-                    (which would be a call to MUI&rsquo;s styled such as here for the select class) that would take care of looking at the
-                    theme and applying the corresponding style overrides. I recommend logging an issue.
+                    Looking to Increase exposure, online traffic, and bookings to your vacation rental? Interested in driving traffic to
+                    your personal booking site, rather than using a 3rd party booking site?
                   </Typography>
                 </Stack>
               </Grid>
@@ -640,7 +633,7 @@ const ContactUS = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} mt={5} pl={4} pr={2} justifyContent="center" alignItems="center">
+      <Grid container spacing={2} my={5} pl={4} pr={2} justifyContent="center" alignItems="center">
         <Grid item xs={12} sm={12} md={10}>
           <Grid container spacing={2} pt={4}>
             <Grid item xs={12} sm={6} md={6}>
@@ -754,14 +747,14 @@ const ContactUS = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} mt={16} justifyContent="center" alignItems="center">
+      {/* <Grid container spacing={2} mt={16} justifyContent="center" alignItems="center">
         <Grid item sm={12} md={10}></Grid>
         <Grid item xs={12} sm={10} lg={9}>
           <Container maxWidth="lg" sx={{ px: { xs: 0, sm: 2 } }}>
             <ContactForm />
           </Container>
         </Grid>
-      </Grid>
+      </Grid> */}
 
       <ScrollTop>
         <Fade in={trigger} color="primary">
@@ -776,8 +769,8 @@ const ContactUS = () => {
   );
 };
 
-ContactUS.getLayout = function getLayout(page) {
+Index.getLayout = function getLayout(page) {
   return <Layout variant="simple">{page}</Layout>;
 };
 
-export default ContactUS;
+export default Index;

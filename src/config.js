@@ -55,6 +55,9 @@ export const ACCOUNT_EP = {
 export const CORE_EP = {
   PING: '/core/protected/ping/',
 
+  CITY_LIST: '/core/city/',
+  CITY_DETAIL: '/core/city/{id}/',
+
   EMAIL_COLLECT: '/core/interested/email/',
 
   PROFILE_ME: '/core/profile/me/',
@@ -73,7 +76,8 @@ export const DIRECTORY_EP = {
   PROPERTY_LIST: '/directory/property/',
   PROPERTY_DETAIL: '/directory/property/{id}/',
   PROPERTY_DELETE: '/directory/property/{id}/',
-  PROPERTY_ACHIEVE: '/directory/property/{id}/achieve/'
+  PROPERTY_ACHIEVE: '/directory/property/{id}/achieve/',
+  PROPERTY_FORM_ITEMS: '/directory/property/form/items/'
 };
 
 export const NOTIFICATION_EP = {

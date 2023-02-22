@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 // next
 // import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 
 // material-ui
 import {
@@ -10,17 +12,36 @@ import {
   Autocomplete,
   Box,
   Button,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardActions,
+  CardContent,
+  Chip,
+  Collapse,
+  Avatar,
+  Dialog,
+  DialogActions,
   DialogContent,
+  DialogContentText,
   DialogTitle,
   Divider,
-  // FormControl,
+  FormControl,
   FormControlLabel,
-  // FormHelperText,
+  FormHelperText,
   Grid,
+  IconButton,
+  InputAdornment,
   InputLabel,
+  List,
+  ListItem,
+  ListItemText,
   // MenuItem,
+  OutlinedInput,
+  Popover,
   Radio,
   RadioGroup,
+  Slider,
   Stack,
   Step,
   StepLabel,
@@ -29,29 +50,186 @@ import {
   TextField,
   Typography
 } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
 
 // third-party
 import * as Yup from 'yup';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
+import { CloseOutlined, PlusOutlined, PlusSquareTwoTone } from '@ant-design/icons';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // project import
 import Layout from 'layout';
 import Page from 'components/Page';
 import MainCard from 'components/MainCard';
+import { openSnackbar } from 'store/reducers/snackbar';
+import { SlideUp } from 'components/transitions/Slide';
+import UploadMultiFile from 'components/third-party/dropzone/MultiFile';
 
 // assets
 // import { UploadOutlined } from '@ant-design/icons';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { filter } from 'lodash';
+import { set } from 'date-fns';
+
+// project import
+import { colorTheme, fetcher, CORE_EP, CORE_URL, DIRECTORY_EP, errorProcessor, successProcessor, warningProcessor } from 'config';
 
 // ==============================|| ADD NEW PRODUCT - MAIN ||============================== //
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+const steps = ['Stage 1', 'Stage 2', 'Stage 3'];
+const emptyProperty = {
+  id: null,
+  name: '',
+  type: null,
+  pictures: [],
+  video: null,
+  virtual_tour: null,
+  space: null,
+  hosted_by: '',
+  no_of_guest: 0,
+  no_of_bedrooms: 0,
+  no_of_bathrooms: 0,
+  is_pet_allowed: true,
+  suitability: true,
+  description: '',
+  host_note: '',
+  room_type: null,
+  sleeper_type: null,
+  price_night: 0.0,
+  address: {
+    street: '',
+    number: '',
+    city: '',
+    zip_code: ''
+  },
+  email: '',
+  phone: '',
+  logo: '',
+  accessibility: [],
+  activities: [],
+  bathrooms: [],
+  booking_sites: [],
+  social_media: [],
+  entertainments: [],
+  essentials: [],
+  families: [],
+  features: [],
+  kitchens: [],
+  laundries: [],
+  outsides: [],
+  parking: [],
+  pool_spas: [],
+  safeties: [],
+  spaces: [],
+  services: [],
+  social_media_label: '',
+  cancellation_policy: '',
+  stage: 0
+};
+const formToRaw = (val) => {
+  val.type = val.type?.id;
+  val.space = val.space?.id;
+  val.sleeper_type = val.sleeper_type?.id;
+  val.room_type = val.room_type?.id;
+  val.accessibility = val.accessibility.map((x) => x.id);
+  val.activities = val.activities.map((x) => x.id);
+  val.bathrooms = val.bathrooms.map((x) => x.id);
+  val.booking_sites = val.booking_sites.map((x) => x.id);
+  val.social_media = val.social_media.map((x) => x.id);
+  val.entertainments = val.entertainments.map((x) => x.id);
+  val.essentials = val.essentials.map((x) => x.id);
+  val.families = val.families.map((x) => x.id);
+  val.features = val.features.map((x) => x.id);
+  val.kitchens = val.kitchens.map((x) => x.id);
+  val.laundries = val.laundries.map((x) => x.id);
+  val.outsides = val.outsides.map((x) => x.id);
+  val.parking = val.parking.map((x) => x.id);
+  val.pool_spas = val.pool_spas.map((x) => x.id);
+  val.safeties = val.safeties.map((x) => x.id);
+  val.spaces = val.spaces.map((x) => x.id);
+  val.services = val.services.map((x) => x.id);
+  return val;
+};
 
-function PropertyAdd({ property = { is_pet_allowed: true } }) {
+function PropertyAdd({ property = emptyProperty }) {
+  const { data: session } = useSession();
+  const dispatch = useDispatch();
+  const [allCities, setAllCities] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [states, setStates] = useState([]);
+  const [services, setServices] = useState([]);
+  const [spaces, setSpaces] = useState([]);
+  const [essentials, setEssentials] = useState([]);
+  const [pets, setPets] = useState([]);
+  const [bathrooms, setBathrooms] = useState([]);
+  const [kitchens, setKitchens] = useState([]);
+  const [poolSpa, setPoolSpa] = useState([]);
+  const [outsides, setOutsides] = useState([]);
+  const [entertainments, setEntertainments] = useState([]);
+  const [laundries, setLaundries] = useState([]);
+  const [families, setFamilies] = useState([]);
+  const [parking, setParking] = useState([]);
+  const [safeties, setSafeties] = useState([]);
+  const [features, setFeatures] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [accessibility, setAccessibility] = useState([]);
+  const [bookingSiteDialog, setBookingSiteDialog] = useState(false);
+  const [bookingSite, setBookingSite] = useState(null);
+  const [bookingSites, setBookingSites] = useState([]);
+  const [bookingSiteError, setBookingSiteError] = useState(null);
+  const [socialMediaDialog, setSocialMediaDialog] = useState(false);
+  const [socialMediaLink, setSocialMediaLink] = useState(null);
+  const [socialMediaLinks, setSocialMediaLinks] = useState([]);
+  const [socialMediaLinkError, setSocialMediaLinkError] = useState(null);
+  const [stage, setStage] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
+  const [stepErrors, setStepErrors] = useState([]);
   // const [optional, setOptional] = useState(new Set());
+
+  const isCreating = !property.id;
+
+  const BOOKING_SITES = [
+    { id: 'air-bnb', label: 'Air BNB' },
+    { id: 'vrbo', label: 'VRBO' },
+    { id: 'google-vacation-rental', label: 'Google Vacation Rental' },
+    { id: 'flipkey', label: 'Flipkey' },
+    { id: 'windmu', label: 'Windmu' },
+    { id: 'booking', label: 'Booking.com' },
+    { id: 'expedia', label: 'Expedia' },
+    { id: 'housetrip', label: 'Housetrip' },
+    { id: 'rent-by-owner', label: 'Rent By Owner' },
+    { id: 'holidaylettings', label: 'HolidayLettings' },
+    { id: 'traveloka', label: 'Traveloka' },
+    { id: 'trip', label: 'Trip.com' },
+    { id: 'agoda', label: 'Agoda' },
+    { id: 'glamping', label: 'Glamping.com' },
+    { id: 'despegar-decolar', label: 'Despegar/Decolar' },
+    { id: 'edreams', label: 'eDreams' },
+    { id: 'pegipegi', label: 'PegiPegi' },
+    { id: 'rakuten', label: 'Rakuten' },
+    { id: 'riparide', label: 'Riparide' },
+    { id: 'anyplace', label: 'Anyplace' },
+    { id: 'furniturefinders', label: 'furnitureFinders' },
+    { id: '9flats', label: '9flats' },
+    { id: 'coliving', label: 'Coliving.com' },
+    { id: 'instant-world-booking', label: 'Instant World Booking' },
+    { id: 'only-apartments', label: 'Only-Apartments' }
+  ];
+
+  const SOCIAL_MEDIAS = [
+    { id: 'facebook', label: 'Facebook' },
+    { id: 'instagram', label: 'Instagram' },
+    { id: 'tiktok', label: 'TikTok' },
+    { id: 'youtube', label: 'YouTube' },
+    { id: 'twitter', label: 'Twitter' },
+    { id: 'google-business', label: 'GoogleBusiness' },
+    { id: 'yelp', label: 'Yelp' }
+  ];
 
   const TYPES = [
     { id: 'house', label: 'House' },
@@ -107,6 +285,70 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
     { id: 'casita-sep-guest-quarters', label: 'Casita/Sep Guest Quarters' }
   ];
 
+  const ROOM_TYPES = [
+    { id: 'bedroom', label: 'Bedroom' },
+    { id: 'casita', label: 'Casita' },
+    { id: 'den', label: 'Den' },
+    { id: 'office', label: 'Office' },
+    { id: 'living-room', label: 'Living Room' },
+    { id: 'family-room', label: 'Family Room' },
+    { id: 'loft', label: 'Loft' },
+    { id: 'studio', label: 'Studio' }
+  ];
+
+  const SLEEPER_TYPES = [
+    { id: 'king-bed', label: 'King Bed' },
+    { id: 'queen-bed', label: 'Queen Bed' },
+    { id: 'double-bed', label: 'Double Bed' },
+    { id: 'twin-single-bed', label: 'Twin/Single Bed' },
+    { id: 'futon', label: 'Futon' },
+    { id: 'sofa-sleeper', label: 'Sofa Sleeper' },
+    { id: 'cot', label: 'Cot' },
+    { id: 'trundle', label: 'Trundle' },
+    { id: 'bunk-bed', label: 'Bunk Bed' },
+    { id: 'air-mattress-floor-mattress', label: 'Air Mattress/Floor Mattress' }
+  ];
+
+  const partOne = [
+    'name',
+    'type',
+    'pictures',
+    'video',
+    'space',
+    'hosted_by',
+    'phone',
+    'email',
+    'no_of_guest',
+    'no_of_bedrooms',
+    'no_of_bathrooms',
+    'price_night',
+    'is_pet_allowed',
+    'suitability',
+    'address',
+    'description',
+    'room_type',
+    'sleeper_type',
+    'booking_sites',
+    'social_media'
+  ];
+  const partTwo = [
+    'services',
+    'spaces',
+    'essentials',
+    'pets',
+    'bathrooms',
+    'kitchens',
+    'pool_spas',
+    'outsides',
+    'entertainments',
+    'laundries',
+    'families',
+    'parking',
+    'accessibility'
+  ];
+  const partThree = ['safeties', 'features', 'activities', 'cancellation_policy', 'host_note'];
+  const parts = [partOne, partTwo, partThree];
+
   const isStepOptional = (step) => {
     return [].includes(step);
   };
@@ -116,21 +358,51 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
   };
 
   const isStepFailed = (step) => {
-    return [].includes(step);
+    return stepErrors.includes(step);
   };
 
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
+  const handleNext = (touched, event, formErrors, setFieldValue) => {
+    console.log(touched);
+    console.log(formErrors);
+
+    if (stage === 0) {
+      let target = event.target;
+      target.form.requestSubmit();
+      setStage(1);
+      setTimeout(() => target.click(), 300);
+      return;
     }
 
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+    let errorFound = false;
+    for (let x of Object.keys(formErrors)) {
+      if (parts[activeStep].includes(x)) {
+        console.log(x);
+        errorFound = true;
+        break;
+      }
+    }
+
+    if (errorFound) {
+      setStepErrors([...stepErrors, activeStep]);
+      warningProcessor('Please fix error on the form', dispatch, openSnackbar);
+    } else {
+      setFieldValue('stage', activeStep + 1);
+      setStepErrors(stepErrors.filter((x) => x !== activeStep));
+      let newSkipped = skipped;
+      if (isStepSkipped(activeStep)) {
+        newSkipped = new Set(newSkipped.values());
+        newSkipped.delete(activeStep);
+      }
+
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      setSkipped(newSkipped);
+    }
+
+    return;
   };
 
   const handleBack = () => {
+    setFieldValue('stage', activeStep);
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
@@ -153,21 +425,211 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
     setActiveStep(0);
   };
 
+  const handleBookingClose = () => {
+    setBookingSite(null);
+    setBookingSiteError(null);
+    setBookingSiteDialog(false);
+  };
+
+  const handleSocialMediaClose = () => {
+    setSocialMediaLink(null);
+    setSocialMediaDialog(false);
+    setSocialMediaLinkError(null);
+  };
+
+  const markGuest = [
+    { value: 5, label: '5 Guest' },
+    { value: 20, label: '20 Guest' },
+    { value: 30, label: '30 Guest' },
+    { value: 45, label: '45 Guest' }
+  ];
+
+  const markBedroom = [
+    { value: 5, label: '5 Bedrooms' },
+    { value: 20, label: '20 Bedrooms' },
+    { value: 30, label: '30 Bedrooms' },
+    { value: 45, label: '45 Bedrooms' }
+  ];
+
+  const markBathrooms = [
+    { value: 5, label: '5 Bathrooms' },
+    { value: 20, label: '20 Bathrooms' },
+    { value: 30, label: '30 Bathrooms' },
+    { value: 45, label: '45 Bathrooms' }
+  ];
+
+  const isUrl = (str) => {
+    try {
+      new URL(str);
+      return /(\.\w)/.test(str);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const checkSiteError = (bs) => {
+    let site = bs?.site;
+    let id = bs?.id;
+    let error = '';
+    let status = false;
+    if (site === '' || site === undefined) {
+      status = true;
+      error = 'Site Link is Required!!!';
+    } else if (isUrl(site)) {
+      setBookingSite({ ...bs, site });
+    } else if (isUrl(`https://${site}`)) {
+      setBookingSite({ ...bs, site: `https://${site}` });
+    } else {
+      status = true;
+      error = 'This must be a valid URL';
+    }
+
+    if (bookingSiteError !== null) {
+      setBookingSiteError({ ...bookingSiteError, link: error });
+    }
+
+    if (id === '' || id === undefined) {
+      status = true;
+      setBookingSiteError({ link: error, id: 'Booking Site is Required!!!' });
+    } else {
+      setBookingSiteError({ link: error, id: '' });
+    }
+    return status;
+  };
+
+  const checkMediaLinkError = (socialMediaLink) => {
+    let error = '';
+    let id = socialMediaLink?.id;
+    let site = socialMediaLink?.site;
+    let status = false;
+    if (site === '' || site === undefined) {
+      error = 'Site is Required!!!';
+      status = true;
+    } else if (isUrl(site)) {
+      setSocialMediaLink({ ...socialMediaLink, site });
+    } else if (isUrl(`https://${site}`)) {
+      setSocialMediaLink({ ...socialMediaLink, site: `https://${site}` });
+    } else {
+      error = 'This must be a valid URL';
+      status = true;
+    }
+
+    if (bookingSiteError !== null) {
+      setSocialMediaLinkError({ ...socialMediaLinkError, link: error });
+    }
+
+    if (id === '' || id === undefined) {
+      status = true;
+      setSocialMediaLinkError({ link: error, id: 'Select Social Media!!!' });
+    } else {
+      setSocialMediaLinkError({ link: error, id: '' });
+    }
+
+    return status;
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    fetcher(CORE_EP.CITY_LIST, 'get', session, null, null, res => {
+        setAllCities(res.data);
+        let addedStates = [];
+        // eslint-disable-next-line
+        res.data.filter((x) => {
+          if (addedStates.includes(x.state_name)) {
+            return false;
+          } else {
+            addedStates.push(x.state_name);
+            return true;
+          }
+        });
+        setStates(addedStates);
+        // console.log('Cities***** ', res.data);
+        // console.log('States***** ', addedStates);
+      },
+      (err) => {
+        errorProcessor(err, () => {}, dispatch, openSnackbar);
+      }
+    );
+
+    // eslint-disable-next-line
+    fetcher(DIRECTORY_EP.PROPERTY_FORM_ITEMS, 'get', session, null, null, res => {
+        console.log('Items***** ', res.data);
+        setServices(res.data.services);
+        setSpaces(res.data.spaces);
+        setEssentials(res.data.essentials);
+        setBathrooms(res.data.bathrooms);
+        setKitchens(res.data.kitchens);
+        setPoolSpa(res.data.pool_spas);
+        setOutsides(res.data.outsides);
+        setEntertainments(res.data.entertainments);
+        setLaundries(res.data.laundries);
+        setFamilies(res.data.families);
+        setParking(res.data.parking);
+        setSafeties(res.data.safeties);
+        setFeatures(res.data.features);
+        setActivities(res.data.activities);
+        setAccessibility(res.data.accessibility);
+      },
+      (err) => {
+        errorProcessor(err, () => {}, dispatch, openSnackbar);
+      }
+    );
+    // eslint-disable-next-line
+  }, []);
+
   const formik = useFormik({
     initialValues: property,
     validationSchema: Yup.object().shape({
-      name: Yup.string().max(128).required('Please provide a name or label for the Property/Rental')
+      name: Yup.string().max(128).required('Please provide a name or label for the Property/Rental'),
+      type: Yup.object()
+        .shape({
+          id: Yup.string().required('Please select Type for the Property/Rental').min(1)
+        })
+        .nullable()
+        .required('Please select Type for the Property/Rental'),
+      space: Yup.object()
+        .shape({
+          id: Yup.string().required('Please select Space Type for the Property/Rental').min(1)
+        })
+        .nullable()
+        .required('Please select Space Type for the Property/Rental'),
+      hosted_by: Yup.string().required('Please provide the Hosted By'),
+      no_of_guest: Yup.number().min(1, 'No of Guest must be a number between 1-49').max(49, 'No of Guest must be a number between 1-49'),
+      no_of_bedrooms: Yup.number()
+        .min(1, 'No of Bedrooms must be a number between 1-49')
+        .max(49, 'No of Bedrooms must be a number between 1-49'),
+      no_of_bathrooms: Yup.number()
+        .min(1, 'No of Bathrooms must be a number between 1-49')
+        .max(49, 'No of Bathrooms must be a number between 1-49'),
+      description: Yup.string().required('Please provide the Description'),
+      booking_sites: Yup.array().min(1, 'Please provide at least one Booking Site'),
+      address: Yup.object().shape({
+        state: Yup.string().required('Please select State').min(1),
+        city: Yup.object().nullable().required('Please select/type the City'),
+        zip_code: Yup.string().required('Please enter the Zip Code').min(1),
+        street: Yup.string().required('Please enter the street').min(1),
+        number: Yup.string().required('Please enter the number').min(1)
+      }),
+      stage: Yup.number().min(3, 'Success Stage').max(3, 'Success Stage'),
+      room_type: Yup.object()
+        .shape({ id: Yup.string().required('Room type is Required').min(1) })
+        .nullable()
+        .required('Room type is Required'),
+      sleeper_type: Yup.object()
+        .shape({ id: Yup.string().required('Sleeper Type is Required').min(1) })
+        .nullable()
+        .required('Sleeper Type is Required')
     }),
     onSubmit: (values, { setErrors, setSubmitting }) => {
-      // console.log('========== : : ===========');
+      console.log('========== : : ===========');
       console.log(values);
       console.log(formToRaw(values));
 
-      const url = isCreating ? CORE_EP.PROJECT_CREATE : CORE_EP.PROJECT_UPDATE.format(project.id);
+      const URL = isCreating ? DIRECTORY_EP.PROPERTY_CREATE : DIRECTORY_EP.PROPERTY_UPDATE.format(property.id);
 
       // eslint-disable-next-line
-      fetcher(url, isCreating ? 'post' : 'put', sxssion, null, formToRaw(values), (res) => {
-          const msg = intl.formatMessage({ id: isCreating ? 'projects-feedback-created' : 'projects-feedback-updated' });
+      fetcher(URL, isCreating ? 'post' : 'put', session, null, formToRaw(values), (res) => {
+          const msg = isCreating ? 'Property/Rental Created Successfully' : 'Property/Rental Updated Successfully';
           successProcessor(msg, dispatch, openSnackbar);
           setSubmitting(false);
           onCancel();
@@ -180,6 +642,7 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
           }
         },
         (err) => {
+          console.log(err.response.data);
           errorProcessor(err, setErrors, dispatch, openSnackbar);
           setSubmitting(false);
         }
@@ -187,7 +650,7 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
     }
   });
 
-  const { errors, touched, handleBlur, handleChange, handleSubmit, getFieldProps, setFieldValue, values } = formik;
+  const { errors, touched, handleBlur, handleChange, handleSubmit, getFieldProps, setFieldValue, values, isSubmitting } = formik;
 
   return (
     <Page title="Add Property">
@@ -201,11 +664,7 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
                     const stepProps = {};
                     const labelProps = {};
                     if (isStepFailed(index)) {
-                      labelProps.optional = (
-                        <Typography variant="caption" color="error">
-                          Alert message
-                        </Typography>
-                      );
+                      // labelProps.optional = <Typography variant="caption" color="error">Alert message</Typography>;
                       labelProps.error = true;
                     }
                     if (isStepOptional(index)) {
@@ -241,15 +700,117 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-type">Type</InputLabel>
+                        <Autocomplete
+                          // freeSolo
+                          disablePortal
+                          fullWidth
+                          id="property-type"
+                          value={values.type}
+                          onChange={(event, newValue) => setFieldValue('type', newValue)}
+                          options={TYPES}
+                          getOptionLabel={(label) => label.label}
+                          isOptionEqualToValue={(option, value) => option.id === value.id}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="type"
+                              error={Boolean(touched.type && errors.type)}
+                              helperText={touched.type && errors.type}
+                              placeholder="Type"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+
+                      <Grid item xs={12} sm={6}>
+                        <Grid container spacing={1}>
+                          <Grid item xs={12}>
+                            <InputLabel sx={{ mt: 0.5 }}>Photos:</InputLabel>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <UploadMultiFile
+                              type="STANDARD"
+                              showList={true}
+                              setFieldValue={setFieldValue}
+                              files={values.pictures}
+                              error={Boolean(touched.pictures && errors.pictures)}
+                              onUpload={() => console.log('====> Upload Picture')}
+                              fieldName={'pictures'}
+                            />
+                          </Grid>
+                          {touched.pictures && errors.pictures && (
+                            <Grid item xs={12}>
+                              <FormHelperText error id="standard-weight-helper-text-password-login">
+                                {errors.pictures}
+                              </FormHelperText>
+                            </Grid>
+                          )}
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Grid container spacing={1}>
+                          <Grid item xs={12}>
+                            <InputLabel sx={{ mt: 0.5 }}>Video:</InputLabel>
+                          </Grid>
+                          <Grid item xs={12}>
+                            <UploadMultiFile
+                              type="STANDARD"
+                              showList={true}
+                              setFieldValue={setFieldValue}
+                              files={values.video}
+                              error={Boolean(touched.video && errors.video)}
+                              onUpload={() => console.log('====> Upload Video')}
+                              fieldName={'video'}
+                              multiple={false}
+                              accepted="image/gif"
+                            />
+                          </Grid>
+                          {touched.video && errors.video && (
+                            <Grid item xs={12}>
+                              <FormHelperText error id="standard-weight-helper-text-password-login">
+                                {errors.video}
+                              </FormHelperText>
+                            </Grid>
+                          )}
+                        </Grid>
+                      </Grid>
+
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-space">Space</InputLabel>
+                        <Autocomplete
+                          disablePortal
+                          fullWidth
+                          id="property-space"
+                          name="space"
+                          value={values.space}
+                          onChange={(event, newValue) => setFieldValue('space', newValue)}
+                          options={STATUS}
+                          getOptionLabel={(label) => label.label}
+                          isOptionEqualToValue={(option, value) => option.id === value.id}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="space"
+                              error={Boolean(touched.space && errors.space)}
+                              helperText={touched.space && errors.space}
+                              placeholder="Space Booked"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
                         <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-email">Contact Email</InputLabel>
+                          <InputLabel htmlFor="property-hosted-by">Hosted By</InputLabel>
                           <TextField
                             fullWidth
-                            id="property-email"
-                            placeholder="Contact Email"
-                            {...getFieldProps('email')}
-                            error={Boolean(touched.email && errors.email)}
-                            helperText={touched.email && errors.email}
+                            id="property-hosted-by"
+                            placeholder="Rental Name"
+                            {...getFieldProps('hosted_by')}
+                            error={Boolean(touched.hosted_by && errors.hosted_by)}
+                            helperText={touched.hosted_by && errors.hosted_by}
                           />
                         </Stack>
                       </Grid>
@@ -268,90 +829,83 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-type">Type</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            disablePortal
-                            fullWidth
-                            id="property-type"
-                            options={TYPES}
-                            getOptionLabel={(label) => label.label}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} label="" placeholder="Type" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-space">Space</InputLabel>
-                          <Autocomplete
-                            disablePortal
-                            fullWidth
-                            id="property-space"
-                            options={STATUS}
-                            getOptionLabel={(label) => label.label}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} label="" placeholder="Space" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-hosted-by">Hosted By</InputLabel>
+                          <InputLabel htmlFor="property-email">Contact Email</InputLabel>
                           <TextField
                             fullWidth
-                            id="property-hosted-by"
-                            placeholder="Rental Name"
-                            {...getFieldProps('hosted_by')}
-                            error={Boolean(touched.hosted_by && errors.hosted_by)}
-                            helperText={touched.hosted_by && errors.hosted_by}
+                            id="property-email"
+                            placeholder="Contact Email"
+                            {...getFieldProps('email')}
+                            error={Boolean(touched.email && errors.email)}
+                            helperText={touched.email && errors.email}
                           />
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Stack spacing={1.25}>
                           <InputLabel htmlFor="property-no-of-guest">No of Guest</InputLabel>
-                          <TextField
-                            fullWidth
-                            type="number"
-                            id="property-no-of-guest"
-                            placeholder="No of Guest"
-                            {...getFieldProps('no_of_guest')}
-                            error={Boolean(touched.no_of_guest && errors.no_of_guest)}
-                            helperText={touched.no_of_guest && errors.no_of_guest}
-                          />
+                          <FormControl fullWidth error={Boolean(touched.no_of_guest && errors.no_of_guest)}>
+                            <Slider
+                              {...getFieldProps('no_of_guest')}
+                              aria-label="Small steps"
+                              defaultValue={0}
+                              // getAriaValueText={guestValue}
+                              step={1}
+                              min={0}
+                              max={49}
+                              marks={markGuest}
+                              // valueLabelDisplay="on"
+                              valueLabelDisplay="auto"
+                              color={touched.no_of_guest && errors.no_of_guest ? 'error' : 'primary'}
+                            />
+                            <FormHelperText>{touched.no_of_guest && errors.no_of_guest}</FormHelperText>
+                          </FormControl>
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Stack spacing={1.25}>
                           <InputLabel htmlFor="property-no-of-bedrooms">No of Bedrooms</InputLabel>
-                          <TextField
-                            fullWidth
-                            type="number"
-                            id="property-no-of-bedrooms"
-                            placeholder="No of Bedrooms"
-                            {...getFieldProps('no_of_bedrooms')}
-                            error={Boolean(touched.no_of_bedrooms && errors.no_of_bedrooms)}
-                            helperText={touched.no_of_bedrooms && errors.no_of_bedrooms}
-                          />
+                          <FormControl fullWidth error={Boolean(touched.no_of_bedrooms && errors.no_of_bedrooms)}>
+                            <Slider
+                              {...getFieldProps('no_of_bedrooms')}
+                              aria-label="Small steps"
+                              defaultValue={0}
+                              // getAriaValueText={bedroomValue}
+                              step={1}
+                              min={0}
+                              max={49}
+                              marks={markBedroom}
+                              valueLabelDisplay="auto"
+                              // valueLabelDisplay="on"
+                              color={touched.no_of_bedrooms && errors.no_of_bedrooms ? 'error' : 'primary'}
+                            />
+                            <FormHelperText>{touched.no_of_bedrooms && errors.no_of_bedrooms}</FormHelperText>
+                          </FormControl>
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
+                        <Stack spacing={1} sx={{ py: 4 }}>
                           <InputLabel htmlFor="property-no-of-bathrooms">No of Bathrooms</InputLabel>
-                          <TextField
-                            fullWidth
-                            type="number"
-                            id="property-no-of-bathrooms"
-                            placeholder="No of Bathrooms"
-                            {...getFieldProps('no_of_bathrooms')}
-                            error={Boolean(touched.no_of_bathrooms && errors.no_of_bathrooms)}
-                            helperText={touched.no_of_bathrooms && errors.no_of_bathrooms}
-                          />
+                          <FormControl fullWidth error={Boolean(touched.no_of_bathrooms && errors.no_of_bathrooms)}>
+                            <Slider
+                              {...getFieldProps('no_of_bathrooms')}
+                              aria-label="Small steps"
+                              defaultValue={0}
+                              // getAriaValueText={bedroomValue}
+                              value={values.no_of_bathrooms}
+                              step={1}
+                              min={0}
+                              max={49}
+                              marks={markBathrooms}
+                              valueLabelDisplay="auto"
+                              // valueLabelDisplay="on"
+                              color={touched.no_of_bathrooms && errors.no_of_bathrooms ? 'error' : 'primary'}
+                            />
+                            <FormHelperText>{touched.no_of_bathrooms && errors.no_of_bathrooms}</FormHelperText>
+                          </FormControl>
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
+                        <Stack spacing={1.25} sx={{ py: 3 }}>
                           <InputLabel htmlFor="property-price-night">Ave $ Per Night</InputLabel>
                           <TextField
                             fullWidth
@@ -359,39 +913,83 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
                             id="property-price-night"
                             placeholder="Ave $ Per Night"
                             {...getFieldProps('price_night')}
+                            InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
                             error={Boolean(touched.price_night && errors.price_night)}
                             helperText={touched.price_night && errors.price_night}
                           />
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-description">Description</InputLabel>
-                          <TextField
-                            fullWidth
-                            multiline
-                            id="property-description"
-                            placeholder="Description"
-                            {...getFieldProps('description')}
-                            error={Boolean(touched.description && errors.description)}
-                            helperText={touched.description && errors.description}
+                        <Card>
+                          <CardHeader
+                            avatar=<Avatar sx={{ bgcolor: red[500] }}>B</Avatar>
+                            action={
+                              <IconButton aria-label="settings" onClick={() => setBookingSiteDialog(true)}>
+                                <PlusOutlined />
+                              </IconButton>
+                            }
+                            title="Booking Sites"
+                            subheader="You can add as many booking sites as applies to you"
                           />
-                        </Stack>
+                          <CardContent sx={{ py: 0 }}>
+                            <List sx={{ p: 0 }}>
+                              {bookingSites.map((x, i) => (
+                                <ListItem divider={bookingSites.length > i + 1} key={`booking-site-${i}`}>
+                                  <ListItemText primary={x?.label} secondary={x?.site} />
+                                  <Stack direction="row" alignItems="center" spacing={0.75}>
+                                    <CloseOutlined
+                                      onClick={() => {
+                                        let bs = bookingSites.filter((b) => b.id !== x.id);
+                                        setFieldValue('booking_sites', bs);
+                                        setBookingSites(bs);
+                                      }}
+                                    />
+                                  </Stack>
+                                </ListItem>
+                              ))}
+                            </List>
+                            <FormHelperText sx={{ color: red[500] }}>{touched.booking_sites && errors.booking_sites}</FormHelperText>
+                          </CardContent>
+                        </Card>
                       </Grid>
+
                       <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-host-note">Host Notes</InputLabel>
-                          <TextField
-                            fullWidth
-                            multiline
-                            id="property-host-note"
-                            placeholder="Host Notes"
-                            {...getFieldProps('host_note')}
-                            error={Boolean(touched.host_note && errors.host_note)}
-                            helperText={touched.host_note && errors.host_note}
+                        <Card>
+                          <CardHeader
+                            avatar={
+                              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                S
+                              </Avatar>
+                            }
+                            action={
+                              <IconButton aria-label="settings" onClick={() => setSocialMediaDialog(true)}>
+                                <PlusOutlined />
+                              </IconButton>
+                            }
+                            title="Social Media"
+                            subheader="Add your Social Media Links"
                           />
-                        </Stack>
+                          <CardContent sx={{ py: 0 }}>
+                            <List sx={{ p: 0 }}>
+                              {socialMediaLinks.map((x, i) => (
+                                <ListItem divider={socialMediaLinks.length > i + 1} key={`social-media-link-${i}`}>
+                                  <ListItemText primary={x.label} secondary={x.site} />
+                                  <Stack direction="row" alignItems="center" spacing={0.75}>
+                                    <CloseOutlined
+                                      onClick={() => {
+                                        let sm = socialMediaLinks.filter((b) => b.id !== x.id);
+                                        setFieldValue('social_media', sm);
+                                        setSocialMediaLinks(sm);
+                                      }}
+                                    />
+                                  </Stack>
+                                </ListItem>
+                              ))}
+                            </List>
+                          </CardContent>
+                        </Card>
                       </Grid>
+
                       <Grid item xs={12} sm={6}>
                         <Stack spacing={1.25}>
                           <RadioGroup row name="row-radio-buttons-group">
@@ -436,444 +1034,676 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
                           </RadioGroup>
                         </Stack>
                       </Grid>
+
+                      <Grid item xs={12}>
+                        <CardHeader title="Address" />
+                        <Divider />
+                        <Box sx={{ pt: 2 }}>
+                          <Grid container spacing={3}>
+                            <Grid item xs={12} sm={5}>
+                              <InputLabel htmlFor="state-address">State</InputLabel>
+                              <Autocomplete
+                                disablePortal
+                                fullWidth
+                                id="property-state-address"
+                                options={states}
+                                name="address.state"
+                                value={values.address?.state || null}
+                                onChange={(event, newValue) => {
+                                  setCities(allCities.filter((x) => x.state_name === newValue));
+                                  setFieldValue('address.state', newValue);
+                                  setFieldValue('address.city', null);
+                                }}
+                                getOptionLabel={(label) => label}
+                                isOptionEqualToValue={(option, value) => option === value || option === ''}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    name="address.state"
+                                    error={Boolean(touched.address?.state && errors.address?.state)}
+                                    helperText={touched.address?.state && errors.address?.state}
+                                    placeholder="State"
+                                    variant="outlined"
+                                  />
+                                )}
+                              />
+                            </Grid>
+                            <Grid item xs={12} sm={5}>
+                              <InputLabel htmlFor="city-address">City</InputLabel>
+                              <Autocomplete
+                                disablePortal
+                                fullWidth
+                                id="property-city-address"
+                                options={cities}
+                                name="address.city"
+                                value={values.address?.city || null}
+                                onChange={(event, newValue) => setFieldValue('address.city', newValue)}
+                                getOptionLabel={(label) => label.name}
+                                isOptionEqualToValue={(option, value) => option.id === value.id}
+                                renderInput={(params) => (
+                                  <TextField
+                                    {...params}
+                                    name="address.city"
+                                    error={Boolean(touched.address?.city && errors.address?.city)}
+                                    helperText={touched.address?.city && errors.address?.city}
+                                    placeholder="City"
+                                    variant="outlined"
+                                  />
+                                )}
+                              />
+                            </Grid>
+
+                            <Grid item xs={12} sm={2}>
+                              <InputLabel htmlFor="zip_code-address">Zip Code</InputLabel>
+                              <TextField
+                                fullWidth
+                                id="zip_code-address"
+                                placeholder="Zip Code"
+                                // {...getFieldProps('address.zip_code')}
+                                name="address.zip_code"
+                                value={values.address?.zip_code || ''}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                                error={Boolean(touched.address?.zip_code && errors.address?.zip_code)}
+                                helperText={touched.address?.zip_code && errors.address?.zip_code}
+                              />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <Stack spacing={1.25}>
+                                <InputLabel htmlFor="street-address">Street Name</InputLabel>
+                                <TextField
+                                  fullWidth
+                                  id="street-address"
+                                  value={values.address?.street || ''}
+                                  name="address.street"
+                                  onBlur={handleBlur}
+                                  onChange={handleChange}
+                                  placeholder="Street Name"
+                                  error={Boolean(touched.address?.street && errors.address?.street)}
+                                  helperText={touched.address?.street && errors.address?.street}
+                                />
+                              </Stack>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <Stack spacing={1.25}>
+                                <InputLabel htmlFor="number-address">Number</InputLabel>
+                                <TextField
+                                  fullWidth
+                                  id="number-address"
+                                  value={values.address?.number || ''}
+                                  name="address.number"
+                                  onBlur={handleBlur}
+                                  onChange={handleChange}
+                                  placeholder="Number"
+                                  error={Boolean(touched.address?.number && errors.address?.number)}
+                                  helperText={touched.address?.number && errors.address?.number}
+                                />
+                              </Stack>
+                            </Grid>
+                          </Grid>
+                        </Box>
+                      </Grid>
+
                       <Grid item xs={12} sm={6}>
                         <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-facebook">Facebook Link</InputLabel>
+                          <InputLabel htmlFor="property-description">Description</InputLabel>
                           <TextField
                             fullWidth
-                            id="property-facebook"
-                            placeholder="Facebook Link"
-                            {...getFieldProps('facebook')}
-                            error={Boolean(touched.facebook && errors.facebook)}
-                            helperText={touched.facebook && errors.facebook}
+                            multiline
+                            id="property-description"
+                            placeholder="Description"
+                            {...getFieldProps('description')}
+                            error={Boolean(touched.description && errors.description)}
+                            helperText={touched.description && errors.description}
                           />
                         </Stack>
                       </Grid>
+
                       <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-instagram">Instagram Link</InputLabel>
-                          <TextField
-                            fullWidth
-                            id="property-instagram"
-                            placeholder="Instagram Link"
-                            {...getFieldProps('instagram')}
-                            error={Boolean(touched.instagram && errors.instagram)}
-                            helperText={touched.instagram && errors.instagram}
-                          />
-                        </Stack>
+                        <InputLabel htmlFor="property-room_type">Room Type</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={false}
+                          id="property-room_type"
+                          options={ROOM_TYPES}
+                          value={values.room_type}
+                          name="room_type"
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('room_type', newValue)}
+                          getOptionLabel={(label) => label.label || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id }
+                          renderTags={(value, getTagProps) =>
+                            value.map((option, index) => (
+                              <span key={index}>
+                                <Chip
+                                  {...getTagProps({ index })}
+                                  variant="combined"
+                                  label={option.label}
+                                  deleteIcon={<CloseOutlined style={{ fontSize: '0.75rem' }} />}
+                                  sx={{ color: 'text.primary' }}
+                                />
+                              </span>
+                            ))
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              error={Boolean(touched.room_type && errors.room_type)}
+                              helperText={touched.room_type && errors.room_type}
+                              placeholder="Select Room Type"
+                              variant="outlined"
+                            />
+                          )}
+                        />
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-facebook">Tiktok Link</InputLabel>
-                          <TextField
-                            fullWidth
-                            id="property-tiktok"
-                            placeholder="Tiktok Link"
-                            {...getFieldProps('tiktok')}
-                            error={Boolean(touched.tiktok && errors.tiktok)}
-                            helperText={touched.tiktok && errors.tiktok}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-twitter">Twitter Link</InputLabel>
-                          <TextField
-                            fullWidth
-                            id="property-twitter"
-                            placeholder="Twitter Link"
-                            {...getFieldProps('twitter')}
-                            error={Boolean(touched.twitter && errors.twitter)}
-                            helperText={touched.twitter && errors.twitter}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-google-business">Google Business Link</InputLabel>
-                          <TextField
-                            fullWidth
-                            id="property-google-business"
-                            placeholder="Google Business Link"
-                            {...getFieldProps('google_business')}
-                            error={Boolean(touched.google_business && errors.google_business)}
-                            helperText={touched.google_business && errors.google_business}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-yelp">Yelp Link</InputLabel>
-                          <TextField
-                            fullWidth
-                            id="property-yelp"
-                            placeholder="Yelp Link"
-                            {...getFieldProps('yelp')}
-                            error={Boolean(touched.yelp && errors.yelp)}
-                            helperText={touched.yelp && errors.yelp}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-booking-site">Booking Sites</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-booking-site"
-                            options={[]}
-                            value={values.booking_site}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('booking_site', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="booking_site" placeholder="Select Booking Sites" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-booking-site-link">Booking Site Link</InputLabel>
-                          <TextField
-                            fullWidth
-                            id="property-booking-site-link"
-                            placeholder="Booking Site Link"
-                            {...getFieldProps('booking_site_link')}
-                            error={Boolean(touched.booking_site_link && errors.booking_site_link)}
-                            helperText={touched.booking_site_link && errors.booking_site_link}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-services">Services</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-services"
-                            options={[]}
-                            value={values.services}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('services', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="services" placeholder="Select Services that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-spaces">Spaces</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-spaces"
-                            options={[]}
-                            value={values.spaces}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('spaces', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="services" placeholder="Select Spaces that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-essentials">Essentials</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-essentials"
-                            options={[]}
-                            value={values.essentials}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('essentials', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="services" placeholder="Select Essentials that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-pets">Pets</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-pets"
-                            options={[]}
-                            value={values.pets}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('pets', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="pets" placeholder="Select Pets that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-bathrooms">Bathrooms</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-bathrooms"
-                            options={[]}
-                            value={values.bathrooms}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('bathrooms', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="bathrooms" placeholder="Select Bathrooms that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-kitchens">Kitchens</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-kitchens"
-                            options={[]}
-                            value={values.kitchens}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('kitchens', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="kitchens" placeholder="Select Kitchens that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-pool-spa">Pool & Spa</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-pool-spa"
-                            options={[]}
-                            value={values.pool_spa}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('pool_spa', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="pool_spa" placeholder="Select all that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-outsides">Outsides</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-outsides"
-                            options={[]}
-                            value={values.outsides}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('outsides', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="outsides" placeholder="Select all that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-entertainments">Entertainments</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-entertainments"
-                            options={[]}
-                            value={values.entertainments}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('entertainments', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="entertainments" placeholder="Select all that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-laundries">Laundries</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-laundries"
-                            options={[]}
-                            value={values.laundries}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('laundries', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="laundries" placeholder="Select all that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-families">Families</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-families"
-                            options={[]}
-                            value={values.families}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('families', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="families" placeholder="Select all that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-parking">Parking</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-parking"
-                            options={[]}
-                            value={values.parking}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('parking', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="parking" placeholder="Select all that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-safeties">Safety</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-safeties"
-                            options={[]}
-                            value={values.safeties}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('safeties', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="safeties" placeholder="Select all that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-features">Features</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-features"
-                            options={[]}
-                            value={values.features}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('features', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="features" placeholder="Select all that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-activities">Activities</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-activities"
-                            options={[]}
-                            value={values.activities}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('activities', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="activities" placeholder="Select all that applies" />}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-accessibility">Accessibility</InputLabel>
-                          <Autocomplete
-                            freeSolo
-                            fullWidth
-                            multiple={true}
-                            disablePortal
-                            id="property-accessibility"
-                            options={[]}
-                            value={values.accessibility}
-                            onBlur={handleBlur}
-                            onChange={(event, newValue) => setFieldValue('accessibility', newValue)}
-                            getOptionLabel={(label) => label.name}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => <TextField {...params} name="accessibility" placeholder="Select all that applies" />}
-                          />
-                        </Stack>
+                        <InputLabel htmlFor="property-sleeper_type">Sleeper Type</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={false}
+                          id="property-sleeper_type"
+                          options={SLEEPER_TYPES}
+                          value={values.sleeper_type}
+                          name="sleeper_type"
+                          getOptionLabel={(label) => label.label || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('sleeper_type', newValue)}
+                          renderTags={(value, getTagProps) =>
+                            value.map((option, index) => (
+                              <span key={index}>
+                                <Chip
+                                  {...getTagProps({ index })}
+                                  variant="combined"
+                                  label={option.label}
+                                  deleteIcon={<CloseOutlined style={{ fontSize: '0.75rem' }} />}
+                                  sx={{ color: 'text.primary' }}
+                                />
+                              </span>
+                            ))
+                          }
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="sleeper_type"
+                              error={Boolean(touched.sleeper_type && errors.sleeper_type)}
+                              helperText={touched.sleeper_type && errors.sleeper_type}
+                              placeholder="Select Sleeper Type"
+                              variant="outlined"
+                            />
+                          )}
+                        />
                       </Grid>
                     </Grid>
                   )}
 
                   {activeStep === 1 && (
                     <Grid container spacing={3}>
-                      <Grid item xs={12} sm={12}>
-                        Second
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-services">Services</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-services"
+                          name="services"
+                          options={services}
+                          value={values.services}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('services', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              error={Boolean(touched.services && errors.services)}
+                              helperText={touched.services && errors.services}
+                              placeholder="Select Services that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-spaces">Spaces</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          name="spaces"
+                          id="property-spaces"
+                          options={spaces}
+                          value={values.spaces}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('spaces', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              error={Boolean(touched.spaces && errors.spaces)}
+                              helperText={touched.spaces && errors.spaces}
+                              placeholder="Select Spaces that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-essentials">Essentials</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          name="essentials"
+                          id="property-essentials"
+                          options={essentials}
+                          value={values.essentials}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('essentials', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="essentials"
+                              error={Boolean(touched.essentials && errors.essentials)}
+                              helperText={touched.essentials && errors.essentials}
+                              placeholder="Select Essentials that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-pets">Pets</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-pets"
+                          name="pets"
+                          options={pets}
+                          value={values.pets}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('pets', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="pets"
+                              error={Boolean(touched.pets && errors.pets)}
+                              helperText={touched.pets && errors.pets}
+                              placeholder="Select Pets that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-bathrooms">Bathrooms</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          name="bathrooms"
+                          id="property-bathrooms"
+                          options={bathrooms}
+                          value={values.bathrooms}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('bathrooms', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="bathrooms"
+                              error={Boolean(touched.bathrooms && errors.bathrooms)}
+                              helperText={touched.bathrooms && errors.bathrooms}
+                              placeholder="Select Bathrooms that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-kitchens">Kitchens</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-kitchens"
+                          name="kitchens"
+                          options={kitchens}
+                          value={values.kitchens}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('kitchens', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="kitchens"
+                              error={Boolean(touched.kitchens && errors.kitchens)}
+                              helperText={touched.kitchens && errors.kitchens}
+                              placeholder="Select Kitchens that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-pool-spa">Pool & Spa</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-pool-spa"
+                          name="pool_spas"
+                          options={poolSpa}
+                          value={values.pool_spas}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('pool_spas', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="pool_spas"
+                              error={Boolean(touched.pool_spas && errors.pool_spas)}
+                              helperText={touched.pool_spas && errors.pool_spas}
+                              placeholder="Select all that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-outsides">Outsides</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-outsides"
+                          name="outsides"
+                          options={outsides}
+                          value={values.outsides}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('outsides', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="outsides"
+                              error={Boolean(touched.outsides && errors.outsides)}
+                              helperText={touched.outsides && errors.outsides}
+                              placeholder="Select all that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-entertainments">Entertainments</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-entertainments"
+                          name="entertainments"
+                          options={entertainments}
+                          value={values.entertainments}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('entertainments', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="entertainments"
+                              error={Boolean(touched.entertainments && errors.entertainments)}
+                              helperText={touched.entertainments && errors.entertainments}
+                              placeholder="Select all that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-laundries">Laundries</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-laundries"
+                          name="laundries"
+                          options={laundries}
+                          value={values.laundries}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('laundries', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="laundries"
+                              error={Boolean(touched.laundries && errors.laundries)}
+                              helperText={touched.laundries && errors.laundries}
+                              placeholder="Select all that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-families">Families</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-families"
+                          name="families"
+                          options={families}
+                          value={values.families}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('families', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="families"
+                              error={Boolean(touched.families && errors.families)}
+                              helperText={touched.families && errors.families}
+                              placeholder="Select all that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-parking">Parking</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-parking"
+                          name="parking"
+                          options={parking}
+                          value={values.parking}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('parking', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="parking"
+                              error={Boolean(touched.parking && errors.parking)}
+                              helperText={touched.parking && errors.parking}
+                              placeholder="Select all that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-accessibility">Accessibility</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-accessibility"
+                          name="accessibility"
+                          options={accessibility}
+                          value={values.accessibility}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('accessibility', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="accessibility"
+                              error={Boolean(touched.accessibility && errors.accessibility)}
+                              helperText={touched.accessibility && errors.accessibility}
+                              placeholder="Select all that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
                       </Grid>
                     </Grid>
                   )}
+
                   {activeStep === 2 && (
                     <Grid container spacing={3}>
-                      <Grid item xs={12} sm={12}>
-                        Third
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-safeties">Safety</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-safeties"
+                          name="safeties"
+                          options={safeties}
+                          value={values.safeties}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('safeties', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="safeties"
+                              error={Boolean(touched.safeties && errors.safeties)}
+                              helperText={touched.safeties && errors.safeties}
+                              placeholder="Select all that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-features">Features</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-features"
+                          name="features"
+                          options={features}
+                          value={values.features}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('features', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="features"
+                              error={Boolean(touched.features && errors.features)}
+                              helperText={touched.features && errors.features}
+                              placeholder="Select all that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <InputLabel htmlFor="property-activities">Activities</InputLabel>
+                        <Autocomplete
+                          fullWidth
+                          multiple={true}
+                          disablePortal
+                          id="property-activities"
+                          name="activities"
+                          options={activities}
+                          value={values.activities}
+                          onBlur={handleBlur}
+                          onChange={(event, newValue) => setFieldValue('activities', newValue)}
+                          getOptionLabel={(label) => label.name || ''}
+                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="activities"
+                              error={Boolean(touched.activities && errors.activities)}
+                              helperText={touched.activities && errors.activities}
+                              placeholder="Select all that applies"
+                              variant="outlined"
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Stack spacing={1.25}>
+                          <InputLabel htmlFor="property-cancellation-policy">Cancellation Policy</InputLabel>
+                          <TextField
+                            fullWidth
+                            multiline
+                            id="property-cancellation-policy"
+                            placeholder="Cancellation Policy"
+                            {...getFieldProps('cancellation_policy')}
+                            error={Boolean(touched.cancellation_policy && errors.cancellation_policy)}
+                            helperText={touched.cancellation_policy && errors.cancellation_policy}
+                          />
+                        </Stack>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Stack spacing={1.25}>
+                          <InputLabel htmlFor="property-host-note">Host Notes</InputLabel>
+                          <TextField
+                            fullWidth
+                            multiline
+                            id="property-host-note"
+                            placeholder="Host Notes"
+                            {...getFieldProps('host_note')}
+                            error={Boolean(touched.host_note && errors.host_note)}
+                            helperText={touched.host_note && errors.host_note}
+                          />
+                        </Stack>
                       </Grid>
                     </Grid>
                   )}
+
                   <Grid item xs={12} sm={12}>
                     {activeStep === steps.length ? (
                       <>
-                        <Typography sx={{ mt: 2, mb: 1 }}>All steps completed - you&apos;re finished</Typography>
+                        <Typography sx={{ mt: 2, mb: 1 }}>
+                          All steps completed - you&apos;re finished... Give me the content to write here!!!
+                        </Typography>
                         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                           <Box sx={{ flex: '1 1 auto' }} />
-                          <Button onClick={handleReset}>Reset</Button>
+                          {/* <Button onClick={handleReset}>Reset</Button> */}
+                          <Button color="warning" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
+                            Back
+                          </Button>
+                          <Button disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
+                            Create Rental\Property
+                          </Button>
                         </Box>
                       </>
                     ) : (
@@ -889,13 +1719,222 @@ function PropertyAdd({ property = { is_pet_allowed: true } }) {
                               Skip
                             </Button>
                           )}
-                          <Button onClick={handleNext}>{activeStep === steps.length - 1 ? 'Finish' : 'Next'}</Button>
+                          <Button
+                            // type={activeStep === steps.length - 1 ? 'submit' : 'button'}
+                            onClick={(event) => handleNext(touched, event, errors, setFieldValue)}
+                          >
+                            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                          </Button>
                         </Box>
                       </>
                     )}
                   </Grid>
                 </Grid>
               </DialogContent>
+
+              {/* Booking Site Add Dialog */}
+              <Dialog
+                fullWidth
+                maxWidth="sm"
+                open={bookingSiteDialog}
+                TransitionComponent={SlideUp}
+                keepMounted
+                onClose={handleBookingClose}
+                aria-describedby="alert-dialog-slide-description"
+              >
+                <DialogTitle>Select Applicable Booking Site</DialogTitle>
+                <DialogContent>
+                  <Grid container spacing={1} sx={{ px: 2, pb: 0, mb: 0 }}>
+                    <Grid item xs={12}>
+                      <InputLabel htmlFor="property-booking_site-name">Booking Site</InputLabel>
+                      <Autocomplete
+                        fullWidth
+                        id="property-booking_site-name"
+                        options={BOOKING_SITES.filter((x) => {
+                          let not_added = true;
+                          for (let b of bookingSites) {
+                            if (b.id === x.id) {
+                              not_added = false;
+                              break;
+                            }
+                          }
+                          return not_added;
+                        })}
+                        value={bookingSite}
+                        getOptionLabel={(label) => {
+                          return label.label;
+                        }}
+                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                        onChange={(event, newValue) => setBookingSite(newValue)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            name="booking_site"
+                            error={Boolean(bookingSiteError?.id)}
+                            helperText={bookingSiteError?.id}
+                            placeholder="Select Booking Site"
+                            variant="outlined"
+                          />
+                        )}
+                        renderTags={(value, getTagProps) =>
+                          value.map((option, index) => (
+                            <span key={index}>
+                              <Chip
+                                {...getTagProps({ index })}
+                                variant="combined"
+                                label={option.label}
+                                deleteIcon={<CloseOutlined style={{ fontSize: '0.75rem' }} />}
+                                sx={{ color: 'text.primary' }}
+                              />
+                            </span>
+                          ))
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Stack spacing={1.25}>
+                        <InputLabel htmlFor="property-booking-site-link"></InputLabel>
+                        <TextField
+                          fullWidth
+                          id="property-booking-site-link"
+                          placeholder="Booking Site Link"
+                          value={bookingSite?.site || ''}
+                          onChange={(event) => {
+                            console.log(event.target.value);
+                            setBookingSite({ ...bookingSite, site: event.target.value });
+                          }}
+                          // {...getFieldProps('booking_site.site')}
+                          InputProps={{ startAdornment: <InputAdornment position="start">https://</InputAdornment> }}
+                          error={Boolean(bookingSiteError?.link)}
+                          helperText={bookingSiteError?.link}
+                        />
+                      </Stack>
+                    </Grid>
+                  </Grid>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleBookingClose}>Close</Button>
+                  <Button
+                    onClick={() => {
+                      if (!checkSiteError(bookingSite)) {
+                        console.log('Goo to go...');
+                        console.log(bookingSite);
+                        console.log(bookingSites);
+                        setFieldValue('booking_sites', [...bookingSites, bookingSite]);
+                        setBookingSites([...bookingSites, bookingSite]);
+                        setBookingSite(null);
+                        successProcessor('Booking Site Successfully Added', dispatch, openSnackbar);
+                      } else {
+                        console.log('Nope!!!');
+                      }
+                    }}
+                  >
+                    Add
+                  </Button>
+                </DialogActions>
+              </Dialog>
+
+              {/* Social Media Site Add Dialog */}
+              <Dialog
+                fullWidth
+                maxWidth="sm"
+                open={socialMediaDialog}
+                TransitionComponent={SlideUp}
+                keepMounted
+                onClose={handleSocialMediaClose}
+                aria-describedby="alert-dialog-slide-description"
+              >
+                <DialogTitle>Select Social Media</DialogTitle>
+                <DialogContent>
+                  <Grid container spacing={1} sx={{ px: 2, pb: 0, mb: 0 }}>
+                    <Grid item xs={12}>
+                      <InputLabel htmlFor="property-social_link-name">Social Media</InputLabel>
+                      <Autocomplete
+                        fullWidth
+                        multiple={false}
+                        // freeSolo
+                        id="property-social_link-name"
+                        options={SOCIAL_MEDIAS.filter((x) => {
+                          let not_added = true;
+                          for (let b of socialMediaLinks) {
+                            if (b.id === x.id) {
+                              not_added = false;
+                              break;
+                            }
+                          }
+                          return not_added;
+                        })}
+                        value={socialMediaLink}
+                        getOptionLabel={(label) => label.label}
+                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                        onBlur={handleBlur}
+                        onChange={(event, newValue) => setSocialMediaLink(newValue)}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            name="social_media_label"
+                            error={Boolean(socialMediaLinkError?.id)}
+                            helperText={socialMediaLinkError?.id}
+                            placeholder="Select Room Type"
+                            variant="outlined"
+                          />
+                        )}
+                        renderTags={(value, getTagProps) =>
+                          value.map((option, index) => (
+                            <span key={index}>
+                              <Chip
+                                {...getTagProps({ index })}
+                                variant="combined"
+                                label={option.label}
+                                deleteIcon={<CloseOutlined style={{ fontSize: '0.75rem' }} />}
+                                sx={{ color: 'text.primary' }}
+                              />
+                            </span>
+                          ))
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Stack spacing={1.25}>
+                        <InputLabel htmlFor="property-social-media-link"></InputLabel>
+                        <TextField
+                          fullWidth
+                          id="property-social-media-link"
+                          placeholder="Social Media Link"
+                          value={socialMediaLink?.site || ''}
+                          onChange={(event) => {
+                            setSocialMediaLink({ ...socialMediaLink, site: event.target.value });
+                          }}
+                          InputProps={{ startAdornment: <InputAdornment position="start">https://</InputAdornment> }}
+                          error={Boolean(socialMediaLinkError?.link)}
+                          helperText={socialMediaLinkError?.link}
+                        />
+                      </Stack>
+                    </Grid>
+                  </Grid>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleSocialMediaClose}>Close</Button>
+                  <Button
+                    onClick={() => {
+                      if (!checkMediaLinkError(socialMediaLink)) {
+                        // console.log('Goo to go...');
+                        // console.log(socialMediaLink);
+                        // console.log(socialMediaLinks);
+                        setFieldValue('social_media', socialMediaLinks);
+                        setSocialMediaLinks([...socialMediaLinks, socialMediaLink]);
+                        setSocialMediaLink(null);
+                        setSocialMediaLinkError(null);
+                        successProcessor('Booking Site Successfully Added', dispatch, openSnackbar);
+                      } else {
+                        console.log('Nope!!!');
+                      }
+                    }}
+                  >
+                    Add
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Form>
           </LocalizationProvider>
         </FormikProvider>
