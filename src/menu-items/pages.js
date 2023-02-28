@@ -50,6 +50,13 @@ const pages = {
           type: 'item',
           url: CORE_URL.PROPERTY_CREATE,
           target: false
+        },
+        {
+          id: 'rental-list-mine',
+          title: <FormattedMessage id="rental-list-mine" />,
+          type: 'item',
+          url: CORE_URL.PROPERTY_LIST_MINE,
+          target: false
         }
       ]
     }

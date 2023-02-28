@@ -33,6 +33,7 @@ export const CORE_URL = {
 
   PROPERTY_CREATE: '/rental/property/add',
   PROPERTY_LIST: '/rental/property/list/',
+  PROPERTY_LIST_MINE: '/rental/property/list-mine/',
 
   PROFILE_CREATE: '/accounts/user/new',
   PROFILE_UPDATE: '/accounts/user/{id}/',

@@ -111,7 +111,7 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent }) {
             size="small"
           />
           <Stack direction="row" alignItems="center" spacing={1}>
-            <SortingSelect sortBy={sortBy.id} setSortBy={setSortBy} allColumns={allColumns} />
+            {/* <SortingSelect sortBy={sortBy.id} setSortBy={setSortBy} allColumns={allColumns} /> */}
             <Button variant="contained" startIcon={<PlusOutlined />} onClick={handleAddProduct}>
               Add Property
             </Button>
@@ -188,6 +188,7 @@ const PropertyList = ({ properties = [] }) => {
       console.log(data);
       // eslint-disable-next-line
       fetcher(DIRECTORY_EP.PROPERTY_LIST, 'get', session, null, null, res => {
+          console.log('-------', res.data);
           setData(res.data);
         },
         (err) => {

@@ -5,7 +5,8 @@
   "properties": "Properties",
   "property-list": "Property Directory",
   "property-add": "Add Property",
-  "rental-add": "Add Rental",
+  "rental-add": "Add PDL",
+  "rental-list-mine": "My PDLs",
 
   "accordion": "Accordion",
   "account-profile": "Account Profile",

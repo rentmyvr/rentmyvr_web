@@ -51,24 +51,67 @@ import { AppleFilled, ShoppingFilled, TagFilled, UpSquareFilled } from '@ant-des
 
 let items = [
   {
-    name: 'Random Name #1',
-    description: 'Probably the most random thing you have ever seen!',
-    img: '/assets/images/1300x800/design-51.png'
+    name: 'Book Direct with Hosts or Compare Rates',
+    description: 'Book Direct with Hosts or Compare Rates',
+    img: '/assets/images/975x600/design-68.png',
+    btnText: 'Search Here',
+    textColor: '#fff'
   },
   {
-    name: 'Random Name #2',
-    description: 'Hello World 2!',
-    img: '/assets/images/1300x800/design-54.png'
+    name: 'All Listing Links in One Place',
+    description: 'Compare rates or compare ratings and reviews all in one place',
+    img: '/assets/images/975x600/design-69.png',
+    btnText: 'Start Your Search',
+    textColor: '#fff'
   },
   {
-    name: 'Random Name #3',
-    description: 'Hello World 3!',
-    img: '/assets/images/1300x800/design-58.png'
+    name: 'Find a Company Who Manages Vacation Rentals',
+    description: 'Looking to hire a management company? Have questions and need a professional before you book your stay?',
+    img: '/assets/images/975x600/design-70.png',
+    btnText: 'Find a Company',
+    textColor: '#fff'
   },
   {
-    name: 'Random Name #4',
-    description: 'Hello World 4!',
-    img: '/assets/images/1300x800/design-57.png'
+    name: 'Rent My VR is Growing',
+    description: 'Are you ready to list a property or your vacation rental management company with us?',
+    img: '/assets/images/975x600/design-71.png',
+    btnText: 'Get Started',
+    textColor: '#fff'
+  },
+  {
+    name: 'Search All Sites With One Search',
+    description: 'Book using your preferred platform once you find your dream vacation property',
+    img: '/assets/images/975x600/design-72.png',
+    btnText: 'Search Now',
+    textColor: '#000'
+  },
+  {
+    name: 'Dreaming of Where To Go Next?',
+    description: 'Search by category or amenity and discover themed or unique properties you never knew existed',
+    img: '/assets/images/975x600/design-73.png',
+    btnText: 'Find a Property',
+    textColor: '#eee'
+  },
+  {
+    name: 'Rates that Leave You Feeling More Relaxed',
+    description: 'Find the site offering the lowest rate on a property or check for direct booking options to save',
+    img: '/assets/images/975x600/design-74.png',
+    btnText: 'Search Here',
+    textColor: '#eee'
+  },
+  {
+    name: 'Take the Hassle Out of the Hunt',
+    description: 'Bringing all the online booking sites together to make your search a little better',
+    img: '/assets/images/975x600/design-75.png',
+    btnText: 'Search Rentals',
+    textColor: '#fff'
+  },
+  {
+    name: 'Book Your Stay the Better Way',
+    description: 'Finally, a site where you can view a property’s website, online profiles, social media, and reviews, all in one place',
+    img: '/assets/images/975x600/design-76.png',
+    btnText: 'Search Now',
+    textColor: '#fff'
   }
 ];
 
@@ -79,13 +122,23 @@ const CarouselItem = ({ item }) => {
       spacing={12}
       justifyContent="center"
       alignItems="center"
-      sx={{ height: '600px', backgroundImage: `url(${item.img})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+      sx={{
+        // marginTop: '30px',
+        // height: '600px',
+        // backgroundImage: `url(${item.img})`,
+        // backgroundSize: 'cover',
+        // backgroundPosition: 'center',
+        background: `url(${item.img}) no-repeat center center fixed`,
+        backgroundSize: 'cover',
+        height: '600px',
+        overflow: 'hidden'
+      }}
       mt={0}
     >
       <Grid item xs={12} sm={10}>
-        <h2>{item.name}</h2>
-        <p>{item.description}</p>
-        <Button>Check it out!</Button>
+        <h2 style={{ color: item.textColor }}>{item.name}</h2>
+        <p style={{ color: item.textColor, fontWeight: 'normal' }}>{item.description}</p>
+        <Button>{item.btnText}</Button>
       </Grid>
     </Grid>
   );

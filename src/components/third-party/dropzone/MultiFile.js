@@ -12,7 +12,8 @@ import RejectionFiles from './RejectionFiles';
 import PlaceholderContent from './PlaceholderContent';
 import FilesPreview from './FilesPreview';
 
-const ACCEPTED = 'image/gif, image/png, image/jpeg';
+// const ACCEPTED = 'image/gif, image/png, image/jpeg';
+const ACCEPTED = 'image/*';
 
 const DropzoneWrapper = styled('div')(({ theme }) => ({
   outline: 'none',
@@ -74,7 +75,7 @@ const MultiFileUpload = ({
 
   const showPreview = (file) => {
     console.log(file);
-    // console.log(' ...showPreview()');
+    console.log(' ...showPreview()');
   };
 
   return (

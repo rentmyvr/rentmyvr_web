@@ -106,7 +106,7 @@ const emptyProperty = {
   },
   email: '',
   phone: '',
-  logo: '',
+  logo: null,
   accessibility: [],
   activities: [],
   bathrooms: [],
@@ -128,29 +128,30 @@ const emptyProperty = {
   cancellation_policy: '',
   stage: 0
 };
+
 const formToRaw = (val) => {
-  val.type = val.type?.id;
-  val.space = val.space?.id;
-  val.sleeper_type = val.sleeper_type?.id;
-  val.room_type = val.room_type?.id;
-  val.accessibility = val.accessibility.map((x) => x.id);
-  val.activities = val.activities.map((x) => x.id);
-  val.bathrooms = val.bathrooms.map((x) => x.id);
-  val.booking_sites = val.booking_sites.map((x) => x.id);
-  val.social_media = val.social_media.map((x) => x.id);
-  val.entertainments = val.entertainments.map((x) => x.id);
-  val.essentials = val.essentials.map((x) => x.id);
-  val.families = val.families.map((x) => x.id);
-  val.features = val.features.map((x) => x.id);
-  val.kitchens = val.kitchens.map((x) => x.id);
-  val.laundries = val.laundries.map((x) => x.id);
-  val.outsides = val.outsides.map((x) => x.id);
-  val.parking = val.parking.map((x) => x.id);
-  val.pool_spas = val.pool_spas.map((x) => x.id);
-  val.safeties = val.safeties.map((x) => x.id);
-  val.spaces = val.spaces.map((x) => x.id);
-  val.services = val.services.map((x) => x.id);
-  return val;
+  let v = { ...val };
+  v.address = { ...val.address, city: val.address.city.id, city_id: val.address.city.id };
+  v.type = val.type?.id;
+  v.space = val.space?.id;
+  v.sleeper_type = val.sleeper_type?.id;
+  v.room_type = val.room_type?.id;
+  v.accessibility = val.accessibility.map((x) => x.id);
+  v.activities = val.activities.map((x) => x.id);
+  v.bathrooms = val.bathrooms.map((x) => x.id);
+  v.entertainments = val.entertainments.map((x) => x.id);
+  v.essentials = val.essentials.map((x) => x.id);
+  v.families = val.families.map((x) => x.id);
+  v.features = val.features.map((x) => x.id);
+  v.kitchens = val.kitchens.map((x) => x.id);
+  v.laundries = val.laundries.map((x) => x.id);
+  v.outsides = val.outsides.map((x) => x.id);
+  v.parking = val.parking.map((x) => x.id);
+  v.pool_spas = val.pool_spas.map((x) => x.id);
+  v.safeties = val.safeties.map((x) => x.id);
+  v.spaces = val.spaces.map((x) => x.id);
+  v.services = val.services.map((x) => x.id);
+  return v;
 };
 
 function PropertyAdd({ property = emptyProperty }) {
@@ -192,41 +193,41 @@ function PropertyAdd({ property = emptyProperty }) {
   const isCreating = !property.id;
 
   const BOOKING_SITES = [
-    { id: 'air-bnb', label: 'Air BNB' },
-    { id: 'vrbo', label: 'VRBO' },
-    { id: 'google-vacation-rental', label: 'Google Vacation Rental' },
-    { id: 'flipkey', label: 'Flipkey' },
-    { id: 'windmu', label: 'Windmu' },
-    { id: 'booking', label: 'Booking.com' },
-    { id: 'expedia', label: 'Expedia' },
-    { id: 'housetrip', label: 'Housetrip' },
-    { id: 'rent-by-owner', label: 'Rent By Owner' },
-    { id: 'holidaylettings', label: 'HolidayLettings' },
-    { id: 'traveloka', label: 'Traveloka' },
-    { id: 'trip', label: 'Trip.com' },
-    { id: 'agoda', label: 'Agoda' },
-    { id: 'glamping', label: 'Glamping.com' },
-    { id: 'despegar-decolar', label: 'Despegar/Decolar' },
-    { id: 'edreams', label: 'eDreams' },
-    { id: 'pegipegi', label: 'PegiPegi' },
-    { id: 'rakuten', label: 'Rakuten' },
-    { id: 'riparide', label: 'Riparide' },
-    { id: 'anyplace', label: 'Anyplace' },
-    { id: 'furniturefinders', label: 'furnitureFinders' },
-    { id: '9flats', label: '9flats' },
-    { id: 'coliving', label: 'Coliving.com' },
-    { id: 'instant-world-booking', label: 'Instant World Booking' },
-    { id: 'only-apartments', label: 'Only-Apartments' }
+    { name: 'air-bnb', label: 'Air BNB' },
+    { name: 'vrbo', label: 'VRBO' },
+    { name: 'google-vacation-rental', label: 'Google Vacation Rental' },
+    { name: 'flipkey', label: 'Flipkey' },
+    { name: 'windmu', label: 'Windmu' },
+    { name: 'booking', label: 'Booking.com' },
+    { name: 'expedia', label: 'Expedia' },
+    { name: 'housetrip', label: 'Housetrip' },
+    { name: 'rent-by-owner', label: 'Rent By Owner' },
+    { name: 'holidaylettings', label: 'HolidayLettings' },
+    { name: 'traveloka', label: 'Traveloka' },
+    { name: 'trip', label: 'Trip.com' },
+    { name: 'agoda', label: 'Agoda' },
+    { name: 'glamping', label: 'Glamping.com' },
+    { name: 'despegar-decolar', label: 'Despegar/Decolar' },
+    { name: 'edreams', label: 'eDreams' },
+    { name: 'pegipegi', label: 'PegiPegi' },
+    { name: 'rakuten', label: 'Rakuten' },
+    { name: 'riparide', label: 'Riparide' },
+    { name: 'anyplace', label: 'Anyplace' },
+    { name: 'furniturefinders', label: 'furnitureFinders' },
+    { name: '9flats', label: '9flats' },
+    { name: 'coliving', label: 'Coliving.com' },
+    { name: 'instant-world-booking', label: 'Instant World Booking' },
+    { name: 'only-apartments', label: 'Only-Apartments' }
   ];
 
   const SOCIAL_MEDIAS = [
-    { id: 'facebook', label: 'Facebook' },
-    { id: 'instagram', label: 'Instagram' },
-    { id: 'tiktok', label: 'TikTok' },
-    { id: 'youtube', label: 'YouTube' },
-    { id: 'twitter', label: 'Twitter' },
-    { id: 'google-business', label: 'GoogleBusiness' },
-    { id: 'yelp', label: 'Yelp' }
+    { name: 'facebook', label: 'Facebook' },
+    { name: 'instagram', label: 'Instagram' },
+    { name: 'tiktok', label: 'TikTok' },
+    { name: 'youtube', label: 'YouTube' },
+    { name: 'twitter', label: 'Twitter' },
+    { name: 'google-business', label: 'GoogleBusiness' },
+    { name: 'yelp', label: 'Yelp' }
   ];
 
   const TYPES = [
@@ -419,10 +420,6 @@ function PropertyAdd({ property = emptyProperty }) {
     });
   };
 
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  // };
-
   const handleBookingClose = () => {
     setBookingSite(null);
     setBookingSiteError(null);
@@ -466,17 +463,21 @@ function PropertyAdd({ property = emptyProperty }) {
   };
 
   const checkSiteError = (bs) => {
+    // let id = bs?.id;
     let site = bs?.site;
-    let id = bs?.id;
+    let name = bs?.name;
     let error = '';
     let status = false;
     if (site === '' || site === undefined) {
       status = true;
       error = 'Site Link is Required!!!';
     } else if (isUrl(site)) {
-      setBookingSite({ ...bs, site });
+      site = site.includes('http') ? site : `http://${site}`;
+      console.log(11);
+      // setBookingSite({ ...bs, site });
     } else if (isUrl(`https://${site}`)) {
-      setBookingSite({ ...bs, site: `https://${site}` });
+      console.log(22);
+      // setBookingSite({ ...bs, site: `https://${site}` });
     } else {
       status = true;
       error = 'This must be a valid URL';
@@ -486,27 +487,28 @@ function PropertyAdd({ property = emptyProperty }) {
       setBookingSiteError({ ...bookingSiteError, link: error });
     }
 
-    if (id === '' || id === undefined) {
+    if (name === '' || name === undefined) {
       status = true;
-      setBookingSiteError({ link: error, id: 'Booking Site is Required!!!' });
+      setBookingSiteError({ link: error, name: 'Booking Site is Required!!!' });
     } else {
-      setBookingSiteError({ link: error, id: '' });
+      setBookingSiteError({ link: error, name: '' });
     }
     return status;
   };
 
   const checkMediaLinkError = (socialMediaLink) => {
     let error = '';
-    let id = socialMediaLink?.id;
+    let name = socialMediaLink?.name;
     let site = socialMediaLink?.site;
     let status = false;
     if (site === '' || site === undefined) {
       error = 'Site is Required!!!';
       status = true;
     } else if (isUrl(site)) {
-      setSocialMediaLink({ ...socialMediaLink, site });
+      site = site.includes('http') ? site : `http://${site}`;
+      // setSocialMediaLink({ ...socialMediaLink, site });
     } else if (isUrl(`https://${site}`)) {
-      setSocialMediaLink({ ...socialMediaLink, site: `https://${site}` });
+      // setSocialMediaLink({ ...socialMediaLink, site: `https://${site}` });
     } else {
       error = 'This must be a valid URL';
       status = true;
@@ -516,11 +518,11 @@ function PropertyAdd({ property = emptyProperty }) {
       setSocialMediaLinkError({ ...socialMediaLinkError, link: error });
     }
 
-    if (id === '' || id === undefined) {
+    if (name === '' || name === undefined) {
       status = true;
-      setSocialMediaLinkError({ link: error, id: 'Select Social Media!!!' });
+      setSocialMediaLinkError({ link: error, name: 'Select Social Media!!!' });
     } else {
-      setSocialMediaLinkError({ link: error, id: '' });
+      setSocialMediaLinkError({ link: error, name: '' });
     }
 
     return status;
@@ -619,31 +621,33 @@ function PropertyAdd({ property = emptyProperty }) {
         .required('Sleeper Type is Required')
     }),
     onSubmit: (values, { setErrors, setSubmitting }) => {
-      console.log('========== : : ===========');
+      console.log('========== : 1 : ===========');
       console.log(values);
-      console.log(formToRaw(values));
+      let val = formToRaw(values);
+      console.log(val);
+      console.log('========== : 2 : ===========');
 
       const URL = isCreating ? DIRECTORY_EP.PROPERTY_CREATE : DIRECTORY_EP.PROPERTY_UPDATE.format(property.id);
 
       // eslint-disable-next-line
-      fetcher(URL, isCreating ? 'post' : 'put', session, null, formToRaw(values), (res) => {
+      fetcher(URL, isCreating ? 'post' : 'put', session, null, val, (res) => {
           const msg = isCreating ? 'Property/Rental Created Successfully' : 'Property/Rental Updated Successfully';
           successProcessor(msg, dispatch, openSnackbar);
           setSubmitting(false);
-          onCancel();
-          if (isCreating) {
-            if (typeof setData === 'function') {
-              setData([...data, res.data]);
-            }
-          } else if (typeof setData === 'function') {
-            setData(data.map((x) => (x.id === res.data.id ? res.data : x)));
-          }
+          // if (isCreating) {
+          //   if (typeof setData === 'function') {
+          //     setData([...data, res.data]);
+          //   }
+          // } else if (typeof setData === 'function') {
+          //   setData(data.map((x) => (x.id === res.data.id ? res.data : x)));
+          // }
         },
         (err) => {
-          console.log(err.response.data);
+          console.log(err);
           errorProcessor(err, setErrors, dispatch, openSnackbar);
           setSubmitting(false);
-        }
+        },
+        true
       );
     }
   });
@@ -704,6 +708,7 @@ function PropertyAdd({ property = emptyProperty }) {
                           disablePortal
                           fullWidth
                           id="property-type"
+                          name="type"
                           value={values.type}
                           onChange={(event, newValue) => setFieldValue('type', newValue)}
                           options={TYPES}
@@ -712,7 +717,6 @@ function PropertyAdd({ property = emptyProperty }) {
                           renderInput={(params) => (
                             <TextField
                               {...params}
-                              name="type"
                               error={Boolean(touched.type && errors.type)}
                               helperText={touched.type && errors.type}
                               placeholder="Type"
@@ -790,7 +794,6 @@ function PropertyAdd({ property = emptyProperty }) {
                           renderInput={(params) => (
                             <TextField
                               {...params}
-                              name="space"
                               error={Boolean(touched.space && errors.space)}
                               helperText={touched.space && errors.space}
                               placeholder="Space Booked"
@@ -954,11 +957,7 @@ function PropertyAdd({ property = emptyProperty }) {
                       <Grid item xs={12} sm={6}>
                         <Card>
                           <CardHeader
-                            avatar={
-                              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                S
-                              </Avatar>
-                            }
+                            avatar=<Avatar sx={{ bgcolor: red[500] }}>S</Avatar>
                             action={
                               <IconButton aria-label="settings" onClick={() => setSocialMediaDialog(true)}>
                                 <PlusOutlined />
@@ -1591,11 +1590,10 @@ function PropertyAdd({ property = emptyProperty }) {
                           onBlur={handleBlur}
                           onChange={(event, newValue) => setFieldValue('safeties', newValue)}
                           getOptionLabel={(label) => label.name || ''}
-                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                          isOptionEqualToValue={(option, value) => option?.id === value?.id}
                           renderInput={(params) => (
                             <TextField
                               {...params}
-                              name="safeties"
                               error={Boolean(touched.safeties && errors.safeties)}
                               helperText={touched.safeties && errors.safeties}
                               placeholder="Select all that applies"
@@ -1717,10 +1715,7 @@ function PropertyAdd({ property = emptyProperty }) {
                               Skip
                             </Button>
                           )}
-                          <Button
-                            // type={activeStep === steps.length - 1 ? 'submit' : 'button'}
-                            onClick={(event) => handleNext(touched, event, errors, setFieldValue)}
-                          >
+                          <Button onClick={(event) => handleNext(touched, event, errors, setFieldValue)}>
                             {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                           </Button>
                         </Box>
@@ -1751,7 +1746,7 @@ function PropertyAdd({ property = emptyProperty }) {
                         options={BOOKING_SITES.filter((x) => {
                           let not_added = true;
                           for (let b of bookingSites) {
-                            if (b.id === x.id) {
+                            if (b.name === x.name) {
                               not_added = false;
                               break;
                             }
@@ -1759,17 +1754,15 @@ function PropertyAdd({ property = emptyProperty }) {
                           return not_added;
                         })}
                         value={bookingSite}
-                        getOptionLabel={(label) => {
-                          return label.label;
-                        }}
-                        isOptionEqualToValue={(option, value) => option.id === value.id}
-                        onChange={(event, newValue) => setBookingSite(newValue)}
+                        getOptionLabel={(label) => label.label}
+                        isOptionEqualToValue={(option, value) => option.name === value.name}
+                        onChange={(event, newValue) => setBookingSite((prev) => ({ ...prev, ...newValue }))}
                         renderInput={(params) => (
                           <TextField
                             {...params}
                             name="booking_site"
-                            error={Boolean(bookingSiteError?.id)}
-                            helperText={bookingSiteError?.id}
+                            error={Boolean(bookingSiteError?.name)}
+                            helperText={bookingSiteError?.name}
                             placeholder="Select Booking Site"
                             variant="outlined"
                           />
@@ -1798,10 +1791,12 @@ function PropertyAdd({ property = emptyProperty }) {
                           placeholder="Booking Site Link"
                           value={bookingSite?.site || ''}
                           onChange={(event) => {
-                            console.log(event.target.value);
-                            setBookingSite({ ...bookingSite, site: event.target.value });
+                            let val = event.target.value;
+                            setBookingSite({
+                              ...bookingSite,
+                              site: isUrl(val) ? val : isUrl(`https://${val}`) ? `https://${val}` : val
+                            });
                           }}
-                          // {...getFieldProps('booking_site.site')}
                           InputProps={{ startAdornment: <InputAdornment position="start">https://</InputAdornment> }}
                           error={Boolean(bookingSiteError?.link)}
                           helperText={bookingSiteError?.link}
@@ -1815,9 +1810,9 @@ function PropertyAdd({ property = emptyProperty }) {
                   <Button
                     onClick={() => {
                       if (!checkSiteError(bookingSite)) {
-                        console.log('Goo to go...');
-                        console.log(bookingSite);
-                        console.log(bookingSites);
+                        // console.log('Goo to go...');
+                        // console.log(bookingSite);
+                        // console.log(bookingSites);
                         setFieldValue('booking_sites', [...bookingSites, bookingSite]);
                         setBookingSites([...bookingSites, bookingSite]);
                         setBookingSite(null);
@@ -1855,7 +1850,7 @@ function PropertyAdd({ property = emptyProperty }) {
                         options={SOCIAL_MEDIAS.filter((x) => {
                           let not_added = true;
                           for (let b of socialMediaLinks) {
-                            if (b.id === x.id) {
+                            if (b.name === x.name) {
                               not_added = false;
                               break;
                             }
@@ -1864,15 +1859,15 @@ function PropertyAdd({ property = emptyProperty }) {
                         })}
                         value={socialMediaLink}
                         getOptionLabel={(label) => label.label}
-                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                        isOptionEqualToValue={(option, value) => option.name === value.name}
                         onBlur={handleBlur}
-                        onChange={(event, newValue) => setSocialMediaLink(newValue)}
+                        onChange={(event, newValue) => setSocialMediaLink((prev) => ({ ...prev, ...newValue }))}
                         renderInput={(params) => (
                           <TextField
                             {...params}
                             name="social_media_label"
-                            error={Boolean(socialMediaLinkError?.id)}
-                            helperText={socialMediaLinkError?.id}
+                            error={Boolean(socialMediaLinkError?.name)}
+                            helperText={socialMediaLinkError?.name}
                             placeholder="Select Room Type"
                             variant="outlined"
                           />
@@ -1901,7 +1896,11 @@ function PropertyAdd({ property = emptyProperty }) {
                           placeholder="Social Media Link"
                           value={socialMediaLink?.site || ''}
                           onChange={(event) => {
-                            setSocialMediaLink({ ...socialMediaLink, site: event.target.value });
+                            let val = event.target.value;
+                            setSocialMediaLink({
+                              ...socialMediaLink,
+                              site: isUrl(val) ? val : isUrl(`https://${val}`) ? `https://${val}` : val
+                            });
                           }}
                           InputProps={{ startAdornment: <InputAdornment position="start">https://</InputAdornment> }}
                           error={Boolean(socialMediaLinkError?.link)}
