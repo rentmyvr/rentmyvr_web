@@ -8,9 +8,9 @@ import { useSession } from 'next-auth/react';
 // material-ui
 import { alpha, useTheme } from '@mui/material/styles';
 import {
-  capitalize,
+  // capitalize,
   Button,
-  Chip,
+  // Chip,
   Stack,
   Table,
   TableBody,
@@ -59,7 +59,7 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent }) {
     headerGroups,
     prepareRow,
     setHiddenColumns,
-    allColumns,
+    // allColumns,
     visibleColumns,
     rows,
     page,
@@ -68,7 +68,7 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent }) {
     state: { globalFilter, selectedRowIds, pageIndex, pageSize },
     preGlobalFilteredRows,
     setGlobalFilter,
-    setSortBy
+    // setSortBy
   } = useTable(
     {
       columns,
