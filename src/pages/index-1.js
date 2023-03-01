@@ -129,8 +129,13 @@ const CarouselItem = ({ item }) => {
         // backgroundSize: 'cover',
         // backgroundPosition: 'center',
         background: `url(${item.img}) no-repeat center center fixed`,
-        backgroundSize: 'cover',
+        '-webkitBackgroundSize': 'cover',
+        '-mozBackgroundSize': 'cover',
+        '-oBackgroundSize': 'cover',
+        backgroundSize: '100% 98%',
+        // backgroundSize: 'cover',
         height: '600px',
+        // width: '100%',
         overflow: 'hidden'
       }}
       mt={0}
