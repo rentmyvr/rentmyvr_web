@@ -372,7 +372,7 @@ const Index = () => {
           </Carousel>
           {/* <ContactHeader /> */}
         </Grid>
-        <Grid container spacing={2} pl={4} pr={2} py={4} direction="row" sx={{ backgroundColor: '#1890ff' }}>
+        <Grid container spacing={2} pl={4} pr={2} pt={0} pb={1} direction="row" sx={{ backgroundColor: '#1890ff' }}>
           <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
               <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
