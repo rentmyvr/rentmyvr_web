@@ -53,94 +53,66 @@ let items = [
   {
     name: 'Book Direct with Hosts or Compare Rates',
     description: 'Book Direct with Hosts or Compare Rates',
-    img: '/assets/images/1500x600/design-79.png',
+    img: '/assets/images/1500x600/design-83.png',
     btnText: 'Search Here',
     textColor: '#fff'
   },
   {
-    name: 'Book Direct with Hosts or Compare Rates',
-    description: 'Book Direct with Hosts or Compare Rates',
-    img: '/assets/images/1500x600/design-80.png',
-    btnText: 'Search Here',
+    name: 'All Listing Links in One Place',
+    description: 'Compare rates or compare ratings and reviews all in one place',
+    img: '/assets/images/1500x600/design-84.png',
+    btnText: 'Start Your Search',
     textColor: '#fff'
   },
   {
-    name: 'Book Direct with Hosts or Compare Rates',
-    description: 'Book Direct with Hosts or Compare Rates',
-    img: '/assets/images/1500x600/design-81.png',
-    btnText: 'Search Here',
+    name: 'Find a Company Who Manages Vacation Rentals',
+    description: 'Looking to hire a management company? Have questions and need a professional before you book your stay?',
+    img: '/assets/images/1500x600/design-85.png',
+    btnText: 'Find a Company',
     textColor: '#fff'
   },
   {
-    name: 'Book Direct with Hosts or Compare Rates',
-    description: 'Book Direct with Hosts or Compare Rates',
+    name: 'Rent My VR is Growing',
+    description: 'Are you ready to list a property or your vacation rental management company with us?',
+    img: '/assets/images/1500x600/design-86.png',
+    btnText: 'Get Started',
+    textColor: '#fff'
+  },
+  {
+    name: 'Search All Sites With One Search',
+    description: 'Book using your preferred platform once you find your dream vacation property',
+    img: '/assets/images/1500x600/design-87.png',
+    btnText: 'Search Now',
+    textColor: '#000'
+  },
+  {
+    name: 'Dreaming of Where To Go Next?',
+    description: 'Search by category or amenity and discover themed or unique properties you never knew existed',
+    img: '/assets/images/1500x600/design-88.png',
+    btnText: 'Find a Property',
+    textColor: '#eee'
+  },
+  {
+    name: 'Rates that Leave You Feeling More Relaxed',
+    description: 'Find the site offering the lowest rate on a property or check for direct booking options to save',
+    img: '/assets/images/1500x600/design-89.png',
+    btnText: 'Search Here',
+    textColor: '#eee'
+  },
+  {
+    name: 'Take the Hassle Out of the Hunt',
+    description: 'Bringing all the online booking sites together to make your search a little better',
     img: '/assets/images/1500x600/design-82.png',
-    btnText: 'Search Here',
+    btnText: 'Search Rentals',
     textColor: '#fff'
   },
-  // {
-  //   name: 'Book Direct with Hosts or Compare Rates',
-  //   description: 'Book Direct with Hosts or Compare Rates',
-  //   img: '/assets/images/975x600/design-68.png',
-  //   btnText: 'Search Here',
-  //   textColor: '#fff'
-  // },
-  // {
-  //   name: 'All Listing Links in One Place',
-  //   description: 'Compare rates or compare ratings and reviews all in one place',
-  //   img: '/assets/images/975x600/design-69.png',
-  //   btnText: 'Start Your Search',
-  //   textColor: '#fff'
-  // },
-  // {
-  //   name: 'Find a Company Who Manages Vacation Rentals',
-  //   description: 'Looking to hire a management company? Have questions and need a professional before you book your stay?',
-  //   img: '/assets/images/975x600/design-70.png',
-  //   btnText: 'Find a Company',
-  //   textColor: '#fff'
-  // },
-  // {
-  //   name: 'Rent My VR is Growing',
-  //   description: 'Are you ready to list a property or your vacation rental management company with us?',
-  //   img: '/assets/images/975x600/design-71.png',
-  //   btnText: 'Get Started',
-  //   textColor: '#fff'
-  // },
-  // {
-  //   name: 'Search All Sites With One Search',
-  //   description: 'Book using your preferred platform once you find your dream vacation property',
-  //   img: '/assets/images/975x600/design-72.png',
-  //   btnText: 'Search Now',
-  //   textColor: '#000'
-  // },
-  // {
-  //   name: 'Dreaming of Where To Go Next?',
-  //   description: 'Search by category or amenity and discover themed or unique properties you never knew existed',
-  //   img: '/assets/images/975x600/design-73.png',
-  //   btnText: 'Find a Property',
-  //   textColor: '#eee'
-  // },
-  // {
-  //   name: 'Rates that Leave You Feeling More Relaxed',
-  //   description: 'Find the site offering the lowest rate on a property or check for direct booking options to save',
-  //   img: '/assets/images/975x600/design-74.png',
-  //   btnText: 'Search Here',
-  //   textColor: '#eee'
-  // },
-  // {
-  //   name: 'Take the Hassle Out of the Hunt',
-  //   description: 'Bringing all the online booking sites together to make your search a little better',
-  //   img: '/assets/images/975x600/design-75.png',
-  //   btnText: 'Search Rentals',
-  //   textColor: '#fff'
-  // },
-  // {
-  //   name: 'Book Your Stay the Better Way',
-  //   description: 'Finally, a site where you can view a property’s website, online profiles, social media, and reviews, all in one place',
-  //   img: '/assets/images/975x600/design-76.png',
-  //   btnText: 'Search Now',
-  //   textColor: '#fff'
-  // }
+  {
+    name: 'Book Your Stay the Better Way',
+    description: 'Finally, a site where you can view a property’s website, online profiles, social media, and reviews, all in one place',
+    img: '/assets/images/1500x600/design-81.png',
+    btnText: 'Search Now',
+    textColor: '#fff'
+  }
 ];
 
 const CarouselItem = ({ item }) => {
