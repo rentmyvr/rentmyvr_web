@@ -67,7 +67,7 @@ function ComingSoon() {
   const formik = useFormik({
     initialValues: { email: '' },
     validationSchema: Yup.object().shape({
-      email: Yup.string().max(128).email('This is not a valid email').required('Tell us the email to contact you with')
+      email: Yup.string().max(128).email('This is not a valid email').required('Can you tell us the email to contact you with?')
     }),
     onSubmit: (values, { setErrors, setSubmitting, resetForm }) => {
       console.log('========== : : ===========');
