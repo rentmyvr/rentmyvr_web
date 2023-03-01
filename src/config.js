@@ -78,7 +78,8 @@ export const DIRECTORY_EP = {
   PROPERTY_DETAIL: '/directory/property/{id}/',
   PROPERTY_DELETE: '/directory/property/{id}/',
   PROPERTY_ACHIEVE: '/directory/property/{id}/achieve/',
-  PROPERTY_FORM_ITEMS: '/directory/property/form/items/'
+  PROPERTY_FORM_ITEMS: '/directory/property/form/items/',
+  PROPERTY_FIXED_ITEMS: '/directory/property/fixed/items/'
 };
 
 export const NOTIFICATION_EP = {
