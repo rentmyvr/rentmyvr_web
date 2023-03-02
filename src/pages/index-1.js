@@ -52,65 +52,86 @@ import { AppleFilled, ShoppingFilled, TagFilled, UpSquareFilled } from '@ant-des
 let items = [
   {
     name: 'Book Direct with Hosts or Compare Rates',
-    description: 'Book Direct with Hosts or Compare Rates',
-    img: '/assets/images/1500x600/design-83.png',
+    description: 'Search listings that offer direct booking from the host and save',
+    img: '/assets/images/1500x600/image-1.png',
     btnText: 'Search Here',
     textColor: '#fff'
   },
   {
     name: 'All Listing Links in One Place',
     description: 'Compare rates or compare ratings and reviews all in one place',
-    img: '/assets/images/1500x600/design-84.png',
+    img: '/assets/images/1500x600/image-2.png',
     btnText: 'Start Your Search',
     textColor: '#fff'
   },
   {
     name: 'Find a Company Who Manages Vacation Rentals',
     description: 'Looking to hire a management company? Have questions and need a professional before you book your stay?',
-    img: '/assets/images/1500x600/design-85.png',
+    img: '/assets/images/1500x600/image-3.png',
     btnText: 'Find a Company',
     textColor: '#fff'
   },
   {
     name: 'Rent My VR is Growing',
     description: 'Are you ready to list a property or your vacation rental management company with us?',
-    img: '/assets/images/1500x600/design-86.png',
+    img: '/assets/images/1500x600/image-4.png',
     btnText: 'Get Started',
     textColor: '#fff'
   },
   {
     name: 'Search All Sites With One Search',
     description: 'Book using your preferred platform once you find your dream vacation property',
-    img: '/assets/images/1500x600/design-87.png',
+    img: '/assets/images/1500x600/image-5.png',
     btnText: 'Search Now',
     textColor: '#000'
   },
   {
     name: 'Dreaming of Where To Go Next?',
     description: 'Search by category or amenity and discover themed or unique properties you never knew existed',
-    img: '/assets/images/1500x600/design-88.png',
+    img: '/assets/images/1500x600/image-6.png',
     btnText: 'Find a Property',
     textColor: '#eee'
   },
   {
     name: 'Rates that Leave You Feeling More Relaxed',
     description: 'Find the site offering the lowest rate on a property or check for direct booking options to save',
-    img: '/assets/images/1500x600/design-89.png',
+    img: '/assets/images/1500x600/image-7.png',
     btnText: 'Search Here',
     textColor: '#eee'
   },
   {
     name: 'Take the Hassle Out of the Hunt',
     description: 'Bringing all the online booking sites together to make your search a little better',
-    img: '/assets/images/1500x600/design-82.png',
+    img: '/assets/images/1500x600/image-8.png',
     btnText: 'Search Rentals',
     textColor: '#fff'
   },
   {
     name: 'Book Your Stay the Better Way',
     description: 'Finally, a site where you can view a property’s website, online profiles, social media, and reviews, all in one place',
-    img: '/assets/images/1500x600/design-81.png',
+    img: '/assets/images/1500x600/image-9.png',
     btnText: 'Search Now',
+    textColor: '#fff'
+  },
+  {
+    name: 'No Extra Fees',
+    description: 'With Rent My VR, we believe in flat fee based listings and no fee for our guests.',
+    img: '/assets/images/1500x600/image-10.png',
+    btnText: 'List Now',
+    textColor: '#fff'
+  },
+  {
+    name: 'Search All Sites With One Search',
+    description: 'Book using your preferred platform once you find your dream vacation property',
+    img: '/assets/images/1500x600/image-11.png',
+    btnText: 'Search Now',
+    textColor: '#fff'
+  },
+  {
+    name: 'Dreaming of Where To Go Next?',
+    description: 'Search by category or ammenity and discover themed or unique properties you never knew existed',
+    img: '/assets/images/1500x600/image-12.png',
+    btnText: 'Find a Property',
     textColor: '#fff'
   }
 ];
@@ -375,9 +396,9 @@ const Index = () => {
         <Grid container spacing={2} pl={4} pr={2} pt={0} pb={1} direction="row" sx={{ backgroundColor: '#1890ff' }}>
           <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
-              <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
+              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Arrival Date
-              </InputLabel>
+              </InputLabel> */}
               <TextField
                 fullWidth
                 id="property-yelp"
@@ -390,9 +411,9 @@ const Index = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
-              <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
+              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Outgoing Date
-              </InputLabel>
+              </InputLabel> */}
               <TextField
                 fullWidth
                 id="property-yelp"
@@ -405,9 +426,9 @@ const Index = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
-              <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
+              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Rooms Date
-              </InputLabel>
+              </InputLabel> */}
               <TextField
                 fullWidth
                 id="property-yelp"
@@ -420,9 +441,9 @@ const Index = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
-              <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
+              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Arrival Date
-              </InputLabel>
+              </InputLabel> */}
               <TextField
                 fullWidth
                 id="property-yelp"
@@ -435,9 +456,9 @@ const Index = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
-              <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
+              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Arrival Date
-              </InputLabel>
+              </InputLabel> */}
               <TextField
                 fullWidth
                 id="property-yelp"
