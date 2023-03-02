@@ -12,9 +12,10 @@ import useConfig from 'hooks/useConfig';
 import AnimateButton from 'components/@extended/AnimateButton';
 
 // assets
-import { SendOutlined } from '@ant-design/icons';
+import { SendOutlined, TwitterOutlined, YoutubeOutlined, AmazonOutlined } from '@ant-design/icons';
+import Logo from 'components/logo';
 
-const imgfooterlogo = 'assets/images/landing/codedthemes-logo.svg';
+// const imgfooterlogo = 'assets/images/landing/codedthemes-logo.svg';
 const imgfootersoc1 = 'assets/images/landing/img-soc1.svg';
 const imgfootersoc2 = 'assets/images/landing/img-soc2.svg';
 const imgfootersoc3 = 'assets/images/landing/img-soc3.svg';
@@ -141,13 +142,24 @@ const FooterBlock = ({ isFull }) => {
               >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <CardMedia component="img" image={imgfooterlogo} sx={{ width: 'auto' }} />
+                    {/* <CardMedia component="img" image={imgfooterlogo} sx={{ width: 'auto' }} /> */}
+                    <Logo reverse />
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 400, color: theme.palette.common.white }}>
-                      Since 2017, More than 50K+ Developers trust the CodedThemes Digital Product. Mantis React is Manage under their
-                      Experienced Team Players.
+                    {/* <Typography variant="subtitle1" sx={{ fontWeight: 400, color: theme.palette.common.white }}>
+                      Sign up
+                    </Typography> */}
+
+                    <Link href="/register" underline="none" sx={linkSX}>
+                      Sign up
+                    </Link>
+
+                    <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
+                      Connect with Us on Social:
                     </Typography>
+                    <TwitterOutlined className="icon" />
+                    <YoutubeOutlined className="icon" />
+                    <AmazonOutlined className="icon" />
                   </Grid>
                 </Grid>
               </motion.div>
@@ -168,7 +180,7 @@ const FooterBlock = ({ isFull }) => {
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
-                          Explore us
+                          Terms and Conditions
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
@@ -208,7 +220,7 @@ const FooterBlock = ({ isFull }) => {
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
-                          Help
+                          Cookie Policy
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
@@ -243,7 +255,7 @@ const FooterBlock = ({ isFull }) => {
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
-                          More Products
+                          Site Map
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
@@ -295,7 +307,7 @@ const FooterBlock = ({ isFull }) => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={8}>
               <Typography variant="subtitle2" color="secondary">
-                © Made with love by Team CodedThemes
+                © Copyright icon 2023 Rent My VR
               </Typography>
             </Grid>
             <Grid item xs={12} sm={4}>

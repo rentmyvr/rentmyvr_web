@@ -23,7 +23,8 @@ import {
   Stack,
   TextField,
   Typography,
-  useScrollTrigger
+  useScrollTrigger,
+  InputAdornment
 } from '@mui/material';
 
 import Carousel from 'react-material-ui-carousel';
@@ -43,7 +44,7 @@ import { Rent_1, Rent_2 } from 'components/RentMyVRIcons';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
-import { AppleFilled, ShoppingFilled, TagFilled, UpSquareFilled } from '@ant-design/icons';
+import { HomeFilled, HomeOutlined, ShoppingFilled, CalendarOutlined, EnvironmentOutlined, TeamOutlined, TagFilled, UpSquareFilled } from '@ant-design/icons';
 // import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpSquareFilled } from '@ant-design/icons';
 // import Image from 'next/image';
 
@@ -229,7 +230,7 @@ const countUpTheme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: '#fff',
-          backgroundImage: `url(/assets/images/1200x375.jpg)`,
+          backgroundImage: `url(/assets/images/1200x375.png)`,
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
@@ -393,34 +394,54 @@ const Index = () => {
           </Carousel>
           {/* <ContactHeader /> */}
         </Grid>
-        <Grid container spacing={2} pl={4} pr={2} pt={0} pb={1} direction="row" sx={{ backgroundColor: '#1890ff' }}>
-          <Grid item xs={12} sm={6} md={2}>
+        <Grid container spacing={2} pl={4} pr={2} pt={1} pb={1} mt={-10} zIndex={10} direction="row" sx={{ backgroundColor: 'unset' }}>
+          <Grid item xs={12} sm={6} md={3}>
             <Stack direction="column" spacing={1.25}>
               {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Arrival Date
               </InputLabel> */}
               <TextField
                 fullWidth
-                id="property-yelp"
-                placeholder="Yelp Link"
-                {...getFieldProps('yelp')}
-                error={Boolean(touched.yelp && errors.yelp)}
-                helperText={touched.yelp && errors.yelp}
+                // variant="filled"
+                // label="Where do you want to go?"
+                id="property-where"
+                placeholder="Where do you want to go?"
+                {...getFieldProps('where')}
+                error={Boolean(touched.where && errors.where)}
+                helperText={touched.where && errors.where}
+                sx={{ backgroundColor: '#fff' }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EnvironmentOutlined className="icon" />
+                    </InputAdornment>
+                  )
+                }}
               />
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
+          <Grid item xs={12} sm={6} md={3}>
             <Stack direction="column" spacing={1.25}>
               {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Outgoing Date
               </InputLabel> */}
               <TextField
                 fullWidth
-                id="property-yelp"
-                placeholder="Yelp Link"
-                {...getFieldProps('yelp')}
-                error={Boolean(touched.yelp && errors.yelp)}
-                helperText={touched.yelp && errors.yelp}
+                id="property-checkIn"
+                // variant="filled"
+                // label="Check-in"
+                placeholder="Check-in"
+                {...getFieldProps('checkIn')}
+                error={Boolean(touched.checkIn && errors.checkIn)}
+                helperText={touched.checkIn && errors.checkIn}
+                sx={{ backgroundColor: '#fff' }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <CalendarOutlined className="icon" />
+                    </InputAdornment>
+                  )
+                }}
               />
             </Stack>
           </Grid>
@@ -431,11 +452,47 @@ const Index = () => {
               </InputLabel> */}
               <TextField
                 fullWidth
-                id="property-yelp"
-                placeholder="Yelp Link"
-                {...getFieldProps('yelp')}
-                error={Boolean(touched.yelp && errors.yelp)}
-                helperText={touched.yelp && errors.yelp}
+                id="property-checkOut"
+                // variant="filled"
+                // label="Check-out"
+                placeholder="Check-out"
+                {...getFieldProps('checkOut')}
+                error={Boolean(touched.checkOut && errors.checkOut)}
+                helperText={touched.checkOut && errors.checkOut}
+                sx={{ backgroundColor: '#fff' }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <CalendarOutlined className="icon" />
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} sm={6} md={2}>
+            <Stack direction="column" spacing={1.25} position="relative">
+              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
+                Arrival Date
+              </InputLabel> */}
+              {/* <TeamOutlined className="icon" style={{position: 'absolute', top: '25px', zIndex: '10', left: '5px'}} /> */}
+              <TextField
+                fullWidth
+                id="property-guests"
+                placeholder="Guests"
+                // variant="filled"
+                // label="Guests"
+                {...getFieldProps('guests')}
+                error={Boolean(touched.guests && errors.guests)}
+                helperText={touched.guests && errors.guests}
+                style={{ backgroundColor: '#fff'}}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <TeamOutlined className="icon" />
+                    </InputAdornment>
+                  )
+                }}
               />
             </Stack>
           </Grid>
@@ -444,32 +501,24 @@ const Index = () => {
               {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Arrival Date
               </InputLabel> */}
-              <TextField
+
+              <Button variant="contained" size="large" color="primary">
+                Search
+              </Button>
+              {/* <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose} sx={{ mt: 0.25 }}>
+                <CloseOutlined />
+              </IconButton> */}
+              {/* <TextField
                 fullWidth
                 id="property-yelp"
                 placeholder="Yelp Link"
                 {...getFieldProps('yelp')}
                 error={Boolean(touched.yelp && errors.yelp)}
                 helperText={touched.yelp && errors.yelp}
-              />
+              /> */}
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25}>
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Arrival Date
-              </InputLabel> */}
-              <TextField
-                fullWidth
-                id="property-yelp"
-                placeholder="Yelp Link"
-                {...getFieldProps('yelp')}
-                error={Boolean(touched.yelp && errors.yelp)}
-                helperText={touched.yelp && errors.yelp}
-              />
-            </Stack>
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
+          {/* <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
               <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Arrival Date
@@ -483,7 +532,7 @@ const Index = () => {
                 helperText={touched.yelp && errors.yelp}
               />
             </Stack>
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid container spacing={2} mt={5} justifyContent="center" alignItems="center">
           <Grid item sm={12} md={10}>
@@ -503,7 +552,7 @@ const Index = () => {
           </Grid>
           <Grid item sm={12} md={10}>
             <Stack direction="column" alignItems="center" spacing={1.25} pl={4} pr={2}>
-              <Typography>
+              <Typography variant="h4">
                 Finally, an online directory that offers you what you have been asking for. With RentMyVR, you can do SO MUCH MORE!
               </Typography>
             </Stack>
@@ -514,13 +563,13 @@ const Index = () => {
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     {/* <HomeFilled sx={{ fontSize: 40 }} /> */}
-                    <Rent_1 color="primary" />
+                    {/* <Rent_1 color="primary" /> */}
+                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-1.svg" alt="" />
                   </Avatar>
-                  <Typography variant="h3">Search Rental</Typography>
+                  <Typography variant="h3">Search Properties</Typography>
                   <Typography>
-                    Guests can save money when the host offers discounts for direct booking. Search vacation rentals and compare pricing on
-                    the hosts&apos; different booking platforms. Narrow your search by filtering the sites you prefer to book through and
-                    easily check out a property&apos;s photos and reviews on all sites conveniently located on the property profile.
+                    Guests can save money when the host offers discounts for direct booking. Search vacation rentals, filter by amenities
+                    and compare pricing on the hosts&apos; different booking platforms, all from one place.
                   </Typography>
                 </Stack>
               </Grid>
@@ -528,7 +577,8 @@ const Index = () => {
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     {/* <BankFilled sx={{ fontSize: 40 }} /> */}
-                    <Rent_2 color="warning" />
+                    {/* <Rent_2 color="warning" /> */}
+                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
                   </Avatar>
                   <Typography variant="h3">Search Management Companies</Typography>
                   <Typography>
@@ -540,9 +590,10 @@ const Index = () => {
               <Grid item sm={12} md={4}>
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    <AppleFilled sx={{ fontSize: 40 }} />
+                    {/* <AppleFilled sx={{ fontSize: 40 }} /> */}
+                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-3.svg" alt="" />
                   </Avatar>
-                  <Typography variant="h3">Why List With Us</Typography>
+                  <Typography variant="h3">Why List With Us?</Typography>
                   <Typography>
                     Looking to Increase exposure, online traffic, and bookings to your vacation rental? Interested in driving traffic to
                     your personal booking site, rather than using a 3rd party booking site?
@@ -557,21 +608,15 @@ const Index = () => {
             <Stack spacing={0} justifyContent="center" alignItems="center">
               <Grid item sm={12} md={10}>
                 <Typography display="inline" variant="h2" color="#1890ff">
-                  BEST&nbsp;
+                  Featured&nbsp;
                 </Typography>
                 <Typography display="inline" variant="h2">
-                  SELLING
+                  Listings
                 </Typography>
               </Grid>
               <ThemeProvider theme={underlineTheme}>
                 <Grid></Grid>
               </ThemeProvider>
-              <Typography>
-                This looks like a bug to me (or at least missing a feature that is reasonable for developers to expect to be there).The
-                issue is that Select doesn&rsquo;t define any styles of its own at the root level, so it doesn&rsquo;t leverage the code
-                (which would be a call to MUI&rsquo;s styled such as here for the select class) that would take care of looking at the theme
-                and applying the corresponding style overrides. I recommend logging an issue.
-              </Typography>
             </Stack>
           </Grid>
         </Grid>
@@ -638,18 +683,23 @@ const Index = () => {
                 </CardActions>
               </Card>
             </Grid>
+            <Typography mt={5}>
+              Check out some of our favorite properties! We love themes and the fun concepts our hosts come up with for their properties.
+              Don&rsquo;t forget to follow our social media accounts to see some of our favorites! #vacationrentalsgonewild
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} my={6} justifyContent="center" alignItems="center">
+      <Grid container spacing={2} pb={28} my={6} sx={{width: '100%'}} justifyContent="center" alignItems="center">
         <ThemeProvider theme={countUpTheme}>
           <Grid item xs={12} sx={{ backgroundColor: 'transparent' }}>
             <Box className="imageOverlay">
               <Grid container spacing={0} justifyContent="center" alignItems="center">
                 <Grid item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
-                    <ShoppingFilled className="icon" />
+                    {/* <HomeFilled className="icon" /> */}
+                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
                     <Typography className="count">
                       <CountUp start={0} end={250} duration={20} />
                     </Typography>
@@ -658,27 +708,30 @@ const Index = () => {
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
-                    <ShoppingFilled className="icon" />
+                    {/* <HomeFilled className="icon" /> */}
+                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
                     <Typography className="count">
-                      <CountUp start={0} end={250} duration={20} />
+                      <CountUp start={0} end={100} duration={20} />
                     </Typography>
                     <Typography className="sub">Project</Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
-                    <ShoppingFilled className="icon" />
+                    {/* <HomeFilled className="icon" /> */}
+                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
                     <Typography className="count">
-                      <CountUp start={0} end={250} duration={20} />
+                      <CountUp start={0} end={300} duration={20} />
                     </Typography>
                     <Typography className="sub">Project</Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
-                    <ShoppingFilled className="icon" />
+                    {/* <HomeFilled className="icon" /> */}
+                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
                     <Typography className="count">
-                      <CountUp start={0} end={250} duration={20} />
+                      <CountUp start={0} end={400} duration={20} />
                     </Typography>
                     <Typography className="sub">Project</Typography>
                   </Stack>
@@ -690,7 +743,7 @@ const Index = () => {
       </Grid>
 
       {/* <Grid container spacing={2} mt={60} justifyContent="center" alignItems="center"> */}
-      <Grid container spacing={2} pt={{ xs: 115, sm: 60, md: 31, lg: 31 }} pl={4} pr={2} justifyContent="center" alignItems="center">
+      {/* <Grid container spacing={2} pt={{ xs: 115, sm: 60, md: 31, lg: 31 }} pl={4} pr={2} justifyContent="center" alignItems="center">
         <Grid item sm={12} md={10}>
           <Stack spacing={0} justifyContent="center" alignItems="center">
             <Grid item sm={12} md={10}>
@@ -712,16 +765,16 @@ const Index = () => {
             </Typography>
           </Stack>
         </Grid>
-      </Grid>
+      </Grid> */}
 
-      <Grid container spacing={2} my={5} pl={4} pr={2} justifyContent="center" alignItems="center">
+      {/* <Grid container spacing={2} my={5} pl={4} pr={2} justifyContent="center" alignItems="center">
         <Grid item xs={12} sm={12} md={10}>
           <Grid container spacing={2} pt={4}>
             <Grid item xs={12} sm={6} md={6}>
               <Card elevation={12} square>
                 <ThemeProvider theme={cardTheme}>
                   <CardContent className="single" sx={{ p: '0!important' }}>
-                    <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.jpg" title="Some title" />
+                    <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.png" title="Some title" />
                     <ThemeProvider theme={locationOverlayTheme}>
                       <Grid className="locationOverlay">
                         <Box className="overlayText">
@@ -742,7 +795,7 @@ const Index = () => {
               <Card elevation={12} square>
                 <ThemeProvider theme={cardTheme}>
                   <CardContent className="single" sx={{ p: '0!important' }}>
-                    <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.jpg" title="Some title" />
+                    <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.png" title="Some title" />
                     <ThemeProvider theme={locationOverlayTheme}>
                       <Grid className="locationOverlay">
                         <Box className="overlayText">
@@ -765,7 +818,7 @@ const Index = () => {
               <Card elevation={12} square>
                 <ThemeProvider theme={cardTheme}>
                   <CardContent className="single" sx={{ p: '0!important' }}>
-                    <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.jpg" title="Some title" />
+                    <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.png" title="Some title" />
                     <ThemeProvider theme={locationOverlayTheme}>
                       <Grid className="locationOverlay">
                         <Box className="overlayText">
@@ -786,7 +839,7 @@ const Index = () => {
               <Card elevation={12} square>
                 <ThemeProvider theme={cardTheme}>
                   <CardContent className="single" sx={{ p: '0!important' }}>
-                    <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.jpg" title="Some title" />
+                    <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.png" title="Some title" />
                     <ThemeProvider theme={locationOverlayTheme}>
                       <Grid className="locationOverlay">
                         <Box className="overlayText">
@@ -807,7 +860,7 @@ const Index = () => {
               <Card elevation={12} square>
                 <ThemeProvider theme={cardTheme}>
                   <CardContent className="single" sx={{ p: '0!important' }}>
-                    <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.jpg" title="Some title" />
+                    <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.png" title="Some title" />
                     <ThemeProvider theme={locationOverlayTheme}>
                       <Grid className="locationOverlay">
                         <Box className="overlayText">
@@ -826,7 +879,7 @@ const Index = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
 
       {/* <Grid container spacing={2} mt={16} justifyContent="center" alignItems="center">
         <Grid item sm={12} md={10}></Grid>

@@ -87,7 +87,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
   return (
     <ElevationScroll layout={layout} {...others}>
       <AppBar sx={{ bgcolor: 'transparent', color: theme.palette.text.primary, boxShadow: 'none' }}>
-        <Container disableGutters={matchDownMd}>
+        <Container disableGutters={matchDownMd} maxWidth="unset">
           <Toolbar sx={{ px: { xs: 1.5, md: 0, lg: 0 }, py: 0 }}>
             <Stack direction="row" sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }} alignItems="center">
               <Typography component="div" sx={{ textAlign: 'left', display: 'inline-block' }}>
