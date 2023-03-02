@@ -111,22 +111,17 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
               )}
               <NextLink href={DEFAULT_PATH} passHref>
                 <Link className="header-link" color="white" underline="none">
-                  Vacation Rentals
+                  Search Properties
                 </Link>
               </NextLink>
               <NextLink href={DEFAULT_PATH} passHref>
                 <Link className="header-link" color="white" underline="none">
-                  Vacation Management Companies
+                  Management Companies
                 </Link>
               </NextLink>
               <NextLink href={DEFAULT_PATH} passHref>
                 <Link className="header-link" color="white" underline="none">
-                  List Your Rental
-                </Link>
-              </NextLink>
-              <NextLink href={DEFAULT_PATH} passHref>
-                <Link className="header-link" color="white" underline="none">
-                  List Your Company
+                  List With Us
                 </Link>
               </NextLink>
               {/* <NextLink href={DEFAULT_PATH} passHref>
@@ -137,6 +132,11 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
               <NextLink href={DEFAULT_PATH} passHref>
                 <Link className="header-link" color="white" underline="none">
                   FAQs
+                </Link>
+              </NextLink>
+              <NextLink href={DEFAULT_PATH} passHref>
+                <Link className="header-link" color="white" underline="none">
+                  Comming Soon
                 </Link>
               </NextLink>
               {!session && (
@@ -234,7 +234,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                         <ListItemIcon>
                           <LineOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="Vacation Rentals" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText primary="Search Properties" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                       </ListItemButton>
                     </Link>
                     <Link style={{ textDecoration: 'none' }} href="/">
@@ -242,10 +242,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                         <ListItemIcon>
                           <LineOutlined />
                         </ListItemIcon>
-                        <ListItemText
-                          primary="Vacation Management Companies"
-                          primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }}
-                        />
+                        <ListItemText primary="Management Companies" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                       </ListItemButton>
                     </Link>
                     <Link style={{ textDecoration: 'none' }} href="/">
@@ -253,15 +250,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                         <ListItemIcon>
                           <LineOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="List your Rentals" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
-                      </ListItemButton>
-                    </Link>
-                    <Link style={{ textDecoration: 'none' }} href="/">
-                      <ListItemButton component="span">
-                        <ListItemIcon>
-                          <LineOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary="List your Company" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText primary="List With Uss" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                       </ListItemButton>
                     </Link>
                     {/* <Link style={{ textDecoration: 'none' }} href="/">
@@ -278,6 +267,15 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                           <LineOutlined />
                         </ListItemIcon>
                         <ListItemText primary="FAQ" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <Chip color="primary" label="v1.0" size="small" />
+                      </ListItemButton>
+                    </Link>
+                    <Link style={{ textDecoration: 'none' }} href="/">
+                      <ListItemButton component="span">
+                        <ListItemIcon>
+                          <LineOutlined />
+                        </ListItemIcon>
+                        <ListItemText primary="Comming Soon" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                         <Chip color="primary" label="v1.0" size="small" />
                       </ListItemButton>
                     </Link>
