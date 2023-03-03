@@ -16,9 +16,9 @@ import { SendOutlined, TwitterOutlined, YoutubeOutlined, AmazonOutlined, GlobalO
 import Logo from 'components/logo';
 
 // const imgfooterlogo = 'assets/images/landing/codedthemes-logo.svg';
-const imgfootersoc1 = 'assets/images/landing/img-soc1.svg';
-const imgfootersoc2 = 'assets/images/landing/img-soc2.svg';
-const imgfootersoc3 = 'assets/images/landing/img-soc3.svg';
+// const imgfootersoc1 = 'assets/images/landing/img-soc1.svg';
+// const imgfootersoc2 = 'assets/images/landing/img-soc2.svg';
+// const imgfootersoc3 = 'assets/images/landing/img-soc3.svg';
 
 // ==============================|| LANDING - FOOTER PAGE ||============================== //
 
@@ -41,7 +41,7 @@ const FooterBlock = ({ isFull }) => {
         <Box
           sx={{
             position: 'relative',
-            bgcolor: theme.palette.grey.A700,
+            bgcolor: 'theme.palette.grey.A700',
             zIndex: 1,
             mt: { xs: 0, md: 13.75 },
             pt: { xs: 8, sm: 7.5, md: 18.75 },
@@ -127,7 +127,7 @@ const FooterBlock = ({ isFull }) => {
         </Box>
       )}
 
-      <Box sx={{ pt: isFull ? 0 : 10, pb: 10, bgcolor: theme.palette.grey.A700 }}>
+      <Box sx={{ pt: isFull ? 0 : 10, pb: 7, bgcolor: '#525252' }}>
         <Container>
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
@@ -143,7 +143,8 @@ const FooterBlock = ({ isFull }) => {
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     {/* <CardMedia component="img" image={imgfooterlogo} sx={{ width: 'auto' }} /> */}
-                    <Logo reverse />
+                    {/* <Logo reverse /> */}
+                    <img style={{ width: '200px' }} src="/assets/images/image logo.png" alt="" />
                   </Grid>
                   <Grid item xs={12}>
                     {/* <Typography variant="subtitle1" sx={{ fontWeight: 400, color: theme.palette.common.white }}>
@@ -294,19 +295,36 @@ const FooterBlock = ({ isFull }) => {
               </Grid>
             </Grid>
           </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant="h5" sx={{ mt: 5, color: theme.palette.common.white }}>
+                Disclaimer:
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography sx={{ color: theme.palette.common.white }}>
+                Our goal is to help connect guests of vacation rentals directly to hosts by providing a more thorough and all inclusive
+                search search search search search search search search experience. We provide one platform where all Booking Site profiles
+                and offer direct booking and communication with their guests. All information on RentMyVR.com is to be verified by all
+                bookings or transactions. We seek to provide only an online directory. We will not be a part of your booking communication,
+                communication, screening or agreements between hosts and guests. We also will not be a part of any contract between owners
+                management companies.
+              </Typography>
+            </Grid>
+          </Grid>
         </Container>
       </Box>
-      <Divider sx={{ borderColor: 'grey.700' }} />
+      <Divider sx={{ borderColor: '#8c8c8c' }} />
       <Box
         sx={{
           py: 1.5,
-          bgcolor: theme.palette.mode === 'dark' ? theme.palette.grey[50] : theme.palette.grey[800]
+          bgcolor: theme.palette.mode === 'dark' ? theme.palette.grey[50] : '#525252'
         }}
       >
         <Container>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={8}>
-              <Typography variant="subtitle2" color="secondary">
+              <Typography variant="subtitle2" color="#fff">
                 © Copyright icon 2023 Rent My VR
               </Typography>
             </Grid>
@@ -321,8 +339,7 @@ const FooterBlock = ({ isFull }) => {
                 </Grid>
                 <Grid item>
                   <Link href="#" underline="none" sx={linkSX}>
-                    {/* <CardMedia component="img" image={imgfootersoc2} /> */}
-                    $ USD
+                    {/* <CardMedia component="img" image={imgfootersoc2} /> */}$ USD
                   </Link>
                 </Grid>
                 <Grid item>
