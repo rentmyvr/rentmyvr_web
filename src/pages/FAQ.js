@@ -24,7 +24,10 @@ import {
   TextField,
   Typography,
   useScrollTrigger,
-  InputAdornment
+  InputAdornment,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails
 } from '@mui/material';
 
 import Carousel from 'react-material-ui-carousel';
@@ -49,6 +52,131 @@ import { HomeFilled, HomeOutlined, ShoppingFilled, CalendarOutlined, Environment
 // import Image from 'next/image';
 
 // ==============================|| CONTACT US - MAIN ||============================== //
+
+let faqsForGuests = [
+  {
+    question: 'What is Rent My VR?',
+    answer:
+      'Rent My VR is an company operating out of Arizona, founded by long time veterans of the real estate and vacation rental industry. Since formation, we have helped connect our users/guests to houses, condos, cottages, cabins and vacation rental properties in the US. Rent My VR’s Property Directory listings are provided by either export partnerships, listed by the host, or referred to us. At this time, we do not facilitate any bookings on our website. We instead refer the guest directly to the host or to the platform of their choice to book their stay and complete the transaction. Our aim is to provide a one stop shop place to compare rates, direct booking options, and reviews for each property. '
+  },
+  {
+    question: 'What if I need to Change or Cancel My Reservation?',
+    answer:
+      'Please refer back to the website you used to make the booking. We provide the link to the websites available for each property, in one easy to search directory, however, we do not facilitate the booking, nor do we have access to any of the booking information.'
+  },
+  {
+    question: 'Does Rent My VR charge fees to book a stay at a property?',
+    answer:
+      'Rent My VR does not charge a fee to the guest. Our aim is to make searching properties and choosing an OTA vs direct booking easier. We seek to allow the guest to make an educated decision by comparing rates and reviews on different platforms. We see the listing on our site as a marketing expense to the host, and want to create an easy search and book experience for the end user. '
+  },
+  {
+    question: 'What is Rent My VR’s Cancellation policy?',
+    answer:
+      'Rent My VR is not involved in the booking of a reservation and does not institute a cancellation policy; please refer to the site you used to book your stay. For cancellation of a property or management company directory listing, you are able to login and deactivate a property at any time. We do not offer a refund for early deactivation of listings. '
+  },
+  {
+    question: 'Do you do guest screening? ',
+    answer:
+      'We do not. We only seek to connect guests and travelers with the sites they prefer to use to book their stay. Hosts are responsible for doing their own guest checks and screening. '
+  },
+  {
+    question: 'Is Listing Data on Your Site Up to Date and Reliable? ',
+    answer:
+      'Property listings on our site either consist of limited data on a standard listing or detailed data on a premium listing. These listings include photos and the amenities offered with the property. We receive this data from our partners, directly from the hosts, or from our referral sources. We aim to display accurate property information, however, Rent My VR is not liable for the accuracy of information posted in a listing. Please verify and contact the property owner or manager/ host directly through the site you intend to use for booking. In the event that you suspect a listing is not a legitimate property listing, please report it immediately. Rent My VR takes potential scams very seriously, and will review and deactivate properties until ownership and legitimacy is documented and confirmed. '
+  }
+];
+
+let faqsForHosts = [
+  {
+    question: 'Is Listing Data on Your Site Up to Date and Reliable? ',
+    answer:
+      'Property listings on our site either consist of limited data on a standard listing or detailed data on a premium listing. These listings include photos and the amenities offered with the property. We receive this data from our partners, directly from the hosts, or from our referral sources. We aim to display accurate property information, however, Rent My VR is not liable for the accuracy of information posted in a listing. Please verify and contact the property owner or manager/ host directly through the site you intend to use for booking. In the event that you suspect a listing is not a legitimate property listing, please report it immediately. Rent My VR takes potential scams very seriously, and will review and deactivate properties until ownership and legitimacy is documented and confirmed. '
+  },
+  {
+    question: ' What is Rent My VR?',
+    answer:
+      'Rent My VR is an company operating out of Arizona, founded by long time veterans of the real estate and vacation rental industry. Since formation, we have helped connect our users/guests to houses, condos, cottages, cabins and vacation rental properties in the US. Rent My VR’s Property Directory listings are provided by either export partnerships, listed by the host, or referred to us. At this time, we do not facilitate any bookings on our website. We instead refer the guest directly to the host or to the platform of their choice to book their stay and complete the transaction. Our aim is to provide a one stop shop place to compare rates, direct booking options, and reviews for each property. '
+  },
+
+  {
+    question: 'Who Can List Their Property?',
+    answer:  'Owners, co-hosts, and management companies are all able to list on our site. We do NOT verify any licensing requirements or restrictions by state to constitute a “management company,” so when viewing a management directory listing, please consider any legal requirements that may be necessary when screening a company to potentially manage your property. '
+  },
+
+  {
+    question:'Where Does My Property Need To Be Located?',
+    answer:   'Rent My VR knew one thing when planning our launch and growth strategy - you can’t do everything well, but you can do some things exceptionally. In an effort to provide exceptional customer service and support, we had to come up with a growth strategy that is calculated, paced, and intentional. For this reason, we are currently only located in the United States. We know there is a large demand for an international market. Be on the lookout for expansion outside of the US with a target for full global coverage by 2026. '
+  },
+  {
+    question:'Why doesn’t Rent My VR offer payment processing for bookings?',
+    answer:  'We are a directory of listings, but we want the owner/manager to use the payment option of their choice. We know hosts already have this part of the process in place, and we seek to drive potential guests to view their property, but then allow the guest to book through their preferred platform. We are not involved with the payment or booking process. '
+  },
+
+  {
+    question:'Do you do guest screening?',
+    answer:  'We do not. We only seek to connect guests and travelers with the sites they prefer to use to book their stay. Hosts are responsible for doing their own guest checks and screening.'
+  },
+
+  {
+    question:'How are you building traffic and SEO for Rent My VR? ',
+    answer:  'Where should we start? We have taken a multifaceted approach to SEO, as we know this site is only worth the response and traffic it gets from the end user. Our approach includes traditional SEO, Ads, social media promotion, organic traffic through additional partners and sites and backend SEO to the maximum reach.'
+  },
+
+  {
+    question:'Will I see the email and phone number for my inquiries?',
+    answer:  'You can see the emails or phone numbers as these are required input fields on an inquiry form. We keep your email confidential until you have replied to your guest from your email client. In this way, we are able to cut down on the potential spam from someone scraping our site. However, once you have determined a message has come from a legitimate guest, you are able to contact them through your preferred method.'
+  },
+
+  {
+    question:'Is there a cost to be listed on Rent My VR?',
+    answer:  'We offer a free account that includes the ability to upload free standard listings. Premium membership listings will have additional functionality and added visibility. These listings do have a cost, and you can choose a monthly or annual subscription. '
+  },
+
+  {
+    question:'What is Rent My VR’s Cancellation policy?',
+    answer:  'Rent My VR is not involved in the booking of a reservation and does not institute a cancellation policy; please refer to the site you used to book your stay. For cancellation of a property or management company directory listing, you are able to login and deactivate a property at any time. We do not offer a refund for early deactivation of listings.'
+  },
+
+  {
+    question:'How many images can I upload to a listing? ',
+    answer:  'Standard listings only allow for a single photo upload. These listings are free, and the guest is able to easily click to their preferred website link to view the additional listing photos. Premium listings offer up to 99 photos as an added benefit. '
+  },
+
+  {
+    question:'Do I Really Need Photos?',
+    answer: 'Yes! Listings are sorted by photos. In fact, we won’t approve your listing unless you have at least 1 photo! Standard listings appear below the section for premium listings, so we highly encourage upgrading your listing to allow for more photos. Properties with more photos will appear above properties with less photos. In addition, photos will help with the percentage of people who actually choose to book! The more photos, the better.'
+  },
+
+  {
+    question:'How did my listing end up on your site?',
+    answer:  'We have listed your property either at your request or through a partnership with an OTA or channel manager. You may have also been referred to us through our network for a comp listing. Opting out is easy. Should you decide you do not want the increased traffic and bookings from Rent My VR, you were provided login access upon your listing going live. You are able to login to deactivate or you can Contact Us, and we can deactivate for you. We hope this never happens, but we understand sometimes things come up, and properties are sold or converted to long term rentals. Our solutions team is standing by to assist you with these edits and changes.'
+  },
+
+  {
+    question:'Is Listing Data on Your Site Up to Date and Reliable? ',
+    answer:  'Property listings on our site either consist of limited data on a standard listing or detailed data on a premium listing. These listings include photos and the amenities offered with the property. We receive this data from our partners, directly from the hosts, or from our referral sources. We aim to display accurate property information, however, Rent My VR is not liable for the accuracy of information posted in a listing. Please verify and contact the property owner or manager/ host directly through the site you intend to use for booking. In the event that you suspect a listing is not a legitimate property listing, please report it immediately. Rent My VR takes potential scams very seriously, and will review and deactivate properties until ownership and legitimacy is documented and confirmed. '
+  },
+
+  {
+    question:'What Size Do My Photos Need To Be?',
+    answer:  'Minimum width: 720 px, Minimum height: 480 px'
+  },
+
+  {
+    question:'Should I continue to list with VRBO, AirBNB, etc?',
+    answer:  'We complement your marketing efforts on other sites. We hope to bring you enough value and transparency with analytics that you are soon able to make a determination of where your best spent dollars are going. With Rent My VR, you can compare and contrast as one more way to track which sites guests are likely to click on making it easy to identify if you are losing traffic due to an OTAs policies. In a perfect world, one solution would work for all of your booking needs, but we know there are several powerful platforms that we seek to partner with, rather than compete with.'
+  },
+
+  {
+    question:'Why would I list my management company on Rent My VR? ',
+    answer:  'Looking to book more bookings and drive more traffic to your properties? Looking to acquire more properties to manage? With Rent My VR, you can do both through our Management Directory Listings. We are quickly growing to become the largest online directory of management companies for short term/ vacation rental properties. Get started at the sign up tab, create a login, and immediately add and edit your company s listing. '
+  },
+
+  {
+    question:'Do you have any special pricing or promotions?',
+    answer: 'As a new company, we have been running founder’s promotions to ensure our site offers maximum inventory for potential guests. Our promotions are changing as quickly as our team is building and adding features, and we will often run beta test promotions for our users. Feel free to reach out to our support team here to inquire about any current promotions.'
+  }
+];
 
 let items = [
   {
@@ -370,366 +498,39 @@ const Index = () => {
   return (
     <Page title="Rent MyVR Home">
       <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center">
-        <Grid item xs={12}>
-          <Carousel
-            next={() => {}}
-            prev={() => {}}
-            autoPlay={true}
-            stopAutoPlayOnHover={true}
-            interval={4000}
-            animation="slide"
-            swipe={true}
-            indicators={false}
-            navButtonsAlwaysVisible={true}
-            navButtonsProps={{ style: { backgroundColor: '#1890ff' } }}
-            indicatorIconButtonProps={{ style: { padding: '2px', color: '#eee' } }}
-            activeIndicatorIconButtonProps={{ style: { color: '##1890ff' } }}
-            // indicatorContainerProps={{ style: { marginTop: '-50px' } }}
-            buttonVisible={{ opacity: '1' }}
-            buttonHidden={{ opacity: '0' }}
-          >
-            {items.map((item, i) => (
-              <CarouselItem key={i} item={item} />
+        <Stack spacing={0} justifyContent="center" alignItems="center">
+          <Grid item xs={12}>
+            <img style={{ width: '100%' }} src="/assets/images/Frequently Asked Questions.png" alt="" />
+          </Grid>
+          <Grid item sm={12} md={8} mb={5}>
+            <Typography variant="h2" mb={2} mt={2}>
+              FAQs for Guests
+            </Typography>
+            {faqsForGuests.map((faq, i) => (
+              <Accordion key={i}>
+                <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
+                  <Typography>{faq.question}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>{faq.answer}</Typography>
+                </AccordionDetails>
+              </Accordion>
             ))}
-          </Carousel>
-          {/* <ContactHeader /> */}
-        </Grid>
-        <Grid container spacing={2} pl={4} pr={2} pt={1} pb={1} mt={-10} zIndex={10} direction="row" sx={{ backgroundColor: 'unset' }}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Stack direction="column" spacing={1.25}>
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Arrival Date
-              </InputLabel> */}
-              <TextField
-                fullWidth
-                // variant="filled"
-                // label="Where do you want to go?"
-                id="property-where"
-                placeholder="Where do you want to go?"
-                {...getFieldProps('where')}
-                error={Boolean(touched.where && errors.where)}
-                helperText={touched.where && errors.where}
-                sx={{ backgroundColor: '#fff' }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <EnvironmentOutlined className="icon" />
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Stack>
+            <Typography variant="h2" mb={2} mt={2}>
+              FAQs for Hosts
+            </Typography>
+            {faqsForHosts.map((faq, i) => (
+              <Accordion key={i}>
+                <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
+                  <Typography>{faq.question}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>{faq.answer}</Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Stack direction="column" spacing={1.25}>
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Outgoing Date
-              </InputLabel> */}
-              <TextField
-                fullWidth
-                id="property-checkIn"
-                // variant="filled"
-                // label="Check-in"
-                placeholder="Check-in"
-                {...getFieldProps('checkIn')}
-                error={Boolean(touched.checkIn && errors.checkIn)}
-                helperText={touched.checkIn && errors.checkIn}
-                sx={{ backgroundColor: '#fff' }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <CalendarOutlined className="icon" />
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Stack>
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25}>
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Rooms Date
-              </InputLabel> */}
-              <TextField
-                fullWidth
-                id="property-checkOut"
-                // variant="filled"
-                // label="Check-out"
-                placeholder="Check-out"
-                {...getFieldProps('checkOut')}
-                error={Boolean(touched.checkOut && errors.checkOut)}
-                helperText={touched.checkOut && errors.checkOut}
-                sx={{ backgroundColor: '#fff' }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <CalendarOutlined className="icon" />
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Stack>
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25} position="relative">
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Arrival Date
-              </InputLabel> */}
-              {/* <TeamOutlined className="icon" style={{position: 'absolute', top: '25px', zIndex: '10', left: '5px'}} /> */}
-              <TextField
-                fullWidth
-                id="property-guests"
-                placeholder="Guests"
-                // variant="filled"
-                // label="Guests"
-                {...getFieldProps('guests')}
-                error={Boolean(touched.guests && errors.guests)}
-                helperText={touched.guests && errors.guests}
-                style={{ backgroundColor: '#fff'}}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <TeamOutlined className="icon" />
-                    </InputAdornment>
-                  )
-                }}
-              />
-            </Stack>
-          </Grid>
-          <Grid item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25}>
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Arrival Date
-              </InputLabel> */}
-
-              <Button variant="contained" size="large" color="primary">
-                Search
-              </Button>
-              {/* <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose} sx={{ mt: 0.25 }}>
-                <CloseOutlined />
-              </IconButton> */}
-              {/* <TextField
-                fullWidth
-                id="property-yelp"
-                placeholder="Yelp Link"
-                {...getFieldProps('yelp')}
-                error={Boolean(touched.yelp && errors.yelp)}
-                helperText={touched.yelp && errors.yelp}
-              /> */}
-            </Stack>
-          </Grid>
-          {/* <Grid item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25}>
-              <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Arrival Date
-              </InputLabel>
-              <TextField
-                fullWidth
-                id="property-yelp"
-                placeholder="Yelp Link"
-                {...getFieldProps('yelp')}
-                error={Boolean(touched.yelp && errors.yelp)}
-                helperText={touched.yelp && errors.yelp}
-              />
-            </Stack>
-          </Grid> */}
-        </Grid>
-        <Grid container spacing={2} mt={5} justifyContent="center" alignItems="center">
-          <Grid item sm={12} md={10}>
-            <Stack spacing={0} justifyContent="center" alignItems="center">
-              <Grid item sm={12} md={10}>
-                <Typography display="inline" variant="h2" color="#1890ff">
-                  THE&nbsp;
-                </Typography>
-                <Typography display="inline" variant="h2">
-                  RENT MY VR WAY
-                </Typography>
-              </Grid>
-              <ThemeProvider theme={underlineTheme}>
-                <Grid></Grid>
-              </ThemeProvider>
-            </Stack>
-          </Grid>
-          <Grid item sm={12} md={10}>
-            <Stack direction="column" alignItems="center" spacing={1.25} pl={4} pr={2}>
-              <Typography variant="h4">
-                Finally, an online directory that offers you what you have been asking for. With RentMyVR, you can do SO MUCH MORE!
-              </Typography>
-            </Stack>
-          </Grid>
-          <Grid item sm={12} md={10}>
-            <Grid container spacing={1.25} pl={4} pr={2} pt={4}>
-              <Grid item sm={12} md={4}>
-                <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-                  <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    {/* <HomeFilled sx={{ fontSize: 40 }} /> */}
-                    {/* <Rent_1 color="primary" /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-1.svg" alt="" />
-                  </Avatar>
-                  <Typography variant="h3">Search Properties</Typography>
-                  <Typography>
-                    Guests can save money when the host offers discounts for direct booking. Search vacation rentals, filter by amenities
-                    and compare pricing on the hosts&apos; different booking platforms, all from one place.
-                  </Typography>
-                </Stack>
-              </Grid>
-              <Grid item sm={12} md={4}>
-                <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-                  <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    {/* <BankFilled sx={{ fontSize: 40 }} /> */}
-                    {/* <Rent_2 color="warning" /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
-                  </Avatar>
-                  <Typography variant="h3">Search Management Companies</Typography>
-                  <Typography>
-                    Looking for a professional who specializes in short term rentals in the area you are traveling to? Search our online
-                    directory of Short Term and Vacation Rental Management Companies
-                  </Typography>
-                </Stack>
-              </Grid>
-              <Grid item sm={12} md={4}>
-                <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-                  <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    {/* <AppleFilled sx={{ fontSize: 40 }} /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-3.svg" alt="" />
-                  </Avatar>
-                  <Typography variant="h3">Why List With Us?</Typography>
-                  <Typography>
-                    Looking to Increase exposure, online traffic, and bookings to your vacation rental? Interested in driving traffic to
-                    your personal booking site, rather than using a 3rd party booking site?
-                  </Typography>
-                </Stack>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid container spacing={2} mt={5} pl={4} pr={2} justifyContent="center" alignItems="center">
-          <Grid item sm={12} md={10}>
-            <Stack spacing={0} justifyContent="center" alignItems="center">
-              <Grid item sm={12} md={10}>
-                <Typography display="inline" variant="h2" color="#1890ff">
-                  Featured&nbsp;
-                </Typography>
-                <Typography display="inline" variant="h2">
-                  Listings
-                </Typography>
-              </Grid>
-              <ThemeProvider theme={underlineTheme}>
-                <Grid></Grid>
-              </ThemeProvider>
-              <Typography>
-                Check out some of our favorite properties! We love themes and the fun concepts our hosts come up with for their properties.
-                Don&rsquo;t forget to follow our social media accounts to see some of our favorites! #vacationrentalsgonewild
-              </Typography>
-            </Stack>
-          </Grid>
-        </Grid>
-
-        <Grid item xs={12} sm={12} md={10}>
-          <Grid container spacing={2} pl={4} pr={2} pt={4}>
-            <Grid item xs={12} sm={12} md={4}>
-              <Card elevation={12} square>
-                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/600x450.jpg" title="green iguana" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Lovely Home
-                  </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    <TagFilled /> The location
-                  </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    The location
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  {/* <Button size="small">Share</Button> */}
-                  <Button size="small">Learn More</Button>
-                </CardActions>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={12} md={4}>
-              <Card elevation={12} square>
-                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/600x450.jpg" title="green iguana" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Lovely Home
-                  </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    <TagFilled /> The location
-                  </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    The location
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  {/* <Button size="small">Share</Button> */}
-                  <Button size="small">Learn More</Button>
-                </CardActions>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={12} md={4}>
-              <Card elevation={12} square>
-                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/600x450.jpg" title="green iguana" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Lovely Home
-                  </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    <TagFilled /> The location
-                  </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    The location
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  {/* <Button size="small">Share</Button> */}
-                  <Button size="small">Learn More</Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
-
-      <Grid container spacing={2} pb={28} my={6} sx={{width: '100%'}} justifyContent="center" alignItems="center">
-        <ThemeProvider theme={countUpTheme}>
-          <Grid item xs={12} sx={{ backgroundColor: 'transparent' }}>
-            <Box className="imageOverlay">
-              <Grid container spacing={0} justifyContent="center" alignItems="center">
-                <Grid item xs={12} sm={6} md={3}>
-                  <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
-                    {/* <HomeFilled className="icon" /> */}
-                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
-                    <Typography className="count">
-                      <CountUp start={0} end={50} duration={5} />
-                    </Typography>
-                    <Typography className="sub">Project</Typography>
-                  </Stack>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                  <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
-                    {/* <HomeFilled className="icon" /> */}
-                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
-                    <Typography className="count">
-                      <CountUp start={0} end={500} duration={4} />
-                    </Typography>
-                    <Typography className="sub">Project</Typography>
-                  </Stack>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                  <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
-                    {/* <HomeFilled className="icon" /> */}
-                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
-                    <Typography className="count">
-                      <CountUp start={0} end={9500} duration={3} />
-                    </Typography>
-                    <Typography className="sub">Project</Typography>
-                  </Stack>
-                </Grid> 
-              </Grid>
-            </Box>
-          </Grid>
-        </ThemeProvider>
+        </Stack>
       </Grid>
 
       {/* <Grid container spacing={2} mt={60} justifyContent="center" alignItems="center"> */}
