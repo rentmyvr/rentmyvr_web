@@ -151,14 +151,14 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                 }}
               >
                 <MenuItem onClick={handleClose}>
-                  <NextLink href={DEFAULT_PATH} passHref>
+                  <NextLink href="/property" passHref>
                     <Link className="header-link" color="black" underline="none">
                       List A Property
                     </Link>
                   </NextLink>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <NextLink href={DEFAULT_PATH} passHref>
+                  <NextLink href="/company" passHref>
                     <Link className="header-link" color="black" underline="none">
                       List Your Company
                     </Link>
