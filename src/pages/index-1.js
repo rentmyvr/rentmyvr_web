@@ -36,8 +36,8 @@ import ScrollTop from 'components/ScrollTop';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
-import { CalendarOutlined, EnvironmentOutlined, TeamOutlined, TagFilled, UpSquareFilled } from '@ant-design/icons';
-// import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpSquareFilled } from '@ant-design/icons';
+import { CalendarOutlined, EnvironmentOutlined, TeamOutlined, TagFilled, UpOutlined } from '@ant-design/icons';
+// import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpOutlined } from '@ant-design/icons';
 // import Image from 'next/image';
 
 // ==============================|| CONTACT US - MAIN ||============================== //
@@ -810,7 +810,7 @@ const Index = () => {
         <Fade in={trigger} color="primary">
           <Box onClick={handleClick} role="presentation" sx={{ position: 'fixed', bottom: 16, right: 16 }}>
             <Fab size="medium" aria-label="scroll back to top">
-              <UpSquareFilled sx={{ fontSize: 40 }} />
+              <UpOutlined sx={{ fontSize: 40 }} />
             </Fab>
           </Box>
         </Fade>

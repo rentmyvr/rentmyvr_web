@@ -7,7 +7,7 @@ import Page from 'components/Page';
 import ScrollTop from 'components/ScrollTop';
 
 // assets
-import { UpSquareFilled } from '@ant-design/icons';
+import { UpOutlined } from '@ant-design/icons';
 
 const Index = () => {
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 800 });
@@ -65,7 +65,7 @@ const Index = () => {
         <Fade in={trigger} color="primary">
           <Box onClick={handleClick} role="presentation" sx={{ position: 'fixed', bottom: 16, right: 16 }}>
             <Fab size="medium" aria-label="scroll back to top">
-              <UpSquareFilled sx={{ fontSize: 40 }} />
+              <UpOutlined sx={{ fontSize: 40 }} />
             </Fab>
           </Box>
         </Fade>
