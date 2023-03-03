@@ -2,7 +2,27 @@ import PropTypes from 'prop-types';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Box, Button, Container, CardMedia, Divider, Grid, Link, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  CardMedia,
+  Divider,
+  Grid,
+  Link,
+  Typography,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from '@mui/material';
 
 // third party
 import { motion } from 'framer-motion';
@@ -11,14 +31,203 @@ import { motion } from 'framer-motion';
 import useConfig from 'hooks/useConfig';
 import AnimateButton from 'components/@extended/AnimateButton';
 
+import { useState, useRef, useEffect } from 'react';
+
 // assets
-import { SendOutlined, TwitterOutlined, YoutubeOutlined, AmazonOutlined, GlobalOutlined } from '@ant-design/icons';
+import { SendOutlined, TwitterOutlined, YoutubeOutlined, AmazonOutlined, GlobalOutlined, CloseOutlined } from '@ant-design/icons';
 
 // ==============================|| LANDING - FOOTER PAGE ||============================== //
+
+let languages = [
+  { language: 'English', region: 'United Arab Emirates' },
+  { language: 'Azərbaycan dili', region: 'Azərbaycan' },
+  { language: 'Bahasa Indonesia', region: 'Indonesia' },
+  { language: 'Bosanski', region: 'Bosna i Hercegovina' },
+  { language: 'Català', region: 'Espanya' },
+  { language: 'Čeština', region: 'Česká republika' },
+  { language: 'Crnogorski', region: 'Crna Gora' },
+  { language: 'Dansk', region: 'Danmark' },
+  { language: 'Deutsch', region: 'Deutschland' },
+  { language: 'Deutsch', region: 'Österreich' },
+  { language: 'Deutsch', region: 'Schweiz' },
+  { language: 'Eesti', region: 'Eesti' },
+  { language: 'English', region: 'Australia' },
+  { language: 'English', region: 'Canada' },
+  { language: 'English', region: 'Guyana' },
+  { language: 'English', region: 'India' },
+  { language: 'English', region: 'Ireland' },
+  { language: 'English', region: 'New Zealand' },
+  { language: 'English', region: 'Singapore' },
+  { language: 'Español', region: 'Argentina' },
+  { language: 'Español', region: 'Belice' },
+  { language: 'Español', region: 'Bolivia' },
+  { language: 'Español', region: 'Chile' },
+  { language: 'Español', region: 'Colombia' },
+  { language: 'Español', region: 'Costa Rica' },
+  { language: 'Español', region: 'Ecuador' },
+  { language: 'Español', region: 'El Salvador' },
+  { language: 'Español', region: 'España' },
+  { language: 'Español', region: 'Estados Unidos' },
+  { language: 'Español', region: 'Guatemala' },
+  { language: 'Español', region: 'Honduras' },
+  { language: 'Español', region: 'Latinoamérica' },
+  { language: 'Español', region: 'México' },
+  { language: 'Español', region: 'Nicaragua' },
+  { language: 'Español', region: 'Panamá' },
+  { language: 'Español', region: 'Paraguay' },
+  { language: 'Español', region: 'Perú' },
+  { language: 'Español', region: 'Venezuela' },
+  { language: 'Français', region: 'Belgique' },
+  { language: 'Français', region: 'Canada' },
+  { language: 'Français', region: 'France' },
+  { language: 'Français', region: 'Suisse' },
+  { language: 'Gaeilge', region: 'Éire' },
+  { language: 'Hrvatski', region: 'Hrvatska' },
+  { language: 'isiXhosa', region: 'eMzantsi Afrika' },
+  { language: 'isiZulu', region: 'iNingizimu Afrika' },
+  { language: 'Íslenska', region: 'Ísland' },
+  { language: 'Italiano', region: 'Italia' },
+  { language: 'Italiano', region: 'Svizzera' },
+  { language: 'Kiswahili', region: 'Āfrika' },
+  { language: 'Latviešu', region: 'Latvija' },
+  { language: 'Lietuvių', region: 'Lietuva' },
+  { language: 'Magyar', region: 'Magyarország' },
+  { language: 'Malti', region: 'Malta' },
+  { language: 'Melayu', region: 'Malaysia' },
+  { language: 'Nederlands', region: 'België' },
+  { language: 'Nederlands', region: 'Nederland' },
+  { language: 'Norsk', region: 'Norge' },
+  { language: 'Polski', region: 'Polska' },
+  { language: 'Português', region: 'Brasil' },
+  { language: 'Português', region: 'Portugal' },
+  { language: 'Română', region: 'România' },
+  { language: 'Shqip', region: 'Shqipëri' },
+  { language: 'Slovenčina', region: 'Slovensko' },
+  { language: 'Slovenščina', region: 'Slovenija' },
+  { language: 'Srpski', region: 'Srbija' },
+  { language: 'Suomi', region: 'Suomi' },
+  { language: 'Svenska', region: 'Sverige' },
+  { language: 'Tagalog', region: 'Pilipinas' },
+  { language: 'Tiếng Việt', region: 'Việt Nam' },
+  { language: 'Türkçe', region: 'Türkiye' },
+  { language: 'Ελληνικά', region: 'Ελλάδα' },
+  { language: 'Български', region: 'България' },
+  { language: 'Македонски', region: 'Северна Македонија' },
+  { language: 'Русский', region: 'Россия' },
+  { language: 'Українська', region: 'Україна' },
+  { language: 'ქართული', region: 'საქართველო' },
+  { language: 'Հայերեն', region: 'Հայաստան' },
+  { language: 'עברית', region: 'ישראל' },
+  { language: 'العربية', region: 'العالم' },
+  { language: 'हिन्दी', region: 'भारत' },
+  { language: 'ไทย', region: 'ประเทศไทย' },
+  { language: '한국어', region: '대한민국' },
+  { language: '日本語', region: '日本' },
+  { language: '简体中文', region: '美国' },
+  { language: '繁體中文', region: '美國' },
+  { language: '简体中文', region: '中国' },
+  { language: '繁體中文', region: '香港' },
+  { language: '繁體中文', region: '台灣' }
+];
+
+let currencys = [
+  { name: 'United States dollar', symbol: 'USD-$' },
+  { name: 'Australian dollar', symbol: 'AUD-$' },
+  { name: 'Brazilian real', symbol: 'BRL-R$' },
+  { name: 'Bulgarian lev', symbol: 'BGN-лв.' },
+  { name: 'Canadian dollar', symbol: 'CAD-$' },
+  { name: 'Chilean peso', symbol: 'CLP-$' },
+  { name: 'Chinese yuan', symbol: 'CNY-￥' },
+  { name: 'Colombian peso', symbol: 'COP-$' },
+  { name: 'Costa Rican colon', symbol: 'CRC-₡' },
+  { name: 'Croatian kuna', symbol: 'HRK-kn' },
+  { name: 'Czech koruna', symbol: 'CZK-Kč' },
+  { name: 'Danish krone', symbol: 'DKK-kr' },
+  { name: 'Emirati dirham', symbol: 'AED-ﺩ.ﺇ' },
+  { name: 'Euro', symbol: 'EUR-€' },
+  { name: 'Hong Kong dollar', symbol: 'HKD-$' },
+  { name: 'Hungarian forint', symbol: 'HUF-Ft' },
+  { name: 'Indian rupee', symbol: 'INR-₹' },
+  { name: 'Israeli new shekel', symbol: 'ILS-₪' },
+  { name: 'Japanese yen', symbol: 'JPY-¥' },
+  { name: 'Malaysian ringgit', symbol: 'MYR-RM' },
+  { name: 'Mexican peso', symbol: 'MXN-$' },
+  { name: 'Moroccan dirham', symbol: 'MAD' },
+  { name: 'New Taiwan dollar', symbol: 'TWD-$' },
+  { name: 'New Zealand dollar', symbol: 'NZD-$' },
+  { name: 'Norwegian krone', symbol: 'NOK-kr' },
+  { name: 'Peruvian sol', symbol: 'PEN-S/' },
+  { name: 'Philippine peso', symbol: 'PHP-₱' },
+  { name: 'Polish zloty', symbol: 'PLN-zł' },
+  { name: 'Pound sterling', symbol: 'GBP-£' },
+  { name: 'Romanian leu', symbol: 'RON-lei' },
+  { name: 'Saudi Arabian riyal', symbol: 'SAR-SR' },
+  { name: 'Singapore dollar', symbol: 'SGD-$' },
+  { name: 'South African rand', symbol: 'ZAR-R' },
+  { name: 'South Korean won', symbol: 'KRW-₩' },
+  { name: 'Swedish krona', symbol: 'SEK-kr' },
+  { name: 'Swiss franc', symbol: 'CHF' },
+  { name: 'Thai baht', symbol: 'THB-฿' },
+  { name: 'Turkish lira', symbol: 'TRY-₺' },
+  { name: 'Uruguayan peso', symbol: 'UYU-$U' }
+];
+
+const style = {
+  borderRadius: '10px',
+  border: '1px solid',
+  '&:hover': {
+    cursor: 'pointer',
+    background: '#ddd'
+  }
+};
 
 const FooterBlock = ({ isFull }) => {
   const theme = useTheme();
   const { presetColor } = useConfig();
+  const [state, setState] = useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false
+  });
+  const [selectedLanguage, setSelectedLanguage] = useState(0);
+  const [selectedCurrency, setSelectedCurrency] = useState(0);
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const [languageModalOpen, setLanguageModalOpen] = useState(false);
+  const handleClose = () => {
+    setCurrencyOpen(false), setLanguageModalOpen(false);
+  };
+
+  const [currencyOpen, setCurrencyOpen] = useState(false);
+  const [scroll, setScroll] = useState('paper');
+
+  const handleOpen = (scrollType) => () => {
+    setLanguageModalOpen(true);
+    setScroll(scrollType);
+  };
+
+  const handleClickOpen = (scrollType) => () => {
+    setCurrencyOpen(true);
+    setScroll(scrollType);
+  };
+
+  const descriptionElementRef = useRef(null);
+  useEffect(() => {
+    if (currencyOpen) {
+      const { current: descriptionElement } = descriptionElementRef;
+      if (descriptionElement !== null) {
+        descriptionElement.focus();
+      }
+    }
+  }, [currencyOpen]);
 
   const linkSX = {
     color: theme.palette.common.white,
@@ -29,6 +238,38 @@ const FooterBlock = ({ isFull }) => {
       opacity: '1'
     }
   };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250, padding: '20px' }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>{index % 2 === 0 ? 'inboxicon' : 'mailicon'}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>{index % 2 === 0 ? 'inboxicon' : 'mailicon'}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
     <>
       {isFull && (
@@ -325,22 +566,99 @@ const FooterBlock = ({ isFull }) => {
             <Grid item xs={12} sm={4}>
               <Grid container spacing={2} alignItems="center" sx={{ justifyContent: 'flex-end' }}>
                 <Grid item>
-                  <Link href="#" underline="none" sx={linkSX}>
-                    {/* <CardMedia component="img" image={imgfootersoc1} /> */}
+                  <Link onClick={handleOpen('paper')} underline="none" sx={linkSX} style={{ cursor: 'pointer' }}>
                     <GlobalOutlined style={{ marginRight: '5px' }} />
-                    English (US)
+                    {languages[selectedLanguage].language}
                   </Link>
+                  <Dialog
+                    open={languageModalOpen}
+                    onClose={handleClose}
+                    scroll={scroll}
+                    aria-labelledby="scroll-dialog-title"
+                    aria-describedby="scroll-dialog-description"
+                  >
+                    <DialogTitle id="scroll-dialog-title">
+                      Choose a language and region
+                      <DialogActions style={{ float: 'right' }}>
+                        <CloseOutlined onClick={handleClose} />
+                      </DialogActions>
+                    </DialogTitle>
+                    <DialogContent dividers={scroll === 'paper'}>
+                      <DialogContentText id="scroll-dialog-description" ref={descriptionElementRef} tabIndex={-1}>
+                        <Grid container spacing={0} alignItems="center">
+                          {languages.map((language, key) => (
+                            <Grid
+                              key={key}
+                              item
+                              xs={12}
+                              sm={6}
+                              md={3}
+                              p={1}
+                              my={1}
+                              sx={style}
+                              borderColor={key === selectedLanguage ? '#000' : '#fff!important'}
+                              onClick={() => setSelectedLanguage(key)}
+                            >
+                              <Typography className="sub">{language.language}</Typography>
+                              <Typography className="sub" color={'grey'}>
+                                {language.region}
+                              </Typography>
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </DialogContentText>
+                    </DialogContent>
+                  </Dialog>
                 </Grid>
                 <Grid item>
-                  <Link href="#" underline="none" sx={linkSX}>
-                    {/* <CardMedia component="img" image={imgfootersoc2} /> */}$ USD
+                  <Link onClick={handleClickOpen('paper')} underline="none" sx={linkSX} style={{ cursor: 'pointer' }}>
+                    {currencys[selectedCurrency].symbol}
                   </Link>
+                  <Dialog
+                    open={currencyOpen}
+                    onClose={handleClose}
+                    scroll={scroll}
+                    aria-labelledby="scroll-dialog-title"
+                    aria-describedby="scroll-dialog-description"
+                  >
+                    <DialogTitle id="scroll-dialog-title">
+                      Choose a currency
+                      <DialogActions style={{ float: 'right' }}>
+                        <CloseOutlined onClick={handleClose} />
+                      </DialogActions>
+                    </DialogTitle>
+                    <DialogContent dividers={scroll === 'paper'}>
+                      <DialogContentText id="scroll-dialog-description" ref={descriptionElementRef} tabIndex={-1}>
+                        <Grid container spacing={0} alignItems="center">
+                          {currencys.map((currency, key) => (
+                            <Grid
+                              key={key}
+                              item
+                              xs={12}
+                              sm={6}
+                              md={3}
+                              my={1}
+                              p={1}
+                              sx={style}
+                              borderColor={key === selectedCurrency ? '#000' : '#fff!important'}
+                              onClick={() => setSelectedCurrency(key)}
+                            >
+                              <Typography className="sub">{currency.name}</Typography>
+                              <Typography className="sub">{currency.symbol}</Typography>
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </DialogContentText>
+                    </DialogContent>
+                  </Dialog>
                 </Grid>
                 <Grid item>
-                  <Link href="#" underline="none" sx={linkSX}>
-                    {/* <CardMedia component="img" image={imgfootersoc3} /> */}
+                  <Link onClick={toggleDrawer('bottom', true)} underline="none" sx={linkSX} style={{ cursor: 'pointer' }}>
                     Support & resources
                   </Link>
+                  <Drawer anchor={'bottom'} open={state['bottom']} onClose={toggleDrawer('bottom', false)}>
+                    {list('bottom')}
+                  </Drawer>
                 </Grid>
               </Grid>
             </Grid>

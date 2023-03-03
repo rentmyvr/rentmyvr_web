@@ -617,7 +617,7 @@ const Index = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} pb={28} my={6} sx={{width: '100%'}} justifyContent="center" alignItems="center">
+      <Grid container spacing={2} pb={28} my={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
         <ThemeProvider theme={countUpTheme}>
           <Grid item xs={12} sx={{ backgroundColor: 'transparent' }}>
             <Box className="imageOverlay">
