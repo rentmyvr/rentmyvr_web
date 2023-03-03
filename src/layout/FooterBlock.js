@@ -12,7 +12,7 @@ import useConfig from 'hooks/useConfig';
 import AnimateButton from 'components/@extended/AnimateButton';
 
 // assets
-import { SendOutlined, TwitterOutlined, YoutubeOutlined, AmazonOutlined } from '@ant-design/icons';
+import { SendOutlined, TwitterOutlined, YoutubeOutlined, AmazonOutlined, GlobalOutlined } from '@ant-design/icons';
 import Logo from 'components/logo';
 
 // const imgfooterlogo = 'assets/images/landing/codedthemes-logo.svg';
@@ -157,9 +157,9 @@ const FooterBlock = ({ isFull }) => {
                     <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
                       Connect with Us on Social:
                     </Typography>
-                    <TwitterOutlined className="icon" />
-                    <YoutubeOutlined className="icon" />
-                    <AmazonOutlined className="icon" />
+                    <TwitterOutlined className="icon" style={{ fontSize: '30px', color: '#fff', padding: '5px' }} />
+                    <YoutubeOutlined className="icon" style={{ fontSize: '30px', color: '#fff', padding: '5px' }} />
+                    <AmazonOutlined className="icon" style={{ fontSize: '30px', color: '#fff', padding: '5px' }} />
                   </Grid>
                 </Grid>
               </motion.div>
@@ -314,17 +314,21 @@ const FooterBlock = ({ isFull }) => {
               <Grid container spacing={2} alignItems="center" sx={{ justifyContent: 'flex-end' }}>
                 <Grid item>
                   <Link href="#" underline="none" sx={linkSX}>
-                    <CardMedia component="img" image={imgfootersoc1} />
+                    {/* <CardMedia component="img" image={imgfootersoc1} /> */}
+                    <GlobalOutlined style={{ marginRight: '5px' }} />
+                    English (US)
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link href="#" underline="none" sx={linkSX}>
-                    <CardMedia component="img" image={imgfootersoc2} />
+                    {/* <CardMedia component="img" image={imgfootersoc2} /> */}
+                    $ USD
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link href="#" underline="none" sx={linkSX}>
-                    <CardMedia component="img" image={imgfootersoc3} />
+                    {/* <CardMedia component="img" image={imgfootersoc3} /> */}
+                    Support & resources
                   </Link>
                 </Grid>
               </Grid>

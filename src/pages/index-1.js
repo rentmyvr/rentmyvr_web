@@ -701,7 +701,7 @@ const Index = () => {
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
                     <Typography className="count">
-                      <CountUp start={0} end={250} duration={20} />
+                      <CountUp start={0} end={50} duration={5} />
                     </Typography>
                     <Typography className="sub">Project</Typography>
                   </Stack>
@@ -711,7 +711,7 @@ const Index = () => {
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
                     <Typography className="count">
-                      <CountUp start={0} end={100} duration={20} />
+                      <CountUp start={0} end={500} duration={4} />
                     </Typography>
                     <Typography className="sub">Project</Typography>
                   </Stack>
@@ -721,21 +721,11 @@ const Index = () => {
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
                     <Typography className="count">
-                      <CountUp start={0} end={300} duration={20} />
+                      <CountUp start={0} end={9500} duration={3} />
                     </Typography>
                     <Typography className="sub">Project</Typography>
                   </Stack>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                  <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
-                    {/* <HomeFilled className="icon" /> */}
-                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
-                    <Typography className="count">
-                      <CountUp start={0} end={400} duration={20} />
-                    </Typography>
-                    <Typography className="sub">Project</Typography>
-                  </Stack>
-                </Grid>
+                </Grid> 
               </Grid>
             </Box>
           </Grid>
