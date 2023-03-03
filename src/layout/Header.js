@@ -24,7 +24,9 @@ import {
   Stack,
   Toolbar,
   Typography,
-  useScrollTrigger
+  useScrollTrigger,
+  Menu,
+  MenuItem
 } from '@mui/material';
 
 // project import
@@ -83,6 +85,14 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
   //     }
   //   }
   // });
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <ElevationScroll layout={layout} {...others}>
@@ -119,11 +129,42 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                   Management Companies
                 </Link>
               </NextLink>
-              <NextLink href={DEFAULT_PATH} passHref>
-                <Link className="header-link" color="white" underline="none">
-                  List With Us
-                </Link>
-              </NextLink>
+              <Link
+                id="basic-button"
+                className="header-link"
+                underline="none"
+                style={{ cursor: 'pointer' }}
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+              >
+                List With Us
+              </Link>
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button',
+                }}
+              >
+                <MenuItem onClick={handleClose}>
+                  <NextLink href={DEFAULT_PATH} passHref>
+                    <Link className="header-link" color="black" underline="none">
+                      List A Property
+                    </Link>
+                  </NextLink>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <NextLink href={DEFAULT_PATH} passHref>
+                    <Link className="header-link" color="black" underline="none">
+                      List Your Company
+                    </Link>
+                  </NextLink>
+                </MenuItem>
+              </Menu>
               {/* <NextLink href={DEFAULT_PATH} passHref>
                 <Link className="header-link" color="white" underline="none">
                   Ad. with Us
@@ -250,7 +291,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                         <ListItemIcon>
                           <LineOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="List With Uss" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText primary="List With Us" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                       </ListItemButton>
                     </Link>
                     {/* <Link style={{ textDecoration: 'none' }} href="/">
