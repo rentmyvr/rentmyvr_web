@@ -159,7 +159,7 @@ const Index = () => {
                 <AccordionSummary
                   aria-controls="panel1a-content"
                   id="panel1a-header"
-                  sx={{ background: 'rgb(162 156 174 / 76%)', borderRadius: '5px' }}
+                  sx={{ background: 'repeating-linear-gradient(150deg, rgb(142 168 191 / 88%), transparent 868px)', borderRadius: '5px' }}
                 >
                   <Typography>{faq.question}</Typography>
                 </AccordionSummary>
@@ -176,7 +176,7 @@ const Index = () => {
                 <AccordionSummary
                   aria-controls="panel1a-content"
                   id="panel1a-header"
-                  sx={{ background: 'rgb(162 156 174 / 76%)', borderRadius: '5px' }}>
+                  sx={{ background: 'repeating-linear-gradient(150deg, rgb(142 168 191 / 88%), transparent 868px)', borderRadius: '5px' }}>
                   <Typography>{faq.question}</Typography>
                 </AccordionSummary>
                 <AccordionDetails sx={{ background: 'rgba(0,0,0, .1)' }}>
