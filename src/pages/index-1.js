@@ -20,7 +20,14 @@ import {
   InputAdornment
 } from '@mui/material';
 
+import dayjs from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+
 import Carousel from 'react-material-ui-carousel';
+
+import { useState } from 'react';
 
 // third-party
 import * as Yup from 'yup';
@@ -270,6 +277,8 @@ const Index = () => {
       // anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
+  const [checkInValue, setCheckInValue] = useState('');
+  const [checkOutValue, setCheckOutValue] = useState('');
 
   const formik = useFormik({
     initialValues: {},
@@ -350,7 +359,7 @@ const Index = () => {
                 {...getFieldProps('where')}
                 error={Boolean(touched.where && errors.where)}
                 helperText={touched.where && errors.where}
-                sx={{ backgroundColor: '#fff' }}
+                sx={{ backgroundColor: '#fff', borderRadius: '5px' }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -361,12 +370,23 @@ const Index = () => {
               />
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Stack spacing={3}>
+                  <DesktopDatePicker
+                    label="Check-in"
+                    inputFormat="MM/DD/YYYY"
+                    value={checkInValue}
+                    onChange={setCheckInValue}
+                    renderInput={(params) => <TextField {...params} sx={{ backgroundColor: '#fff', borderRadius: '5px' }} />}
+                  />
+                </Stack>
+              </LocalizationProvider>
               {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Outgoing Date
               </InputLabel> */}
-              <TextField
+              {/* <TextField
                 fullWidth
                 id="property-checkIn"
                 // variant="filled"
@@ -383,15 +403,26 @@ const Index = () => {
                     </InputAdornment>
                   )
                 }}
-              />
+              /> */}
             </Stack>
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Stack spacing={3}>
+                  <DesktopDatePicker
+                    label="Check-out"
+                    inputFormat="MM/DD/YYYY"
+                    value={checkOutValue}
+                    onChange={setCheckOutValue}
+                    renderInput={(params) => <TextField {...params} sx={{ backgroundColor: '#fff', borderRadius: '5px' }} />}
+                  />
+                </Stack>
+              </LocalizationProvider>
               {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Rooms Date
               </InputLabel> */}
-              <TextField
+              {/* <TextField
                 fullWidth
                 id="property-checkOut"
                 // variant="filled"
@@ -408,10 +439,10 @@ const Index = () => {
                     </InputAdornment>
                   )
                 }}
-              />
+              /> */}
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
+          <Grid item xs={12} sm={6} md={3}>
             <Stack direction="column" spacing={1.25} position="relative">
               {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Arrival Date
@@ -426,7 +457,7 @@ const Index = () => {
                 {...getFieldProps('guests')}
                 error={Boolean(touched.guests && errors.guests)}
                 helperText={touched.guests && errors.guests}
-                style={{ backgroundColor: '#fff'}}
+                style={{ backgroundColor: '#fff', borderRadius: '5px' }}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
