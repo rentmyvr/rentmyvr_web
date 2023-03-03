@@ -1,8 +1,5 @@
 import PropTypes from 'prop-types';
 
-// next
-import NextLink from 'next/link';
-
 // material-ui
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import {
@@ -13,13 +10,9 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  // Container,
   Fab,
   Fade,
   Grid,
-  InputLabel,
-  Link,
-  // Paper,
   Stack,
   TextField,
   Typography,
@@ -40,11 +33,10 @@ import CountUp from 'react-countup';
 import Layout from 'layout';
 import Page from 'components/Page';
 import ScrollTop from 'components/ScrollTop';
-import { Rent_1, Rent_2 } from 'components/RentMyVRIcons';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
-import { HomeFilled, HomeOutlined, ShoppingFilled, CalendarOutlined, EnvironmentOutlined, TeamOutlined, TagFilled, UpSquareFilled } from '@ant-design/icons';
+import { CalendarOutlined, EnvironmentOutlined, TeamOutlined, TagFilled, UpSquareFilled } from '@ant-design/icons';
 // import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpSquareFilled } from '@ant-design/icons';
 // import Image from 'next/image';
 
@@ -266,57 +258,6 @@ const countUpTheme = createTheme({
   }
 });
 
-const cardTheme = createTheme({
-  components: {
-    MuiCardContent: {
-      styleOverrides: {
-        root: {
-          overflow: 'hidden',
-          position: 'relative',
-          borderRadius: '2px',
-          '&:hover .locationOverlay': {
-            backgroundColor: 'rgba(24, 144, 255, 0.9)',
-            transition: 'all 0.4s ease 0s'
-          },
-          '&:hover .overlayText': {
-            top: '50%',
-            transition: 'all 0.4s ease 0s'
-          }
-        }
-      }
-    }
-  }
-});
-
-const locationOverlayTheme = createTheme({
-  components: {
-    MuiGrid: {
-      styleOverrides: {
-        root: {
-          backgroundColor: 'rgba(0, 0, 0, 0.4)',
-          height: '100%',
-          width: '100%',
-          position: 'absolute',
-          top: 0,
-          transition: 'all 0.4s ease 0s',
-          '.overlayText': {
-            color: '#fff',
-            position: 'relative',
-            top: '80%',
-            transform: 'translateY(-50%)',
-            textAlign: 'center',
-            transition: 'all 0.4s ease 0s',
-            '.headerLink': {
-              fontSize: '22px',
-              fontWeight: 'bold'
-            }
-          }
-        }
-      }
-    }
-  }
-});
-
 const Index = () => {
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 800 });
 
@@ -498,24 +439,9 @@ const Index = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Arrival Date
-              </InputLabel> */}
-
               <Button variant="contained" size="large" color="primary">
                 Search
               </Button>
-              {/* <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose} sx={{ mt: 0.25 }}>
-                <CloseOutlined />
-              </IconButton> */}
-              {/* <TextField
-                fullWidth
-                id="property-yelp"
-                placeholder="Yelp Link"
-                {...getFieldProps('yelp')}
-                error={Boolean(touched.yelp && errors.yelp)}
-                helperText={touched.yelp && errors.yelp}
-              /> */}
             </Stack>
           </Grid>
           {/* <Grid item xs={12} sm={6} md={2}>
