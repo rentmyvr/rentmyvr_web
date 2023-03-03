@@ -363,7 +363,7 @@ const Index = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <EnvironmentOutlined className="icon" />
+                      <EnvironmentOutlined className="icon" style={{ fontSize: '20px' }} />
                     </InputAdornment>
                   )
                 }}
@@ -461,7 +461,7 @@ const Index = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <TeamOutlined className="icon" />
+                      <TeamOutlined className="icon" style={{ fontSize: '20px' }} />
                     </InputAdornment>
                   )
                 }}
