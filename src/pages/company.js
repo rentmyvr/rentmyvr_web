@@ -21,7 +21,7 @@ const Index = () => {
 
   return (
     <Page title="Rent MyVR Home">
-      <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center">
+      <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center" bgcolor="#f4f8ff">
         <Stack spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
             <img style={{ width: '100%' }} src="/assets/images/List Your Company.png" alt="" />
