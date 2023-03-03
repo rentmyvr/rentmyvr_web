@@ -170,14 +170,14 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                   Ad. with Us
                 </Link>
               </NextLink> */}
-              <NextLink href={DEFAULT_PATH} passHref>
+              <NextLink href="/FAQ" passHref>
                 <Link className="header-link" color="white" underline="none">
                   FAQs
                 </Link>
               </NextLink>
-              <NextLink href={DEFAULT_PATH} passHref>
+              <NextLink href="/coming-soon" passHref>
                 <Link className="header-link" color="white" underline="none">
-                  Comming Soon
+                  Coming Soon
                 </Link>
               </NextLink>
               {!session && (
@@ -316,7 +316,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                         <ListItemIcon>
                           <LineOutlined />
                         </ListItemIcon>
-                        <ListItemText primary="Comming Soon" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText primary="Coming Soon" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                         <Chip color="primary" label="v1.0" size="small" />
                       </ListItemButton>
                     </Link>
