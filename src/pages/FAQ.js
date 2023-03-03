@@ -145,7 +145,7 @@ const Index = () => {
 
   return (
     <Page title="Rent MyVR Home">
-      <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center">
+      <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center" bgcolor={'#dee8fa'}>
         <Stack spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
             <img style={{ width: '100%' }} src="/assets/images/Frequently Asked Questions.png" alt="" />
@@ -155,24 +155,31 @@ const Index = () => {
               FAQs for Guests
             </Typography>
             {faqsForGuests.map((faq, i) => (
-              <Accordion key={i}>
-                <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
+              <Accordion key={i} sx={{ background: '#dee8fa!important' }}>
+                <AccordionSummary
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                  sx={{ background: 'rgb(162 156 174 / 76%)', borderRadius: '5px' }}
+                >
                   <Typography>{faq.question}</Typography>
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails sx={{ background: 'rgba(0,0,0, .1)' }}>
                   <Typography>{faq.answer}</Typography>
                 </AccordionDetails>
               </Accordion>
             ))}
-            <Typography variant="h2" mb={2} mt={2}>
+            <Typography variant="h2" mb={2} mt={3}>
               FAQs for Hosts
             </Typography>
             {faqsForHosts.map((faq, i) => (
-              <Accordion key={i}>
-                <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
+              <Accordion key={i} sx={{ background: '#dee8fa!important' }}>
+                <AccordionSummary
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                  sx={{ background: 'rgb(162 156 174 / 76%)', borderRadius: '5px' }}>
                   <Typography>{faq.question}</Typography>
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails sx={{ background: 'rgba(0,0,0, .1)' }}>
                   <Typography>{faq.answer}</Typography>
                 </AccordionDetails>
               </Accordion>
