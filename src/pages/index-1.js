@@ -49,7 +49,7 @@ import ScrollTop from 'components/ScrollTop';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
-import { EnvironmentOutlined, TeamOutlined, TagFilled, UpOutlined } from '@ant-design/icons';
+import { EnvironmentOutlined, TeamOutlined, TagFilled, UpOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 // import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpOutlined } from '@ant-design/icons';
 // import Image from 'next/image';
 
@@ -89,7 +89,7 @@ let items = [
     description: 'Book using your preferred platform once you find your dream vacation property',
     img: '/assets/images/1500x600/Image-5.png',
     btnText: 'Search Now',
-    textColor: '#000'
+    textColor: '#fff'
   },
   {
     name: 'Dreaming of Where To Go Next?',
@@ -147,7 +147,6 @@ const CarouselItem = ({ item }) => {
     <Grid
       container
       spacing={12}
-      justifyContent="center"
       alignItems="center"
       sx={{
         // marginTop: '30px',
@@ -167,10 +166,12 @@ const CarouselItem = ({ item }) => {
       }}
       mt={0}
     >
-      <Grid item xs={12} sm={10}>
-        <h2 style={{ color: item.textColor }}>{item.name}</h2>
-        <p style={{ color: item.textColor, fontWeight: 'normal' }}>{item.description}</p>
-        <Button>{item.btnText}</Button>
+      <Grid xs={12} sm={4} md={3} style={{ background: 'rgba(0, 0, 0, 0.5)', textAlign: 'center', borderRadius: '5px' }} ml={30} p={5}>
+        <h1 style={{ color: item.textColor, marginTop: 0 }}>{item.name}</h1>
+        <h3 style={{ color: item.textColor, fontWeight: 'normal' }}>{item.description}</h3>
+        <Button variant="contained" style={{ borderRadius: '15px', marginTop: '25px' }}>
+          {item.btnText}
+        </Button>
       </Grid>
     </Grid>
   );
@@ -576,9 +577,98 @@ const Index = () => {
                           aria-labelledby="composition-button"
                           onKeyDown={handleListKeyDown}
                         >
-                          <MenuItem onClick={handleClose}>Profile</MenuItem>
-                          <MenuItem onClick={handleClose}>My account</MenuItem>
-                          <MenuItem onClick={handleClose}>Logout</MenuItem>
+                          <MenuItem>
+                            <Grid container spacing={0} justifyContent="center" alignItems="center">
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                                <Typography variant="h4" className="sub">
+                                  Adults
+                                </Typography>
+                                <Typography className="sub" color={'grey'}>
+                                  Ages 13 or above
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                                <Typography display="inline" variant="h4" m="auto">
+                                  5
+                                </Typography>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </MenuItem>
+                          <MenuItem>
+                            <Grid container spacing={0} justifyContent="center" alignItems="center">
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                                <Typography className="sub" variant="h4">
+                                  Children
+                                </Typography>
+                                <Typography className="sub" color={'grey'}>
+                                  Ages 2-12
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                                <Typography display="inline" variant="h4" m="auto">
+                                  5
+                                </Typography>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </MenuItem>
+                          <MenuItem>
+                            <Grid container spacing={0} justifyContent="center" alignItems="center">
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                                <Typography className="sub" variant="h4">
+                                  Infants
+                                </Typography>
+                                <Typography className="sub" color={'grey'}>
+                                  Under 2
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                                <Typography display="inline" variant="h4" m="auto">
+                                  5
+                                </Typography>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </MenuItem>
+                          <MenuItem>
+                            <Grid container spacing={0} justifyContent="center" alignItems="center">
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                                <Typography className="sub" variant="h4">
+                                  Pets
+                                </Typography>
+                                <Typography className="sub" color={'grey'}>
+                                  Bringing a service animal?
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                                <Typography display="inline" variant="h4" m="auto">
+                                  5
+                                </Typography>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </MenuItem>
                         </MenuList>
                       </ClickAwayListener>
                     </Paper>

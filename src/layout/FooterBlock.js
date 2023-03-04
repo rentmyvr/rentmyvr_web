@@ -379,15 +379,9 @@ const FooterBlock = ({ isFull }) => {
               >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    {/* <CardMedia component="img" image={imgfooterlogo} sx={{ width: 'auto' }} /> */}
-                    {/* <Logo reverse /> */}
                     <img style={{ width: '200px' }} src="/assets/images/image logo.png" alt="" />
                   </Grid>
                   <Grid item xs={12}>
-                    {/* <Typography variant="subtitle1" sx={{ fontWeight: 400, color: theme.palette.common.white }}>
-                      Sign up
-                    </Typography> */}
-
                     <Link href="/register" underline="none" sx={linkSX}>
                       Sign up
                     </Link>
@@ -413,10 +407,8 @@ const FooterBlock = ({ isFull }) => {
                     </Link>
 
                     <Link href="https://www.tiktok.com/@rentmyvr.com" sx={linkSX} color="white" underline="none">
-                      <FaTiktok className="icon" style={{ fontSize: '25px'}} />
+                      <FaTiktok className="icon" style={{ fontSize: '25px' }} />
                     </Link>
-
-                    {/* <TiktokIcon /> */}
                   </Grid>
                 </Grid>
               </motion.div>
