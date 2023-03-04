@@ -17,7 +17,8 @@ import {
   TextField,
   Typography,
   useScrollTrigger,
-  InputAdornment
+  InputAdornment,
+  Autocomplete
 } from '@mui/material';
 
 import dayjs from 'dayjs';
@@ -265,6 +266,26 @@ const countUpTheme = createTheme({
   }
 });
 
+const regions = [
+  { title: 'Rome, Italy' },
+  { title: 'Rome, Italie' },
+  { title: 'Rio de Janeiro, Brazil' },
+  { title: 'Reykjavik, Iceland' },
+  { title: 'Rio de Janeiro - RJ' },
+  { title: 'Milan, Italy' },
+  { title: 'Miami, FL' },
+  { title: 'Madrid' },
+  { title: 'Mexico City, Mexico' },
+  { title: 'Malaga, Spain' },
+  { title: 'New York, NY' },
+  { title: 'Nice' },
+  { title: 'Naples, FL' },
+  { title: 'New Orleans, LA' },
+  { title: 'New Jersey, United States' },
+  { title: 'Jakarta, Indonesia' },
+  { title: 'Tokyo, Japan' }
+];
+
 const Index = () => {
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 800 });
 
@@ -277,8 +298,10 @@ const Index = () => {
       // anchor.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
-  const [checkInValue, setCheckInValue] = useState('');
-  const [checkOutValue, setCheckOutValue] = useState('');
+  const [checkInValue, setCheckInValue] = useState(null);
+  const [checkInFocused, setCheckInFocused] = useState(false);
+  const [checkOutValue, setCheckOutValue] = useState(null);
+  const [checkOutFocused, setCheckOutFocused] = useState(false);
 
   const formik = useFormik({
     initialValues: {},
@@ -350,7 +373,30 @@ const Index = () => {
               {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
                 Arrival Date
               </InputLabel> */}
-              <TextField
+
+              <Autocomplete
+                options={regions}
+                getOptionLabel={(option) => option.title}
+                style={{ position: 'relative' }}
+                renderInput={(params) => (
+                  <>
+                    <TextField
+                      {...params}
+                      placeholder="Where do you want to go?"
+                      sx={{ backgroundColor: '#fff', borderRadius: '5px' }}
+                      InputProps={{
+                        ...params.InputProps,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <EnvironmentOutlined className="icon" style={{ fontSize: '20px' }} />
+                          </InputAdornment>
+                        )
+                      }}
+                    />
+                  </>
+                )}
+              />
+              {/* <TextField
                 fullWidth
                 // variant="filled"
                 // label="Where do you want to go?"
@@ -367,7 +413,7 @@ const Index = () => {
                     </InputAdornment>
                   )
                 }}
-              />
+              /> */}
             </Stack>
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
@@ -375,11 +421,18 @@ const Index = () => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
                   <DesktopDatePicker
-                    label="Check-in"
+                    label={checkInValue || checkInFocused ? '' : 'Check-in'}
                     inputFormat="MM/DD/YYYY"
                     value={checkInValue}
                     onChange={setCheckInValue}
-                    renderInput={(params) => <TextField {...params} sx={{ backgroundColor: '#fff', borderRadius: '5px' }} />}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        sx={{ backgroundColor: '#fff', borderRadius: '5px' }}
+                        onFocus={() => setCheckInFocused(true)}
+                        onBlur={() => setCheckInFocused(false)}
+                      />
+                    )}
                   />
                 </Stack>
               </LocalizationProvider>
@@ -411,11 +464,18 @@ const Index = () => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
                   <DesktopDatePicker
-                    label="Check-out"
+                    label={checkOutValue || checkOutFocused ? '' : 'Check-out'}
                     inputFormat="MM/DD/YYYY"
                     value={checkOutValue}
                     onChange={setCheckOutValue}
-                    renderInput={(params) => <TextField {...params} sx={{ backgroundColor: '#fff', borderRadius: '5px' }} />}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        sx={{ backgroundColor: '#fff', borderRadius: '5px' }}
+                        onFocus={() => setCheckOutFocused(true)}
+                        onBlur={() => setCheckOutFocused(false)}
+                      />
+                    )}
                   />
                 </Stack>
               </LocalizationProvider>
@@ -682,7 +742,7 @@ const Index = () => {
                     </Typography>
                     <Typography className="sub">Project</Typography>
                   </Stack>
-                </Grid> 
+                </Grid>
               </Grid>
             </Box>
           </Grid>
