@@ -540,7 +540,7 @@ const Index = () => {
               <TextField
                 fullWidth
                 id="property-guests"
-                placeholder="Guests"
+                placeholder="#Guests"
                 // variant="filled"
                 // label="Guests"
                 ref={anchorRef}
