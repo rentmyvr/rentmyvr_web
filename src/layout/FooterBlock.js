@@ -34,7 +34,16 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { useState, useRef, useEffect } from 'react';
 
 // assets
-import { SendOutlined, TwitterOutlined, YoutubeOutlined, AmazonOutlined, GlobalOutlined, CloseOutlined } from '@ant-design/icons';
+import {
+  SendOutlined,
+  TwitterOutlined,
+  YoutubeOutlined,
+  FacebookOutlined,
+  InstagramOutlined,
+  GlobalOutlined,
+  CloseOutlined
+} from '@ant-design/icons';
+import { FaTiktok } from 'react-icons/fa';
 
 // ==============================|| LANDING - FOOTER PAGE ||============================== //
 
@@ -386,9 +395,28 @@ const FooterBlock = ({ isFull }) => {
                     <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
                       Connect with Us on Social:
                     </Typography>
-                    <TwitterOutlined className="icon" style={{ fontSize: '30px', color: '#fff', padding: '5px' }} />
-                    <YoutubeOutlined className="icon" style={{ fontSize: '30px', color: '#fff', padding: '5px' }} />
-                    <AmazonOutlined className="icon" style={{ fontSize: '30px', color: '#fff', padding: '5px' }} />
+
+                    <Link href="https://www.facebook.com/rentmyvr" sx={linkSX} color="white" underline="none">
+                      <FacebookOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                    </Link>
+
+                    <Link href="https://www.instagram.com/rentmyvr" sx={linkSX} color="white" underline="none">
+                      <InstagramOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                    </Link>
+
+                    <Link href=" https://www.youtube.com/@rentmyvr" sx={linkSX} color="white" underline="none">
+                      <YoutubeOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                    </Link>
+
+                    <Link href="https://twitter.com/rentmyvr" sx={linkSX} color="white" underline="none">
+                      <TwitterOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                    </Link>
+
+                    <Link href="https://www.tiktok.com/@rentmyvr.com" sx={linkSX} color="white" underline="none">
+                      <FaTiktok className="icon" style={{ fontSize: '25px'}} />
+                    </Link>
+
+                    {/* <TiktokIcon /> */}
                   </Grid>
                 </Grid>
               </motion.div>
