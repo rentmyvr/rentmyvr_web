@@ -744,7 +744,7 @@ const Index = () => {
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     {/* <BankFilled sx={{ fontSize: 40 }} /> */}
                     {/* <Rent_2 color="warning" /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
+                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-3.svg" alt="" />
                   </Avatar>
                   <Typography variant="h3">Search Companies</Typography>
                   <Typography>
@@ -757,7 +757,7 @@ const Index = () => {
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     {/* <AppleFilled sx={{ fontSize: 40 }} /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-3.svg" alt="" />
+                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
                   </Avatar>
                   <Typography variant="h3">Why List With Us?</Typography>
                   <Typography>
@@ -869,7 +869,7 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={50} duration={5} />
                     </Typography>
-                    <Typography className="sub">States</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>States</Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -879,7 +879,7 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={500} duration={4} />
                     </Typography>
-                    <Typography className="sub">Hosts</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>Hosts</Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -889,7 +889,7 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={9500} duration={3} />
                     </Typography>
-                    <Typography className="sub">Listing</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>Listings</Typography>
                   </Stack>
                 </Grid>
               </Grid>

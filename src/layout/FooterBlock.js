@@ -556,7 +556,7 @@ const FooterBlock = ({ isFull }) => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={8}>
               <Typography variant="subtitle2" color="#fff">
-                © Copyright icon 2023 Rent My VR
+                © 2023 Rent My VR
               </Typography>
             </Grid>
             <Grid item xs={12} sm={4}>
