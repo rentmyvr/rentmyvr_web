@@ -19,9 +19,10 @@ import {
   useScrollTrigger,
   InputAdornment,
   Autocomplete
+  // Menu,
+  // MenuItem
 } from '@mui/material';
 
-import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -44,7 +45,7 @@ import ScrollTop from 'components/ScrollTop';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
-import { CalendarOutlined, EnvironmentOutlined, TeamOutlined, TagFilled, UpOutlined } from '@ant-design/icons';
+import { EnvironmentOutlined, TeamOutlined, TagFilled, UpOutlined } from '@ant-design/icons';
 // import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpOutlined } from '@ant-design/icons';
 // import Image from 'next/image';
 
@@ -370,10 +371,6 @@ const Index = () => {
         <Grid container spacing={2} pl={4} pr={2} pt={1} pb={1} mt={-10} zIndex={10} direction="row" sx={{ backgroundColor: 'unset' }}>
           <Grid item xs={12} sm={6} md={3}>
             <Stack direction="column" spacing={1.25}>
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Arrival Date
-              </InputLabel> */}
-
               <Autocomplete
                 options={regions}
                 getOptionLabel={(option) => option.title}
@@ -479,9 +476,6 @@ const Index = () => {
                   />
                 </Stack>
               </LocalizationProvider>
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Rooms Date
-              </InputLabel> */}
               {/* <TextField
                 fullWidth
                 id="property-checkOut"
@@ -504,9 +498,6 @@ const Index = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <Stack direction="column" spacing={1.25} position="relative">
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Arrival Date
-              </InputLabel> */}
               {/* <TeamOutlined className="icon" style={{position: 'absolute', top: '25px', zIndex: '10', left: '5px'}} /> */}
               <TextField
                 fullWidth

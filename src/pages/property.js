@@ -37,10 +37,11 @@ const Index = () => {
               with the host or through their own property booking site. We&rsquo;ve provided a way to do so.
             </Typography>
             <Typography mb={2} mt={2}>
-              We have two types of property listings - Standard and Premium. 
+              We have two types of property listings - Standard and Premium.
             </Typography>
             <Typography mb={2} mt={2}>
-              A host can list their property, at no charge, as a Standard Property Directory Listing on Rent My VR. This allows the property to show up and link to an external booking site for guests to view and discover your property listing. 
+              A host can list their property, at no charge, as a Standard Property Directory Listing on Rent My VR. This allows the property
+              to show up and link to an external booking site for guests to view and discover your property listing.
             </Typography>
             <Typography mb={2} mt={2}>
               For one annual flat fee, hosts can upgrade to a Premium Property Directory Listing on Rent My VR. This allows for your
