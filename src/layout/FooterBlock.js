@@ -342,14 +342,7 @@ const FooterBlock = ({ isFull }) => {
                   <Grid item xs={12} sx={{ my: 2 }}>
                     <Box sx={{ display: 'inline-block' }}>
                       <AnimateButton>
-                        <Button
-                          component={Link}
-                          href="https://codedthemes.gitbook.io/mantis/roadmap"
-                          target="_blank"
-                          size="large"
-                          variant="contained"
-                          endIcon={<SendOutlined />}
-                        >
+                        <Button component={Link} href="#" target="_blank" size="large" variant="contained" endIcon={<SendOutlined />}>
                           Roadmap
                         </Button>
                       </AnimateButton>
@@ -420,22 +413,17 @@ const FooterBlock = ({ isFull }) => {
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link
-                          href="https://mui.com/store/items/mantis-react-admin-dashboard-template/"
-                          underline="none"
-                          sx={linkSX}
-                          target="_blank"
-                        >
+                        <Link href="#" underline="none" sx={linkSX} target="_blank">
                           Purchase Mantis React
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link href="https://material-ui.com/store/contributors/codedthemes/" underline="none" sx={linkSX} target="_blank">
+                        <Link href="#" underline="none" sx={linkSX} target="_blank">
                           Portfolio
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link href="https://blog.mantisdashboard.io" underline="none" target="_blank" sx={linkSX}>
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           Blog
                         </Link>
                       </Grid>
@@ -460,17 +448,17 @@ const FooterBlock = ({ isFull }) => {
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link href="https://codedthemes.gitbook.io/mantis/" underline="none" target="_blank" sx={linkSX}>
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           Documentation
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link href="https://github.com/codedthemes/" underline="none" target="_blank" sx={linkSX}>
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           Github
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link href="https://codedthemes.gitbook.io/mantis/changelog" underline="none" target="_blank" sx={linkSX}>
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           Change Log
                         </Link>
                       </Grid>
@@ -495,32 +483,17 @@ const FooterBlock = ({ isFull }) => {
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link
-                          href="https://mui.com/store/previews/berry-react-material-admin/"
-                          underline="none"
-                          target="_blank"
-                          sx={linkSX}
-                        >
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           - &nbsp; Berry React Material
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link
-                          href="https://mui.com/store/previews/berry-react-material-admin-free/"
-                          underline="none"
-                          target="_blank"
-                          sx={linkSX}
-                        >
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           - &nbsp; Berry React Free
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link
-                          href="https://github.com/codedthemes/mantis-free-react-admin-template"
-                          underline="none"
-                          target="_blank"
-                          sx={linkSX}
-                        >
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           - &nbsp; Mantis Free React
                         </Link>
                       </Grid>
@@ -537,13 +510,16 @@ const FooterBlock = ({ isFull }) => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography sx={{ color: theme.palette.common.white }}>
+              <Typography sx={{ color: theme.palette.common.white }} mb={1}>
                 Our goal is to help connect guests of vacation rentals directly to hosts by providing a more thorough and all inclusive
                 search search search search search search search search experience. We provide one platform where all Booking Site profiles
-                and offer direct booking and communication with their guests. All information on RentMyVR.com is to be verified by all
-                bookings or transactions. We seek to provide only an online directory. We will not be a part of your booking communication,
-                communication, screening or agreements between hosts and guests. We also will not be a part of any contract between owners
-                management companies.
+                and offer direct booking and communication with their guests.
+              </Typography>
+
+              <Typography sx={{ color: theme.palette.common.white }}>
+                All information on RentMyVR.com is to be verified by all bookings or transactions. We seek to provide only an online
+                directory. We will not be a part of your booking communication, communication, screening or agreements between hosts and
+                guests. We also will not be a part of any contract between owners management companies.
               </Typography>
             </Grid>
           </Grid>
