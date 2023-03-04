@@ -19,8 +19,12 @@ import {
   useScrollTrigger,
   InputAdornment,
   Autocomplete,
-  Menu,
-  MenuItem
+  ClickAwayListener,
+  MenuItem,
+  MenuList,
+  Grow,
+  Paper,
+  Popper
 } from '@mui/material';
 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -29,7 +33,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 import Carousel from 'react-material-ui-carousel';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 // third-party
 import * as Yup from 'yup';
@@ -290,14 +294,38 @@ const regions = [
 const Index = () => {
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 800 });
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const settingGuestModal = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [guestMenuOpen, setGuestMenuOpen] = useState(false);
+  const anchorRef = useRef(null);
+  const settingGuestModal = () => {
+    setGuestMenuOpen((prevOpen) => !prevOpen);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setGuestMenuOpen(false);
   };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setGuestMenuOpen(false);
+    } else if (event.key === 'Escape') {
+      setGuestMenuOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = useRef(open);
+  useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = guestMenuOpen;
+  }, [guestMenuOpen]);
 
   const handleClick = (event) => {
     const anchor = (event.target.ownerDocument || document).querySelector('#__next');
@@ -514,6 +542,10 @@ const Index = () => {
                 placeholder="Guests"
                 // variant="filled"
                 // label="Guests"
+                ref={anchorRef}
+                aria-controls={guestMenuOpen ? 'composition-menu' : undefined}
+                aria-expanded={guestMenuOpen ? 'true' : undefined}
+                aria-haspopup="true"
                 onClick={settingGuestModal}
                 {...getFieldProps('guests')}
                 error={Boolean(touched.guests && errors.guests)}
@@ -528,32 +560,31 @@ const Index = () => {
                 }}
               />
 
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                  'aria-labelledby': 'basic-button'
-                }}
-              >
-                <MenuItem onClick={handleClose}>
-                  <Grid item xs={12} sm={6} md={3} p={1} my={1}>
-                    <Typography className="sub">Adults</Typography>
-                    <Typography className="sub" color={'grey'}>
-                      Ages 13 or above
-                    </Typography>
-                  </Grid>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Grid item xs={12} sm={6} md={3} p={1} my={1}>
-                    <Typography className="sub">Children</Typography>
-                    <Typography className="sub" color={'grey'}>
-                      Ages 2-12
-                    </Typography>
-                  </Grid>
-                </MenuItem>
-              </Menu>
+              <Popper open={guestMenuOpen} anchorEl={anchorRef.current} role={undefined} placement="bottom-start" transition disablePortal>
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom'
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <MenuList
+                          autoFocusItem={guestMenuOpen}
+                          id="composition-menu"
+                          aria-labelledby="composition-button"
+                          onKeyDown={handleListKeyDown}
+                        >
+                          <MenuItem onClick={handleClose}>Profile</MenuItem>
+                          <MenuItem onClick={handleClose}>My account</MenuItem>
+                          <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
@@ -744,7 +775,7 @@ const Index = () => {
                 <Grid item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
-                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
+                    <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
                     <Typography className="count">
                       <CountUp start={0} end={50} duration={5} />
                     </Typography>
@@ -754,7 +785,7 @@ const Index = () => {
                 <Grid item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
-                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
+                    <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
                     <Typography className="count">
                       <CountUp start={0} end={500} duration={4} />
                     </Typography>
@@ -764,7 +795,7 @@ const Index = () => {
                 <Grid item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
-                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
+                    <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
                     <Typography className="count">
                       <CountUp start={0} end={9500} duration={3} />
                     </Typography>
