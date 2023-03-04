@@ -628,7 +628,7 @@ const Index = () => {
           </Grid>
           <Grid item sm={12} md={10}>
             <Stack direction="column" alignItems="center" spacing={1.25} pl={4} pr={2}>
-              <Typography variant="h4">
+              <Typography variant="h4" style={{ textAlign: 'center' }}>
                 Finally, an online directory that offers you what you have been asking for. With RentMyVR, you can do SO MUCH MORE!
               </Typography>
             </Stack>
@@ -656,7 +656,7 @@ const Index = () => {
                     {/* <Rent_2 color="warning" /> */}
                     <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
                   </Avatar>
-                  <Typography variant="h3">Search Management Companies</Typography>
+                  <Typography variant="h3">Search Companies</Typography>
                   <Typography>
                     Looking for a professional who specializes in short term rentals in the area you are traveling to? Search our online
                     directory of Short Term and Vacation Rental Management Companies
@@ -693,7 +693,7 @@ const Index = () => {
               <ThemeProvider theme={underlineTheme}>
                 <Grid></Grid>
               </ThemeProvider>
-              <Typography>
+              <Typography variant="h4" style={{ textAlign: 'center' }}>
                 Check out some of our favorite properties! We love themes and the fun concepts our hosts come up with for their properties.
                 Don&rsquo;t forget to follow our social media accounts to see some of our favorites! #vacationrentalsgonewild
               </Typography>
@@ -779,7 +779,7 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={50} duration={5} />
                     </Typography>
-                    <Typography className="sub">Project</Typography>
+                    <Typography className="sub">States</Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -789,7 +789,7 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={500} duration={4} />
                     </Typography>
-                    <Typography className="sub">Project</Typography>
+                    <Typography className="sub">Hosts</Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -799,7 +799,7 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={9500} duration={3} />
                     </Typography>
-                    <Typography className="sub">Project</Typography>
+                    <Typography className="sub">Listing</Typography>
                   </Stack>
                 </Grid>
               </Grid>
