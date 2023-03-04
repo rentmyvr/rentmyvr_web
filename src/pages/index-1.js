@@ -18,9 +18,9 @@ import {
   Typography,
   useScrollTrigger,
   InputAdornment,
-  Autocomplete
-  // Menu,
-  // MenuItem
+  Autocomplete,
+  Menu,
+  MenuItem
 } from '@mui/material';
 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -55,84 +55,84 @@ let items = [
   {
     name: 'Book Direct with Hosts or Compare Rates',
     description: 'Search listings that offer direct booking from the host and save',
-    img: '/assets/images/1500x600/image-1.png',
+    img: '/assets/images/1500x600/Image-1.png',
     btnText: 'Search Here',
     textColor: '#fff'
   },
   {
     name: 'All Listing Links in One Place',
     description: 'Compare rates or compare ratings and reviews all in one place',
-    img: '/assets/images/1500x600/image-2.png',
+    img: '/assets/images/1500x600/Image-2.png',
     btnText: 'Start Your Search',
     textColor: '#fff'
   },
   {
     name: 'Find a Company Who Manages Vacation Rentals',
     description: 'Looking to hire a management company? Have questions and need a professional before you book your stay?',
-    img: '/assets/images/1500x600/image-3.png',
+    img: '/assets/images/1500x600/Image-3.png',
     btnText: 'Find a Company',
     textColor: '#fff'
   },
   {
     name: 'Rent My VR is Growing',
     description: 'Are you ready to list a property or your vacation rental management company with us?',
-    img: '/assets/images/1500x600/image-4.png',
+    img: '/assets/images/1500x600/Image-4.png',
     btnText: 'Get Started',
     textColor: '#fff'
   },
   {
     name: 'Search All Sites With One Search',
     description: 'Book using your preferred platform once you find your dream vacation property',
-    img: '/assets/images/1500x600/image-5.png',
+    img: '/assets/images/1500x600/Image-5.png',
     btnText: 'Search Now',
     textColor: '#000'
   },
   {
     name: 'Dreaming of Where To Go Next?',
     description: 'Search by category or amenity and discover themed or unique properties you never knew existed',
-    img: '/assets/images/1500x600/image-6.png',
+    img: '/assets/images/1500x600/Image-6.png',
     btnText: 'Find a Property',
     textColor: '#eee'
   },
   {
     name: 'Rates that Leave You Feeling More Relaxed',
     description: 'Find the site offering the lowest rate on a property or check for direct booking options to save',
-    img: '/assets/images/1500x600/image-7.png',
+    img: '/assets/images/1500x600/Image-7.png',
     btnText: 'Search Here',
     textColor: '#eee'
   },
   {
     name: 'Take the Hassle Out of the Hunt',
     description: 'Bringing all the online booking sites together to make your search a little better',
-    img: '/assets/images/1500x600/image-8.png',
+    img: '/assets/images/1500x600/Image-8.png',
     btnText: 'Search Rentals',
     textColor: '#fff'
   },
   {
     name: 'Book Your Stay the Better Way',
     description: 'Finally, a site where you can view a property’s website, online profiles, social media, and reviews, all in one place',
-    img: '/assets/images/1500x600/image-9.png',
+    img: '/assets/images/1500x600/Image-9.png',
     btnText: 'Search Now',
     textColor: '#fff'
   },
   {
     name: 'No Extra Fees',
     description: 'With Rent My VR, we believe in flat fee based listings and no fee for our guests.',
-    img: '/assets/images/1500x600/image-10.png',
+    img: '/assets/images/1500x600/Image-10.png',
     btnText: 'List Now',
     textColor: '#fff'
   },
   {
     name: 'Search All Sites With One Search',
     description: 'Book using your preferred platform once you find your dream vacation property',
-    img: '/assets/images/1500x600/image-11.png',
+    img: '/assets/images/1500x600/Image-11.png',
     btnText: 'Search Now',
     textColor: '#fff'
   },
   {
     name: 'Dreaming of Where To Go Next?',
     description: 'Search by category or ammenity and discover themed or unique properties you never knew existed',
-    img: '/assets/images/1500x600/image-12.png',
+    img: '/assets/images/1500x600/Image-12.png',
     btnText: 'Find a Property',
     textColor: '#fff'
   }
@@ -289,6 +289,15 @@ const regions = [
 
 const Index = () => {
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 800 });
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const settingGuestModal = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleClick = (event) => {
     const anchor = (event.target.ownerDocument || document).querySelector('#__next');
@@ -505,6 +514,7 @@ const Index = () => {
                 placeholder="Guests"
                 // variant="filled"
                 // label="Guests"
+                onClick={settingGuestModal}
                 {...getFieldProps('guests')}
                 error={Boolean(touched.guests && errors.guests)}
                 helperText={touched.guests && errors.guests}
@@ -517,6 +527,33 @@ const Index = () => {
                   )
                 }}
               />
+
+              <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                  'aria-labelledby': 'basic-button'
+                }}
+              >
+                <MenuItem onClick={handleClose}>
+                  <Grid item xs={12} sm={6} md={3} p={1} my={1}>
+                    <Typography className="sub">Adults</Typography>
+                    <Typography className="sub" color={'grey'}>
+                      Ages 13 or above
+                    </Typography>
+                  </Grid>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Grid item xs={12} sm={6} md={3} p={1} my={1}>
+                    <Typography className="sub">Children</Typography>
+                    <Typography className="sub" color={'grey'}>
+                      Ages 2-12
+                    </Typography>
+                  </Grid>
+                </MenuItem>
+              </Menu>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
