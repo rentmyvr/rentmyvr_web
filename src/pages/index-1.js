@@ -18,17 +18,22 @@ import {
   Typography,
   useScrollTrigger,
   InputAdornment,
-  Autocomplete
+  Autocomplete,
+  ClickAwayListener,
+  MenuItem,
+  MenuList,
+  Grow,
+  Paper,
+  Popper
 } from '@mui/material';
 
-import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 import Carousel from 'react-material-ui-carousel';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 // third-party
 import * as Yup from 'yup';
@@ -44,7 +49,7 @@ import ScrollTop from 'components/ScrollTop';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
-import { CalendarOutlined, EnvironmentOutlined, TeamOutlined, TagFilled, UpOutlined } from '@ant-design/icons';
+import { EnvironmentOutlined, TeamOutlined, TagFilled, UpOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 // import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpOutlined } from '@ant-design/icons';
 // import Image from 'next/image';
 
@@ -54,84 +59,84 @@ let items = [
   {
     name: 'Book Direct with Hosts or Compare Rates',
     description: 'Search listings that offer direct booking from the host and save',
-    img: '/assets/images/1500x600/image-1.png',
+    img: '/assets/images/1500x600/Image-1.png',
     btnText: 'Search Here',
     textColor: '#fff'
   },
   {
     name: 'All Listing Links in One Place',
     description: 'Compare rates or compare ratings and reviews all in one place',
-    img: '/assets/images/1500x600/image-2.png',
+    img: '/assets/images/1500x600/Image-2.png',
     btnText: 'Start Your Search',
     textColor: '#fff'
   },
   {
     name: 'Find a Company Who Manages Vacation Rentals',
     description: 'Looking to hire a management company? Have questions and need a professional before you book your stay?',
-    img: '/assets/images/1500x600/image-3.png',
+    img: '/assets/images/1500x600/Image-3.png',
     btnText: 'Find a Company',
     textColor: '#fff'
   },
   {
     name: 'Rent My VR is Growing',
     description: 'Are you ready to list a property or your vacation rental management company with us?',
-    img: '/assets/images/1500x600/image-4.png',
+    img: '/assets/images/1500x600/Image-4.png',
     btnText: 'Get Started',
     textColor: '#fff'
   },
   {
     name: 'Search All Sites With One Search',
     description: 'Book using your preferred platform once you find your dream vacation property',
-    img: '/assets/images/1500x600/image-5.png',
+    img: '/assets/images/1500x600/Image-5.png',
     btnText: 'Search Now',
-    textColor: '#000'
+    textColor: '#fff'
   },
   {
     name: 'Dreaming of Where To Go Next?',
     description: 'Search by category or amenity and discover themed or unique properties you never knew existed',
-    img: '/assets/images/1500x600/image-6.png',
+    img: '/assets/images/1500x600/Image-6.png',
     btnText: 'Find a Property',
     textColor: '#eee'
   },
   {
     name: 'Rates that Leave You Feeling More Relaxed',
     description: 'Find the site offering the lowest rate on a property or check for direct booking options to save',
-    img: '/assets/images/1500x600/image-7.png',
+    img: '/assets/images/1500x600/Image-7.png',
     btnText: 'Search Here',
     textColor: '#eee'
   },
   {
     name: 'Take the Hassle Out of the Hunt',
     description: 'Bringing all the online booking sites together to make your search a little better',
-    img: '/assets/images/1500x600/image-8.png',
+    img: '/assets/images/1500x600/Image-8.png',
     btnText: 'Search Rentals',
     textColor: '#fff'
   },
   {
     name: 'Book Your Stay the Better Way',
     description: 'Finally, a site where you can view a property’s website, online profiles, social media, and reviews, all in one place',
-    img: '/assets/images/1500x600/image-9.png',
+    img: '/assets/images/1500x600/Image-9.png',
     btnText: 'Search Now',
     textColor: '#fff'
   },
   {
     name: 'No Extra Fees',
     description: 'With Rent My VR, we believe in flat fee based listings and no fee for our guests.',
-    img: '/assets/images/1500x600/image-10.png',
+    img: '/assets/images/1500x600/Image-10.png',
     btnText: 'List Now',
     textColor: '#fff'
   },
   {
     name: 'Search All Sites With One Search',
     description: 'Book using your preferred platform once you find your dream vacation property',
-    img: '/assets/images/1500x600/image-11.png',
+    img: '/assets/images/1500x600/Image-11.png',
     btnText: 'Search Now',
     textColor: '#fff'
   },
   {
     name: 'Dreaming of Where To Go Next?',
     description: 'Search by category or ammenity and discover themed or unique properties you never knew existed',
-    img: '/assets/images/1500x600/image-12.png',
+    img: '/assets/images/1500x600/Image-12.png',
     btnText: 'Find a Property',
     textColor: '#fff'
   }
@@ -142,7 +147,6 @@ const CarouselItem = ({ item }) => {
     <Grid
       container
       spacing={12}
-      justifyContent="center"
       alignItems="center"
       sx={{
         // marginTop: '30px',
@@ -162,10 +166,12 @@ const CarouselItem = ({ item }) => {
       }}
       mt={0}
     >
-      <Grid item xs={12} sm={10}>
-        <h2 style={{ color: item.textColor }}>{item.name}</h2>
-        <p style={{ color: item.textColor, fontWeight: 'normal' }}>{item.description}</p>
-        <Button>{item.btnText}</Button>
+      <Grid xs={12} sm={4} md={3} style={{ background: 'rgba(0, 0, 0, 0.5)', textAlign: 'center', borderRadius: '5px' }} ml={30} p={5}>
+        <h1 style={{ color: item.textColor, marginTop: 0 }}>{item.name}</h1>
+        <h3 style={{ color: item.textColor, fontWeight: 'normal' }}>{item.description}</h3>
+        <Button variant="contained" style={{ borderRadius: '15px', marginTop: '25px' }}>
+          {item.btnText}
+        </Button>
       </Grid>
     </Grid>
   );
@@ -289,6 +295,39 @@ const regions = [
 const Index = () => {
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 800 });
 
+  const [guestMenuOpen, setGuestMenuOpen] = useState(false);
+  const anchorRef = useRef(null);
+  const settingGuestModal = () => {
+    setGuestMenuOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setGuestMenuOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setGuestMenuOpen(false);
+    } else if (event.key === 'Escape') {
+      setGuestMenuOpen(false);
+    }
+  }
+
+  // return focus to the button when we transitioned from !open -> open
+  const prevOpen = useRef(open);
+  useEffect(() => {
+    if (prevOpen.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpen.current = guestMenuOpen;
+  }, [guestMenuOpen]);
+
   const handleClick = (event) => {
     const anchor = (event.target.ownerDocument || document).querySelector('#__next');
     // const anchor = (event.target.ownerDocument || document).querySelector('#back-to-top-anchor');
@@ -370,10 +409,6 @@ const Index = () => {
         <Grid container spacing={2} pl={4} pr={2} pt={1} pb={1} mt={-10} zIndex={10} direction="row" sx={{ backgroundColor: 'unset' }}>
           <Grid item xs={12} sm={6} md={3}>
             <Stack direction="column" spacing={1.25}>
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Arrival Date
-              </InputLabel> */}
-
               <Autocomplete
                 options={regions}
                 getOptionLabel={(option) => option.title}
@@ -479,9 +514,6 @@ const Index = () => {
                   />
                 </Stack>
               </LocalizationProvider>
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Rooms Date
-              </InputLabel> */}
               {/* <TextField
                 fullWidth
                 id="property-checkOut"
@@ -504,16 +536,18 @@ const Index = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <Stack direction="column" spacing={1.25} position="relative">
-              {/* <InputLabel htmlFor="property-yelp" sx={{ color: '#fff' }}>
-                Arrival Date
-              </InputLabel> */}
               {/* <TeamOutlined className="icon" style={{position: 'absolute', top: '25px', zIndex: '10', left: '5px'}} /> */}
               <TextField
                 fullWidth
                 id="property-guests"
-                placeholder="Guests"
+                placeholder="#Guests"
                 // variant="filled"
                 // label="Guests"
+                ref={anchorRef}
+                aria-controls={guestMenuOpen ? 'composition-menu' : undefined}
+                aria-expanded={guestMenuOpen ? 'true' : undefined}
+                aria-haspopup="true"
+                onClick={settingGuestModal}
                 {...getFieldProps('guests')}
                 error={Boolean(touched.guests && errors.guests)}
                 helperText={touched.guests && errors.guests}
@@ -526,6 +560,121 @@ const Index = () => {
                   )
                 }}
               />
+
+              <Popper open={guestMenuOpen} anchorEl={anchorRef.current} role={undefined} placement="bottom-start" transition disablePortal>
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{
+                      transformOrigin: placement === 'bottom-start' ? 'left top' : 'left bottom'
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={handleClose}>
+                        <MenuList
+                          autoFocusItem={guestMenuOpen}
+                          id="composition-menu"
+                          aria-labelledby="composition-button"
+                          onKeyDown={handleListKeyDown}
+                        >
+                          <MenuItem>
+                            <Grid container spacing={0} justifyContent="center" alignItems="center">
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                                <Typography variant="h4" className="sub">
+                                  Adults
+                                </Typography>
+                                <Typography className="sub" color={'grey'}>
+                                  Ages 13 or above
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                                <Typography display="inline" variant="h4" m="auto">
+                                  5
+                                </Typography>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </MenuItem>
+                          <MenuItem>
+                            <Grid container spacing={0} justifyContent="center" alignItems="center">
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                                <Typography className="sub" variant="h4">
+                                  Children
+                                </Typography>
+                                <Typography className="sub" color={'grey'}>
+                                  Ages 2-12
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                                <Typography display="inline" variant="h4" m="auto">
+                                  5
+                                </Typography>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </MenuItem>
+                          <MenuItem>
+                            <Grid container spacing={0} justifyContent="center" alignItems="center">
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                                <Typography className="sub" variant="h4">
+                                  Infants
+                                </Typography>
+                                <Typography className="sub" color={'grey'}>
+                                  Under 2
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                                <Typography display="inline" variant="h4" m="auto">
+                                  5
+                                </Typography>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </MenuItem>
+                          <MenuItem>
+                            <Grid container spacing={0} justifyContent="center" alignItems="center">
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                                <Typography className="sub" variant="h4">
+                                  Pets
+                                </Typography>
+                                <Typography className="sub" color={'grey'}>
+                                  Bringing a service animal?
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                                <Typography display="inline" variant="h4" m="auto">
+                                  5
+                                </Typography>
+                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                  <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
+                                </Button>
+                              </Grid>
+                            </Grid>
+                          </MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={6} md={2}>
@@ -569,7 +718,7 @@ const Index = () => {
           </Grid>
           <Grid item sm={12} md={10}>
             <Stack direction="column" alignItems="center" spacing={1.25} pl={4} pr={2}>
-              <Typography variant="h4">
+              <Typography variant="h4" style={{ textAlign: 'center' }}>
                 Finally, an online directory that offers you what you have been asking for. With RentMyVR, you can do SO MUCH MORE!
               </Typography>
             </Stack>
@@ -595,9 +744,9 @@ const Index = () => {
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     {/* <BankFilled sx={{ fontSize: 40 }} /> */}
                     {/* <Rent_2 color="warning" /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
+                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-3.svg" alt="" />
                   </Avatar>
-                  <Typography variant="h3">Search Management Companies</Typography>
+                  <Typography variant="h3">Search Companies</Typography>
                   <Typography>
                     Looking for a professional who specializes in short term rentals in the area you are traveling to? Search our online
                     directory of Short Term and Vacation Rental Management Companies
@@ -608,7 +757,7 @@ const Index = () => {
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     {/* <AppleFilled sx={{ fontSize: 40 }} /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-3.svg" alt="" />
+                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
                   </Avatar>
                   <Typography variant="h3">Why List With Us?</Typography>
                   <Typography>
@@ -634,7 +783,7 @@ const Index = () => {
               <ThemeProvider theme={underlineTheme}>
                 <Grid></Grid>
               </ThemeProvider>
-              <Typography>
+              <Typography variant="h4" style={{ textAlign: 'center' }}>
                 Check out some of our favorite properties! We love themes and the fun concepts our hosts come up with for their properties.
                 Don&rsquo;t forget to follow our social media accounts to see some of our favorites! #vacationrentalsgonewild
               </Typography>
@@ -716,31 +865,31 @@ const Index = () => {
                 <Grid item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
-                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
+                    <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
                     <Typography className="count">
                       <CountUp start={0} end={50} duration={5} />
                     </Typography>
-                    <Typography className="sub">Project</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>States</Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
-                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
+                    <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
                     <Typography className="count">
                       <CountUp start={0} end={500} duration={4} />
                     </Typography>
-                    <Typography className="sub">Project</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>Hosts</Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
-                    <img style={{ width: '60px' }} src="/assets/images/icons/home.svg" alt="" />
+                    <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
                     <Typography className="count">
                       <CountUp start={0} end={9500} duration={3} />
                     </Typography>
-                    <Typography className="sub">Project</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>Listings</Typography>
                   </Stack>
                 </Grid>
               </Grid>

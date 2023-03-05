@@ -85,7 +85,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
   //     }
   //   }
   // });
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -147,7 +147,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                 open={open}
                 onClose={handleClose}
                 MenuListProps={{
-                  'aria-labelledby': 'basic-button',
+                  'aria-labelledby': 'basic-button'
                 }}
               >
                 <MenuItem onClick={handleClose}>

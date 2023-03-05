@@ -34,7 +34,16 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { useState, useRef, useEffect } from 'react';
 
 // assets
-import { SendOutlined, TwitterOutlined, YoutubeOutlined, AmazonOutlined, GlobalOutlined, CloseOutlined } from '@ant-design/icons';
+import {
+  SendOutlined,
+  TwitterOutlined,
+  YoutubeOutlined,
+  FacebookOutlined,
+  InstagramOutlined,
+  GlobalOutlined,
+  CloseOutlined
+} from '@ant-design/icons';
+import { FaTiktok } from 'react-icons/fa';
 
 // ==============================|| LANDING - FOOTER PAGE ||============================== //
 
@@ -342,14 +351,7 @@ const FooterBlock = ({ isFull }) => {
                   <Grid item xs={12} sx={{ my: 2 }}>
                     <Box sx={{ display: 'inline-block' }}>
                       <AnimateButton>
-                        <Button
-                          component={Link}
-                          href="https://codedthemes.gitbook.io/mantis/roadmap"
-                          target="_blank"
-                          size="large"
-                          variant="contained"
-                          endIcon={<SendOutlined />}
-                        >
+                        <Button component={Link} href="#" target="_blank" size="large" variant="contained" endIcon={<SendOutlined />}>
                           Roadmap
                         </Button>
                       </AnimateButton>
@@ -377,15 +379,9 @@ const FooterBlock = ({ isFull }) => {
               >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    {/* <CardMedia component="img" image={imgfooterlogo} sx={{ width: 'auto' }} /> */}
-                    {/* <Logo reverse /> */}
                     <img style={{ width: '200px' }} src="/assets/images/image logo.png" alt="" />
                   </Grid>
                   <Grid item xs={12}>
-                    {/* <Typography variant="subtitle1" sx={{ fontWeight: 400, color: theme.palette.common.white }}>
-                      Sign up
-                    </Typography> */}
-
                     <Link href="/register" underline="none" sx={linkSX}>
                       Sign up
                     </Link>
@@ -393,9 +389,26 @@ const FooterBlock = ({ isFull }) => {
                     <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
                       Connect with Us on Social:
                     </Typography>
-                    <TwitterOutlined className="icon" style={{ fontSize: '30px', color: '#fff', padding: '5px' }} />
-                    <YoutubeOutlined className="icon" style={{ fontSize: '30px', color: '#fff', padding: '5px' }} />
-                    <AmazonOutlined className="icon" style={{ fontSize: '30px', color: '#fff', padding: '5px' }} />
+
+                    <Link href="https://www.facebook.com/rentmyvr" sx={linkSX} color="white" underline="none">
+                      <FacebookOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                    </Link>
+
+                    <Link href="https://www.instagram.com/rentmyvr" sx={linkSX} color="white" underline="none">
+                      <InstagramOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                    </Link>
+
+                    <Link href=" https://www.youtube.com/@rentmyvr" sx={linkSX} color="white" underline="none">
+                      <YoutubeOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                    </Link>
+
+                    <Link href="https://twitter.com/rentmyvr" sx={linkSX} color="white" underline="none">
+                      <TwitterOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                    </Link>
+
+                    <Link href="https://www.tiktok.com/@rentmyvr.com" sx={linkSX} color="white" underline="none">
+                      <FaTiktok className="icon" style={{ fontSize: '25px' }} />
+                    </Link>
                   </Grid>
                 </Grid>
               </motion.div>
@@ -420,22 +433,17 @@ const FooterBlock = ({ isFull }) => {
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link
-                          href="https://mui.com/store/items/mantis-react-admin-dashboard-template/"
-                          underline="none"
-                          sx={linkSX}
-                          target="_blank"
-                        >
+                        <Link href="#" underline="none" sx={linkSX} target="_blank">
                           Purchase Mantis React
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link href="https://material-ui.com/store/contributors/codedthemes/" underline="none" sx={linkSX} target="_blank">
+                        <Link href="#" underline="none" sx={linkSX} target="_blank">
                           Portfolio
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link href="https://blog.mantisdashboard.io" underline="none" target="_blank" sx={linkSX}>
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           Blog
                         </Link>
                       </Grid>
@@ -460,17 +468,17 @@ const FooterBlock = ({ isFull }) => {
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link href="https://codedthemes.gitbook.io/mantis/" underline="none" target="_blank" sx={linkSX}>
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           Documentation
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link href="https://github.com/codedthemes/" underline="none" target="_blank" sx={linkSX}>
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           Github
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link href="https://codedthemes.gitbook.io/mantis/changelog" underline="none" target="_blank" sx={linkSX}>
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           Change Log
                         </Link>
                       </Grid>
@@ -495,32 +503,17 @@ const FooterBlock = ({ isFull }) => {
                         </Typography>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link
-                          href="https://mui.com/store/previews/berry-react-material-admin/"
-                          underline="none"
-                          target="_blank"
-                          sx={linkSX}
-                        >
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           - &nbsp; Berry React Material
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link
-                          href="https://mui.com/store/previews/berry-react-material-admin-free/"
-                          underline="none"
-                          target="_blank"
-                          sx={linkSX}
-                        >
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           - &nbsp; Berry React Free
                         </Link>
                       </Grid>
                       <Grid item xs={12}>
-                        <Link
-                          href="https://github.com/codedthemes/mantis-free-react-admin-template"
-                          underline="none"
-                          target="_blank"
-                          sx={linkSX}
-                        >
+                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           - &nbsp; Mantis Free React
                         </Link>
                       </Grid>
@@ -537,13 +530,16 @@ const FooterBlock = ({ isFull }) => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography sx={{ color: theme.palette.common.white }}>
+              <Typography sx={{ color: theme.palette.common.white }} mb={1}>
                 Our goal is to help connect guests of vacation rentals directly to hosts by providing a more thorough and all inclusive
                 search search search search search search search search experience. We provide one platform where all Booking Site profiles
-                and offer direct booking and communication with their guests. All information on RentMyVR.com is to be verified by all
-                bookings or transactions. We seek to provide only an online directory. We will not be a part of your booking communication,
-                communication, screening or agreements between hosts and guests. We also will not be a part of any contract between owners
-                management companies.
+                and offer direct booking and communication with their guests.
+              </Typography>
+
+              <Typography sx={{ color: theme.palette.common.white }}>
+                All information on RentMyVR.com is to be verified by all bookings or transactions. We seek to provide only an online
+                directory. We will not be a part of your booking communication, communication, screening or agreements between hosts and
+                guests. We also will not be a part of any contract between owners management companies.
               </Typography>
             </Grid>
           </Grid>
@@ -560,7 +556,7 @@ const FooterBlock = ({ isFull }) => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={8}>
               <Typography variant="subtitle2" color="#fff">
-                © Copyright icon 2023 Rent My VR
+                © 2023 Rent My VR
               </Typography>
             </Grid>
             <Grid item xs={12} sm={4}>
