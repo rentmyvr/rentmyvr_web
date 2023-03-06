@@ -388,7 +388,7 @@ const Index = () => {
             prev={() => {}}
             autoPlay={true}
             stopAutoPlayOnHover={true}
-            interval={4000}
+            interval={2000}
             animation="slide"
             swipe={true}
             indicators={false}
@@ -540,7 +540,7 @@ const Index = () => {
               <TextField
                 fullWidth
                 id="property-guests"
-                placeholder="#Guests"
+                placeholder="# Of Guests"
                 // variant="filled"
                 // label="Guests"
                 ref={anchorRef}
@@ -869,7 +869,9 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={50} duration={5} />
                     </Typography>
-                    <Typography color="#fff" style={{ marginTop: 0 }}>States</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>
+                      States
+                    </Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -879,7 +881,9 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={500} duration={4} />
                     </Typography>
-                    <Typography color="#fff" style={{ marginTop: 0 }}>Hosts</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>
+                      Hosts
+                    </Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -889,7 +893,9 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={9500} duration={3} />
                     </Typography>
-                    <Typography color="#fff" style={{ marginTop: 0 }}>Listings</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>
+                      Listings
+                    </Typography>
                   </Stack>
                 </Grid>
               </Grid>
