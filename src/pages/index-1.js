@@ -49,7 +49,15 @@ import ScrollTop from 'components/ScrollTop';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
-import { EnvironmentOutlined, TeamOutlined, TagFilled, UpOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import {
+  EnvironmentOutlined,
+  TeamOutlined,
+  TagFilled,
+  UpOutlined,
+  PlusCircleOutlined,
+  MinusCircleOutlined,
+  SearchOutlined
+} from '@ant-design/icons';
 // import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpOutlined } from '@ant-design/icons';
 // import Image from 'next/image';
 
@@ -822,7 +830,8 @@ const Index = () => {
           <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
               <Button variant="contained" size="large" color="primary">
-                Search
+                <SearchOutlined />
+                &nbsp;Search
               </Button>
             </Stack>
           </Grid>
