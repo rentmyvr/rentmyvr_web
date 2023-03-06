@@ -383,7 +383,7 @@ const FooterBlock = ({ isFull }) => {
                   </Grid>
                   <Grid item xs={12}>
                     <Link href="/register" underline="none" sx={linkSX}>
-                      Sign up
+                      Sign Up
                     </Link>
 
                     <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
@@ -432,21 +432,11 @@ const FooterBlock = ({ isFull }) => {
                           Terms and Conditions
                         </Typography>
                       </Grid>
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <Link href="#" underline="none" sx={linkSX} target="_blank">
                           Purchase Mantis React
                         </Link>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Link href="#" underline="none" sx={linkSX} target="_blank">
-                          Portfolio
-                        </Link>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
-                          Blog
-                        </Link>
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                   </motion.div>
                 </Grid>
@@ -467,21 +457,11 @@ const FooterBlock = ({ isFull }) => {
                           Cookie Policy
                         </Typography>
                       </Grid>
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           Documentation
                         </Link>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
-                          Github
-                        </Link>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
-                          Change Log
-                        </Link>
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                   </motion.div>
                 </Grid>
@@ -502,21 +482,11 @@ const FooterBlock = ({ isFull }) => {
                           Site Map
                         </Typography>
                       </Grid>
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <Link href="#" underline="none" target="_blank" sx={linkSX}>
                           - &nbsp; Berry React Material
                         </Link>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
-                          - &nbsp; Berry React Free
-                        </Link>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Link href="#" underline="none" target="_blank" sx={linkSX}>
-                          - &nbsp; Mantis Free React
-                        </Link>
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                   </motion.div>
                 </Grid>
