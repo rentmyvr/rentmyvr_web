@@ -88,7 +88,7 @@ const emptyProperty = {
   virtual_tour: null,
   space: null,
   hosted_by: '',
-  no_of_guest: 0,
+  max_no_of_guest: 0,
   no_of_bedrooms: 0,
   no_of_bathrooms: 0,
   is_pet_allowed: true,
@@ -317,7 +317,7 @@ function PropertyAdd({ property = emptyProperty }) {
     'hosted_by',
     'phone',
     'email',
-    'no_of_guest',
+    'max_no_of_guest',
     'no_of_bedrooms',
     'no_of_bathrooms',
     'price_night',
@@ -593,8 +593,10 @@ function PropertyAdd({ property = emptyProperty }) {
         })
         .nullable()
         .required('Please select Space Type for the Property/Rental'),
-      hosted_by: Yup.string().required('Please provide the Hosted By'),
-      no_of_guest: Yup.number().min(1, 'No of Guest must be a number between 1-49').max(49, 'No of Guest must be a number between 1-49'),
+      // hosted_by: Yup.string().required('Please provide the Hosted By'),
+      max_no_of_guest: Yup.number()
+        .min(1, 'No of Guest must be a number between 1-49')
+        .max(49, 'No of Guest must be a number between 1-49'),
       no_of_bedrooms: Yup.number()
         .min(1, 'No of Bedrooms must be a number between 1-49')
         .max(49, 'No of Bedrooms must be a number between 1-49'),
@@ -844,9 +846,9 @@ function PropertyAdd({ property = emptyProperty }) {
                       <Grid item xs={12} sm={6}>
                         <Stack spacing={1.25}>
                           <InputLabel htmlFor="property-no-of-guest">No of Guest</InputLabel>
-                          <FormControl fullWidth error={Boolean(touched.no_of_guest && errors.no_of_guest)}>
+                          <FormControl fullWidth error={Boolean(touched.max_no_of_guest && errors.max_no_of_guest)}>
                             <Slider
-                              {...getFieldProps('no_of_guest')}
+                              {...getFieldProps('max_no_of_guest')}
                               aria-label="Small steps"
                               defaultValue={0}
                               // getAriaValueText={guestValue}
@@ -856,9 +858,9 @@ function PropertyAdd({ property = emptyProperty }) {
                               marks={markGuest}
                               // valueLabelDisplay="on"
                               valueLabelDisplay="auto"
-                              color={touched.no_of_guest && errors.no_of_guest ? 'error' : 'primary'}
+                              color={touched.max_no_of_guest && errors.max_no_of_guest ? 'error' : 'primary'}
                             />
-                            <FormHelperText>{touched.no_of_guest && errors.no_of_guest}</FormHelperText>
+                            <FormHelperText>{touched.max_no_of_guest && errors.max_no_of_guest}</FormHelperText>
                           </FormControl>
                         </Stack>
                       </Grid>
