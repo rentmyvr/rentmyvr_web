@@ -1,0 +1,44 @@
+// Domain hostname or IP address
+const NEXT_DOMAIN = process.env.NEXT_DOMAIN ? process.env.NEXT_DOMAIN.trim() : '';
+// Domain username
+const NEXT_DOMAIN_USER = process.env.NEXT_DOMAIN_USER ? process.env.NEXT_DOMAIN_USER.trim() : '';
+// Source destination path
+const DESTINATION_PATH = `/usr/src/codes/rentmyvr_web`;
+// Your repository
+const REPO = 'git@github.com:rentmyvr/rentmyvr_web.git';
+
+module.exports = {
+  /**
+   * Application configuration section
+   * http://pm2.keymetrics.io/docs/usage/application-declaration/
+   */
+  apps: [
+    {
+      name: 'rentmyvr_web',
+      cwd: '/usr/src/codes/rentmyvr_web',
+      script: 'npm',
+      args: 'start',
+      env: { NODE_ENV: 'development' },
+      env_production: { NODE_ENV: 'production', PORT: 3000 },
+      watch: '.'
+    }
+  ],
+
+  /**
+   * Deployment section
+   * http://pm2.keymetrics.io/docs/usage/deployment/
+   */
+  deploy: {
+    production: {
+      host: NEXT_DOMAIN,
+      user: NEXT_DOMAIN_USER,
+      ref: 'origin/master',
+      repo: REPO,
+      ssh_options: 'StrictHostKeyChecking=no',
+      path: DESTINATION_PATH,
+      'pre-deploy-local': '',
+      'post-deploy': 'npm run build && pm2 startOrRestart ecosystem.config.js --env=production'
+      // 'post-deploy': 'npm install --production && pm2 startOrRestart ecosystem.config.js --env=production && pm2 save'
+    }
+  }
+};

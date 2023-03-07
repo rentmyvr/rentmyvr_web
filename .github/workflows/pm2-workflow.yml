@@ -1,0 +1,53 @@
+name: RentMyVR Dev
+
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Build
+      run: |
+        npm install
+        npm run build
+
+  pm2-configuration:
+    #runner, This job will be running in runner with Ubuntu Server latest version.
+    runs-on: ubuntu-latest
+    
+    needs: [build]
+    
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+      - uses: actions/checkout@v3 #checkout code from repository, so we code downloaded in runner.
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3 #setup nodejs in our runner
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm install pm2@latest -g #install pm2 global
+      - run: pm2 -V #check pm2 version
+      - run: pm2 list #check pm2 list
+      #running pm2 in mode cluster and --watch set to auto restart if index.js have changes.
+      # - run: pm2 start index.js --watch -i max
+      - run: pm2 restart 0
