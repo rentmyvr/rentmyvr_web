@@ -154,7 +154,6 @@ const CarouselItem = ({ item }) => {
   return (
     <Grid
       container
-      spacing={12}
       alignItems="center"
       sx={{
         // marginTop: '30px',
@@ -163,18 +162,27 @@ const CarouselItem = ({ item }) => {
         // backgroundSize: 'cover',
         // backgroundPosition: 'center',
         background: `url(${item.img}) no-repeat center center fixed`,
-        '-webkitBackgroundSize': 'cover',
-        '-mozBackgroundSize': 'cover',
-        '-oBackgroundSize': 'cover',
+        // '-webkitBackgroundSize': 'cover',
+        // '-mozBackgroundSize': 'cover',
+        // '-oBackgroundSize': 'cover',
         // backgroundSize: '100% 98%',
         backgroundSize: 'cover',
         height: '600px',
-        // width: '100%',
         overflow: 'hidden'
       }}
       mt={0}
     >
-      <Grid xs={12} sm={4} md={3} style={{ background: 'rgba(0, 0, 0, 0.5)', textAlign: 'center', borderRadius: '5px' }} ml={30} p={5}>
+      <Grid
+        container
+        item
+        xs={10}
+        sm={4}
+        md={3}
+        style={{ background: 'rgba(0, 0, 0, 0.5)', textAlign: 'center', borderRadius: '5px' }}
+        ml={{ md: 15, sm: 10, xs: 7 }}
+        mr={{ md: 15, sm: 10, xs: 7 }}
+        p={{ md: 5, sm: 3, xs: 3 }}
+      >
         <h1 style={{ color: item.textColor, marginTop: 0 }}>{item.name}</h1>
         <h3 style={{ color: item.textColor, fontWeight: 'normal' }}>{item.description}</h3>
         <Button variant="contained" style={{ borderRadius: '15px', marginTop: '25px' }}>
@@ -254,7 +262,7 @@ const countUpTheme = createTheme({
           '.imageOverlay': {
             backgroundColor: 'rgba(0, 0, 0, 0.7)',
             height: '100%',
-            position: 'absolute',
+            position: 'relative',
             width: '100%',
             top: 0
           },
@@ -363,7 +371,13 @@ const Index = () => {
       const url = isCreating ? CORE_EP.PROJECT_CREATE : CORE_EP.PROJECT_UPDATE.format(project.id);
 
       // eslint-disable-next-line
-      fetcher(url, isCreating ? 'post' : 'put', sxssion, null, formToRaw(values), (res) => {
+      fetcher(
+        url,
+        isCreating ? 'post' : 'put',
+        sxssion,
+        null,
+        formToRaw(values),
+        (res) => {
           const msg = intl.formatMessage({ id: isCreating ? 'projects-feedback-created' : 'projects-feedback-updated' });
           successProcessor(msg, dispatch, openSnackbar);
           setSubmitting(false);
@@ -399,7 +413,7 @@ const Index = () => {
           <Carousel
             next={() => {}}
             prev={() => {}}
-            autoPlay={true}
+            autoPlay={false}
             stopAutoPlayOnHover={true}
             interval={2000}
             animation="slide"
@@ -464,7 +478,7 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
+          <Grid container item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
@@ -507,7 +521,7 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
+          <Grid container item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
@@ -547,7 +561,7 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid container item xs={12} sm={6} md={3}>
             <Stack direction="column" spacing={1.25} position="relative">
               {/* <TeamOutlined className="icon" style={{position: 'absolute', top: '25px', zIndex: '10', left: '5px'}} /> */}
               <TextField
@@ -605,7 +619,7 @@ const Index = () => {
                         >
                           <MenuItem>
                             <Grid container spacing={0} justifyContent="center" alignItems="center">
-                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                              <Grid container item xs={12} sm={6} md={6} p={1} my={1}>
                                 <Typography variant="h4" className="sub">
                                   Adults
                                 </Typography>
@@ -613,7 +627,7 @@ const Index = () => {
                                   Ages 13 or above
                                 </Typography>
                               </Grid>
-                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                              <Grid container item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
                                 <Button
                                   variant="outlined"
                                   size="medium"
@@ -659,7 +673,7 @@ const Index = () => {
                           </MenuItem>
                           <MenuItem>
                             <Grid container spacing={0} justifyContent="center" alignItems="center">
-                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                              <Grid container item xs={12} sm={6} md={6} p={1} my={1}>
                                 <Typography className="sub" variant="h4">
                                   Children
                                 </Typography>
@@ -667,7 +681,7 @@ const Index = () => {
                                   Ages 2-12
                                 </Typography>
                               </Grid>
-                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                              <Grid container item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
                                 <Button
                                   variant="outlined"
                                   size="medium"
@@ -713,7 +727,7 @@ const Index = () => {
                           </MenuItem>
                           <MenuItem>
                             <Grid container spacing={0} justifyContent="center" alignItems="center">
-                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                              <Grid container item xs={12} sm={6} md={6} p={1} my={1}>
                                 <Typography className="sub" variant="h4">
                                   Infants
                                 </Typography>
@@ -721,7 +735,7 @@ const Index = () => {
                                   Under 2
                                 </Typography>
                               </Grid>
-                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                              <Grid container item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
                                 <Button
                                   variant="outlined"
                                   size="medium"
@@ -767,7 +781,7 @@ const Index = () => {
                           </MenuItem>
                           <MenuItem>
                             <Grid container spacing={0} justifyContent="center" alignItems="center">
-                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ width: '300px' }}>
+                              <Grid container item xs={12} sm={6} md={6} p={1} my={1} style={{ width: '300px' }}>
                                 <Typography className="sub" variant="h4">
                                   Pets
                                 </Typography>
@@ -775,7 +789,7 @@ const Index = () => {
                                   Bringing a service animal?
                                 </Typography>
                               </Grid>
-                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
+                              <Grid container item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
                                 <Button
                                   variant="outlined"
                                   size="medium"
@@ -827,7 +841,7 @@ const Index = () => {
               </Popper>
             </Stack>
           </Grid>
-          <Grid item xs={12} sm={6} md={2}>
+          <Grid container item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
               <Button variant="contained" size="large" color="primary">
                 <SearchOutlined />
@@ -852,9 +866,9 @@ const Index = () => {
           </Grid> */}
         </Grid>
         <Grid container spacing={2} mt={5} justifyContent="center" alignItems="center">
-          <Grid item sm={12} md={10}>
+          <Grid container item sm={12} md={10}>
             <Stack spacing={0} justifyContent="center" alignItems="center">
-              <Grid item sm={12} md={10}>
+              <Grid container item sm={12} md={10}>
                 <Typography display="inline" variant="h2" color="#1890ff">
                   THE&nbsp;
                 </Typography>
@@ -863,20 +877,20 @@ const Index = () => {
                 </Typography>
               </Grid>
               <ThemeProvider theme={underlineTheme}>
-                <Grid></Grid>
+                <Grid container></Grid>
               </ThemeProvider>
             </Stack>
           </Grid>
-          <Grid item sm={12} md={10}>
+          <Grid container item sm={12} md={10}>
             <Stack direction="column" alignItems="center" spacing={1.25} pl={4} pr={2}>
               <Typography variant="h4" style={{ textAlign: 'center' }}>
                 Finally, an online directory that offers you what you have been asking for. With RentMyVR, you can do SO MUCH MORE!
               </Typography>
             </Stack>
           </Grid>
-          <Grid item sm={12} md={10}>
+          <Grid container item sm={12} md={10}>
             <Grid container spacing={1.25} pl={4} pr={2} pt={4}>
-              <Grid item sm={12} md={4}>
+              <Grid container item sm={12} md={4}>
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     {/* <HomeFilled sx={{ fontSize: 40 }} /> */}
@@ -890,7 +904,7 @@ const Index = () => {
                   </Typography>
                 </Stack>
               </Grid>
-              <Grid item sm={12} md={4}>
+              <Grid container item sm={12} md={4}>
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     {/* <BankFilled sx={{ fontSize: 40 }} /> */}
@@ -904,7 +918,7 @@ const Index = () => {
                   </Typography>
                 </Stack>
               </Grid>
-              <Grid item sm={12} md={4}>
+              <Grid container item sm={12} md={4}>
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                   <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                     {/* <AppleFilled sx={{ fontSize: 40 }} /> */}
@@ -921,9 +935,9 @@ const Index = () => {
           </Grid>
         </Grid>
         <Grid container spacing={2} mt={5} pl={4} pr={2} justifyContent="center" alignItems="center">
-          <Grid item sm={12} md={10}>
+          <Grid container item sm={12} md={10}>
             <Stack spacing={0} justifyContent="center" alignItems="center">
-              <Grid item sm={12} md={10}>
+              <Grid container item sm={12} md={10}>
                 <Typography display="inline" variant="h2" color="#1890ff">
                   Featured&nbsp;
                 </Typography>
@@ -942,20 +956,23 @@ const Index = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={12} sm={12} md={10}>
+        <Grid container item xs={12} sm={12} md={10}>
           <Grid container spacing={2} pl={4} pr={2} pt={4}>
-            <Grid item xs={12} sm={12} md={4}>
-              <Card elevation={12} square>
-                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/600x450.jpg" title="green iguana" />
+            <Grid container item xs={12} sm={12} md={4}>
+              <Card elevation={12} square style={{ height: '100%' }}>
+                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide1.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    Lovely Home
+                    Sitka Lighthouse
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    <TagFilled /> The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Private Lighthouse- Sitka, Alaska
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Accommodates 6
+                  </Typography>
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Lighthouses have long inspired fascination, but getting to sleep in one is a special treat.
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -964,18 +981,21 @@ const Index = () => {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={12} md={4}>
-              <Card elevation={12} square>
-                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/600x450.jpg" title="green iguana" />
+            <Grid container item xs={12} sm={12} md={4}>
+              <Card elevation={12} square style={{ height: '100%' }}>
+                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide2.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    Lovely Home
+                    Phoenix Hero House
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    <TagFilled /> The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Superhero Themed- Phoenix, Arizona
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Accommodates 9
+                  </Typography>
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Avengers! Assemble- Premier Superhero Themed Property in Arizona.
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -984,18 +1004,21 @@ const Index = () => {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid item xs={12} sm={12} md={4}>
-              <Card elevation={12} square>
-                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/600x450.jpg" title="green iguana" />
+            <Grid container item xs={12} sm={12} md={4}>
+              <Card elevation={12} square style={{ height: '100%' }}>
+                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide3.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    Lovely Home
+                    Double Eagle Ship
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    <TagFilled /> The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Restored Shrimper- Homer, Alaska
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Accommodates 6
+                  </Typography>
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    The “Double Eagle” is now permanently docked on land 10 acres high on the bluff.
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -1008,12 +1031,12 @@ const Index = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} pb={28} my={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
+      <Grid container spacing={2} mt={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
         <ThemeProvider theme={countUpTheme}>
-          <Grid item xs={12} sx={{ backgroundColor: 'transparent' }}>
+          <Grid container item xs={12} sx={{ backgroundColor: 'transparent' }}>
             <Box className="imageOverlay">
               <Grid container spacing={0} justifyContent="center" alignItems="center">
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid container item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
@@ -1025,7 +1048,7 @@ const Index = () => {
                     </Typography>
                   </Stack>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid container item xs={12} sm={6} md={3}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
@@ -1084,7 +1107,7 @@ const Index = () => {
         <Grid item xs={12} sm={12} md={10}>
           <Grid container spacing={2} pt={4}>
             <Grid item xs={12} sm={6} md={6}>
-              <Card elevation={12} square>
+              <Card elevation={12} square style={{height: '100%'}}>
                 <ThemeProvider theme={cardTheme}>
                   <CardContent className="single" sx={{ p: '0!important' }}>
                     <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.png" title="Some title" />
@@ -1105,7 +1128,7 @@ const Index = () => {
               </Card>
             </Grid>
             <Grid item xs={12} sm={6} md={6}>
-              <Card elevation={12} square>
+              <Card elevation={12} square style={{height: '100%'}}>
                 <ThemeProvider theme={cardTheme}>
                   <CardContent className="single" sx={{ p: '0!important' }}>
                     <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.png" title="Some title" />
@@ -1128,7 +1151,7 @@ const Index = () => {
           </Grid>
           <Grid container spacing={2} pt={4}>
             <Grid item xs={12} sm={12} md={4}>
-              <Card elevation={12} square>
+              <Card elevation={12} square style={{height: '100%'}}>
                 <ThemeProvider theme={cardTheme}>
                   <CardContent className="single" sx={{ p: '0!important' }}>
                     <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.png" title="Some title" />
@@ -1149,7 +1172,7 @@ const Index = () => {
               </Card>
             </Grid>
             <Grid item xs={12} sm={12} md={4}>
-              <Card elevation={12} square>
+              <Card elevation={12} square style={{height: '100%'}}>
                 <ThemeProvider theme={cardTheme}>
                   <CardContent className="single" sx={{ p: '0!important' }}>
                     <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.png" title="Some title" />
@@ -1170,7 +1193,7 @@ const Index = () => {
               </Card>
             </Grid>
             <Grid item xs={12} sm={12} md={4}>
-              <Card elevation={12} square>
+              <Card elevation={12} square style={{height: '100%'}}>
                 <ThemeProvider theme={cardTheme}>
                   <CardContent className="single" sx={{ p: '0!important' }}>
                     <CardMedia sx={{ height: 340, width: '100%', m: 0 }} image="/assets/images/1200x375.png" title="Some title" />

@@ -364,7 +364,7 @@ const FooterBlock = ({ isFull }) => {
         </Box>
       )}
 
-      <Box sx={{ pt: isFull ? 0 : 10, pb: 7, bgcolor: '#525252' }}>
+      <Box sx={{ pt: isFull ? 0 : 3, pb: 3, bgcolor: '#525252', height: 'auto' }}>
         <Container>
           <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
@@ -383,7 +383,7 @@ const FooterBlock = ({ isFull }) => {
                   </Grid>
                   <Grid item xs={12}>
                     <Link href="/register" underline="none" sx={linkSX}>
-                      Sign Up
+                      <Typography variant="h3">Sign Up</Typography>
                     </Link>
 
                     <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
