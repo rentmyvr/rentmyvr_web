@@ -49,7 +49,15 @@ import ScrollTop from 'components/ScrollTop';
 // import ContactHeader from 'sections/contact-us/ContactHeader';
 
 // assets
-import { EnvironmentOutlined, TeamOutlined, TagFilled, UpOutlined, PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
+import {
+  EnvironmentOutlined,
+  TeamOutlined,
+  TagFilled,
+  UpOutlined,
+  PlusCircleOutlined,
+  MinusCircleOutlined,
+  SearchOutlined
+} from '@ant-design/icons';
 // import { AppleFilled, BankFilled, HomeFilled, ShoppingFilled, TagFilled, UpOutlined } from '@ant-design/icons';
 // import Image from 'next/image';
 
@@ -379,6 +387,11 @@ const Index = () => {
   const { errors, touched, getFieldProps } = formik;
   // const { errors, touched, handleBlur, handleChange, handleSubmit, isSubmitting, getFieldProps, setFieldValue, values } = formik;
 
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+  const [infants, setInfants] = useState(0);
+  const [pets, setPets] = useState(0);
+
   return (
     <Page title="Rent MyVR Home">
       <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center">
@@ -388,7 +401,7 @@ const Index = () => {
             prev={() => {}}
             autoPlay={true}
             stopAutoPlayOnHover={true}
-            interval={4000}
+            interval={2000}
             animation="slide"
             swipe={true}
             indicators={false}
@@ -540,7 +553,7 @@ const Index = () => {
               <TextField
                 fullWidth
                 id="property-guests"
-                placeholder="#Guests"
+                placeholder="# Of Guests"
                 // variant="filled"
                 // label="Guests"
                 ref={anchorRef}
@@ -559,9 +572,22 @@ const Index = () => {
                     </InputAdornment>
                   )
                 }}
+                value={
+                  (adults || children ? adults + children + ' guests' : '') +
+                  (infants ? ' ' + infants + ' infants' : '') +
+                  (pets ? ' ' + pets + ' pets' : '')
+                }
               />
 
-              <Popper open={guestMenuOpen} anchorEl={anchorRef.current} role={undefined} placement="bottom-start" transition disablePortal>
+              <Popper
+                open={guestMenuOpen}
+                anchorEl={anchorRef.current}
+                role={undefined}
+                placement="bottom-start"
+                transition
+                disablePortal
+                style={{ zIndex: 10 }}
+              >
                 {({ TransitionProps, placement }) => (
                   <Grow
                     {...TransitionProps}
@@ -588,13 +614,44 @@ const Index = () => {
                                 </Typography>
                               </Grid>
                               <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
-                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                <Button
+                                  variant="outlined"
+                                  size="medium"
+                                  sx={{
+                                    border: 'none',
+                                    color: adults === 0 ? '#e4e4e4' : 'grey',
+                                    cursor: adults === 0 ? 'no-drop' : 'pointer',
+                                    padding: 0,
+                                    minWidth: 'unset',
+                                    marginLeft: 'auto',
+                                    '&:hover': {
+                                      color: adults > 0 ? '#222' : '#e4e4e4',
+                                      border: 'none'
+                                    }
+                                  }}
+                                  onClick={() => adults > 0 && setAdults(adults - 1)}
+                                >
                                   <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
                                 </Button>
                                 <Typography display="inline" variant="h4" m="auto">
-                                  5
+                                  {adults}
                                 </Typography>
-                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                <Button
+                                  variant="outlined"
+                                  size="medium"
+                                  sx={{
+                                    border: 'none',
+                                    color: adults + children > 14 ? '#e4e4e4' : 'grey',
+                                    cursor: adults + children > 14 ? 'no-drop' : 'pointer',
+                                    padding: 0,
+                                    minWidth: 'unset',
+                                    '&:hover': {
+                                      color: adults + children < 15 ? '#222' : '#e4e4e4',
+                                      border: 'none'
+                                    }
+                                  }}
+                                  onClick={() => adults + children < 15 && setAdults(adults + 1)}
+                                >
                                   <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
                                 </Button>
                               </Grid>
@@ -611,13 +668,44 @@ const Index = () => {
                                 </Typography>
                               </Grid>
                               <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
-                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                <Button
+                                  variant="outlined"
+                                  size="medium"
+                                  sx={{
+                                    border: 'none',
+                                    color: children === 0 ? '#e4e4e4' : 'grey',
+                                    cursor: children === 0 ? 'no-drop' : 'pointer',
+                                    padding: 0,
+                                    minWidth: 'unset',
+                                    marginLeft: 'auto',
+                                    '&:hover': {
+                                      color: children > 0 ? '#222' : '#e4e4e4',
+                                      border: 'none'
+                                    }
+                                  }}
+                                  onClick={() => children > 0 && setChildren(children - 1)}
+                                >
                                   <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
                                 </Button>
                                 <Typography display="inline" variant="h4" m="auto">
-                                  5
+                                  {children}
                                 </Typography>
-                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                <Button
+                                  variant="outlined"
+                                  size="medium"
+                                  sx={{
+                                    border: 'none',
+                                    color: adults + children > 14 ? '#e4e4e4' : 'grey',
+                                    cursor: adults + children > 14 ? 'no-drop' : 'pointer',
+                                    padding: 0,
+                                    minWidth: 'unset',
+                                    '&:hover': {
+                                      color: adults + children < 15 ? '#222' : '#e4e4e4',
+                                      border: 'none'
+                                    }
+                                  }}
+                                  onClick={() => adults + children < 15 && setChildren(children + 1)}
+                                >
                                   <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
                                 </Button>
                               </Grid>
@@ -634,13 +722,44 @@ const Index = () => {
                                 </Typography>
                               </Grid>
                               <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
-                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                <Button
+                                  variant="outlined"
+                                  size="medium"
+                                  sx={{
+                                    border: 'none',
+                                    color: infants === 0 ? '#e4e4e4' : 'grey',
+                                    cursor: infants === 0 ? 'no-drop' : 'pointer',
+                                    padding: 0,
+                                    minWidth: 'unset',
+                                    marginLeft: 'auto',
+                                    '&:hover': {
+                                      color: infants > 0 ? '#222' : '#e4e4e4',
+                                      border: 'none'
+                                    }
+                                  }}
+                                  onClick={() => infants > 0 && setInfants(infants - 1)}
+                                >
                                   <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
                                 </Button>
                                 <Typography display="inline" variant="h4" m="auto">
-                                  5
+                                  {infants}
                                 </Typography>
-                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                <Button
+                                  variant="outlined"
+                                  size="medium"
+                                  sx={{
+                                    border: 'none',
+                                    color: infants > 4 ? '#e4e4e4' : 'grey',
+                                    cursor: infants > 4 ? 'no-drop' : 'pointer',
+                                    padding: 0,
+                                    minWidth: 'unset',
+                                    '&:hover': {
+                                      color: infants < 5 ? '#222' : '#e4e4e4',
+                                      border: 'none'
+                                    }
+                                  }}
+                                  onClick={() => infants < 5 && setInfants(infants + 1)}
+                                >
                                   <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
                                 </Button>
                               </Grid>
@@ -648,7 +767,7 @@ const Index = () => {
                           </MenuItem>
                           <MenuItem>
                             <Grid container spacing={0} justifyContent="center" alignItems="center">
-                              <Grid item xs={12} sm={6} md={6} p={1} my={1}>
+                              <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ width: '300px' }}>
                                 <Typography className="sub" variant="h4">
                                   Pets
                                 </Typography>
@@ -657,13 +776,44 @@ const Index = () => {
                                 </Typography>
                               </Grid>
                               <Grid item xs={12} sm={6} md={6} p={1} my={1} style={{ display: 'flex' }}>
-                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                <Button
+                                  variant="outlined"
+                                  size="medium"
+                                  sx={{
+                                    border: 'none',
+                                    color: pets === 0 ? '#e4e4e4' : 'grey',
+                                    cursor: pets === 0 ? 'no-drop' : 'pointer',
+                                    padding: 0,
+                                    minWidth: 'unset',
+                                    marginLeft: 'auto',
+                                    '&:hover': {
+                                      color: pets > 0 ? '#222' : '#e4e4e4',
+                                      border: 'none'
+                                    }
+                                  }}
+                                  onClick={() => pets > 0 && setPets(pets - 1)}
+                                >
                                   <MinusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
                                 </Button>
                                 <Typography display="inline" variant="h4" m="auto">
-                                  5
+                                  {pets}
                                 </Typography>
-                                <Button variant="outlined" size="medium" style={{ border: 'none', color: 'grey' }}>
+                                <Button
+                                  variant="outlined"
+                                  size="medium"
+                                  sx={{
+                                    border: 'none',
+                                    color: pets > 4 ? '#e4e4e4' : 'grey',
+                                    cursor: pets > 4 ? 'no-drop' : 'pointer',
+                                    padding: 0,
+                                    minWidth: 'unset',
+                                    '&:hover': {
+                                      color: pets < 5 ? '#222' : '#e4e4e4',
+                                      border: 'none'
+                                    }
+                                  }}
+                                  onClick={() => pets < 5 && setPets(pets + 1)}
+                                >
                                   <PlusCircleOutlined className="icon" style={{ fontSize: '30px' }} />
                                 </Button>
                               </Grid>
@@ -680,7 +830,8 @@ const Index = () => {
           <Grid item xs={12} sm={6} md={2}>
             <Stack direction="column" spacing={1.25}>
               <Button variant="contained" size="large" color="primary">
-                Search
+                <SearchOutlined />
+                &nbsp;Search
               </Button>
             </Stack>
           </Grid>
@@ -869,7 +1020,9 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={50} duration={5} />
                     </Typography>
-                    <Typography color="#fff" style={{ marginTop: 0 }}>States</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>
+                      States
+                    </Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -879,7 +1032,9 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={500} duration={4} />
                     </Typography>
-                    <Typography color="#fff" style={{ marginTop: 0 }}>Hosts</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>
+                      Hosts
+                    </Typography>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
@@ -889,7 +1044,9 @@ const Index = () => {
                     <Typography className="count">
                       <CountUp start={0} end={9500} duration={3} />
                     </Typography>
-                    <Typography color="#fff" style={{ marginTop: 0 }}>Listings</Typography>
+                    <Typography color="#fff" style={{ marginTop: 0 }}>
+                      Listings
+                    </Typography>
                   </Stack>
                 </Grid>
               </Grid>
