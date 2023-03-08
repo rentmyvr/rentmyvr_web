@@ -154,7 +154,6 @@ const CarouselItem = ({ item }) => {
   return (
     <Grid
       container
-      spacing={12}
       alignItems="center"
       sx={{
         // marginTop: '30px',
@@ -169,12 +168,19 @@ const CarouselItem = ({ item }) => {
         // backgroundSize: '100% 98%',
         backgroundSize: 'cover',
         height: '600px',
-        // width: '100%',
         overflow: 'hidden'
       }}
       mt={0}
     >
-      <Grid xs={12} sm={4} md={3} style={{ background: 'rgba(0, 0, 0, 0.5)', textAlign: 'center', borderRadius: '5px' }} ml={30} p={5}>
+      <Grid
+        xs={10}
+        sm={4}
+        md={3}
+        style={{ background: 'rgba(0, 0, 0, 0.5)', textAlign: 'center', borderRadius: '5px' }}
+        ml={13}
+        mr={13}
+        p={5}
+      >
         <h1 style={{ color: item.textColor, marginTop: 0 }}>{item.name}</h1>
         <h3 style={{ color: item.textColor, fontWeight: 'normal' }}>{item.description}</h3>
         <Button variant="contained" style={{ borderRadius: '15px', marginTop: '25px' }}>
@@ -363,7 +369,13 @@ const Index = () => {
       const url = isCreating ? CORE_EP.PROJECT_CREATE : CORE_EP.PROJECT_UPDATE.format(project.id);
 
       // eslint-disable-next-line
-      fetcher(url, isCreating ? 'post' : 'put', sxssion, null, formToRaw(values), (res) => {
+      fetcher(
+        url,
+        isCreating ? 'post' : 'put',
+        sxssion,
+        null,
+        formToRaw(values),
+        (res) => {
           const msg = intl.formatMessage({ id: isCreating ? 'projects-feedback-created' : 'projects-feedback-updated' });
           successProcessor(msg, dispatch, openSnackbar);
           setSubmitting(false);
@@ -399,7 +411,7 @@ const Index = () => {
           <Carousel
             next={() => {}}
             prev={() => {}}
-            autoPlay={true}
+            autoPlay={false}
             stopAutoPlayOnHover={true}
             interval={2000}
             animation="slide"
@@ -946,16 +958,19 @@ const Index = () => {
           <Grid container spacing={2} pl={4} pr={2} pt={4}>
             <Grid item xs={12} sm={12} md={4}>
               <Card elevation={12} square>
-                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/600x450.jpg" title="green iguana" />
+                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide1.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    Lovely Home
+                    Sitka Lighthouse
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    <TagFilled /> The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Private Lighthouse- Sitka, Alaska
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Accommodates 6
+                  </Typography>
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Lighthouses have long inspired fascination, but getting to sleep in one is a special treat.
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -966,16 +981,19 @@ const Index = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={4}>
               <Card elevation={12} square>
-                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/600x450.jpg" title="green iguana" />
+                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide2.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    Lovely Home
+                    Phoenix Hero House
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    <TagFilled /> The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Superhero Themed- Phoenix, Arizona
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Accommodates 9
+                  </Typography>
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Avengers! Assemble- Premier Superhero Themed Property in Arizona.
                   </Typography>
                 </CardContent>
                 <CardActions>
@@ -986,16 +1004,19 @@ const Index = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={4}>
               <Card elevation={12} square>
-                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/600x450.jpg" title="green iguana" />
+                <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide3.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    Lovely Home
+                    Double Eagle Ship
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    <TagFilled /> The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Restored Shrimper- Homer, Alaska
                   </Typography>
-                  <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 300 }}>
-                    The location
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    Accommodates 6
+                  </Typography>
+                  <Typography variant="h5" component="div" sx={{ fontWeight: 300 }}>
+                    The “Double Eagle” is now permanently docked on land 10 acres high on the bluff.
                   </Typography>
                 </CardContent>
                 <CardActions>
