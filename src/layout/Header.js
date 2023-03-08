@@ -90,7 +90,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
   const listOpen = Boolean(listEl);
   const helpOpen = Boolean(helpEl);
   const handleListClick = (event) => {
-    setHelpEl(event.currentTarget);
+    setListEl(event.currentTarget);
   };
   const handleHelpClick = (event) => {
     setHelpEl(event.currentTarget);
