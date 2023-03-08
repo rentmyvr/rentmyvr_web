@@ -178,7 +178,7 @@ const CarouselItem = ({ item }) => {
         xs={10}
         sm={4}
         md={3}
-        style={{ background: 'rgba(0, 0, 0, 0.5)', textAlign: 'center', borderRadius: '5px' }}
+        style={{ background: 'rgba(0, 0, 0, 0.5)', textAlign: 'center', borderRadius: '5px', justifyContent: 'center' }}
         ml={{ md: 15, sm: 10, xs: 7 }}
         mr={{ md: 15, sm: 10, xs: 7 }}
         p={{ md: 5, sm: 3, xs: 3 }}
@@ -434,7 +434,7 @@ const Index = () => {
           {/* <ContactHeader /> */}
         </Grid>
         <Grid container spacing={2} pl={4} pr={2} pt={1} pb={1} mt={-10} zIndex={10} direction="row" sx={{ backgroundColor: 'unset' }}>
-          <Grid item xs={12} sm={6} md={3}>
+          <Grid container item xs={12} sm={6} md={3}>
             <Stack direction="column" spacing={1.25}>
               <Autocomplete
                 options={regions}
@@ -562,7 +562,7 @@ const Index = () => {
             </Stack>
           </Grid>
           <Grid container item xs={12} sm={6} md={3}>
-            <Stack direction="column" spacing={1.25} position="relative">
+            <Stack direction="column" spacing={1.25} position="relative" style={{ width: '100%' }}>
               {/* <TeamOutlined className="icon" style={{position: 'absolute', top: '25px', zIndex: '10', left: '5px'}} /> */}
               <TextField
                 fullWidth
@@ -842,7 +842,7 @@ const Index = () => {
             </Stack>
           </Grid>
           <Grid container item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25}>
+            <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <Button variant="contained" size="large" color="primary">
                 <SearchOutlined />
                 &nbsp;Search
@@ -866,9 +866,9 @@ const Index = () => {
           </Grid> */}
         </Grid>
         <Grid container spacing={2} mt={5} justifyContent="center" alignItems="center">
-          <Grid container item sm={12} md={10}>
+          <Grid container item sm={12} md={10} justifyContent="center">
             <Stack spacing={0} justifyContent="center" alignItems="center">
-              <Grid container item sm={12} md={10}>
+              <Grid container item sm={12} md={12}>
                 <Typography display="inline" variant="h2" color="#1890ff">
                   THE&nbsp;
                 </Typography>
@@ -937,7 +937,7 @@ const Index = () => {
         <Grid container spacing={2} mt={5} pl={4} pr={2} justifyContent="center" alignItems="center">
           <Grid container item sm={12} md={10}>
             <Stack spacing={0} justifyContent="center" alignItems="center">
-              <Grid container item sm={12} md={10}>
+              <Grid container item sm={12} md={10} style={{ justifyContent: 'center' }}>
                 <Typography display="inline" variant="h2" color="#1890ff">
                   Featured&nbsp;
                 </Typography>
@@ -946,7 +946,7 @@ const Index = () => {
                 </Typography>
               </Grid>
               <ThemeProvider theme={underlineTheme}>
-                <Grid></Grid>
+                <Grid container></Grid>
               </ThemeProvider>
               <Typography variant="h4" style={{ textAlign: 'center' }}>
                 Check out some of our favorite properties! We love themes and the fun concepts our hosts come up with for their properties.
@@ -957,8 +957,8 @@ const Index = () => {
         </Grid>
 
         <Grid container item xs={12} sm={12} md={10}>
-          <Grid container spacing={2} pl={4} pr={2} pt={4}>
-            <Grid container item xs={12} sm={12} md={4}>
+          <Grid container spacing={2} pl={2} pr={2} pt={4}>
+            <Grid container item xs={12} sm={12} md={4} style={{ width: '100' }}>
               <Card elevation={12} square style={{ height: '100%' }}>
                 <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide1.png" title="green iguana" />
                 <CardContent>
@@ -981,7 +981,7 @@ const Index = () => {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid container item xs={12} sm={12} md={4}>
+            <Grid container item xs={12} sm={12} md={4} style={{ width: '100' }}>
               <Card elevation={12} square style={{ height: '100%' }}>
                 <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide2.png" title="green iguana" />
                 <CardContent>
@@ -1004,7 +1004,7 @@ const Index = () => {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid container item xs={12} sm={12} md={4}>
+            <Grid container item xs={12} sm={12} md={4} style={{ width: '100' }}>
               <Card elevation={12} square style={{ height: '100%' }}>
                 <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide3.png" title="green iguana" />
                 <CardContent>
@@ -1031,12 +1031,12 @@ const Index = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} mt={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
+      <Grid container mt={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
         <ThemeProvider theme={countUpTheme}>
           <Grid container item xs={12} sx={{ backgroundColor: 'transparent' }}>
             <Box className="imageOverlay">
               <Grid container spacing={0} justifyContent="center" alignItems="center">
-                <Grid container item xs={12} sm={6} md={3}>
+                <Grid container item xs={12} sm={6} md={3} style={{ justifyContent: 'center' }}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
@@ -1048,7 +1048,7 @@ const Index = () => {
                     </Typography>
                   </Stack>
                 </Grid>
-                <Grid container item xs={12} sm={6} md={3}>
+                <Grid container item xs={12} sm={6} md={3} style={{ justifyContent: 'center' }}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
@@ -1060,7 +1060,7 @@ const Index = () => {
                     </Typography>
                   </Stack>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid container item xs={12} sm={6} md={3} style={{ justifyContent: 'center' }}>
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
