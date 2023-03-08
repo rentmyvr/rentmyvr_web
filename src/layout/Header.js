@@ -85,13 +85,21 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
   //     }
   //   }
   // });
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [listEl, setListEl] = useState(null);
+  const [helpEl, setHelpEl] = useState(null);
+  const listOpen = Boolean(listEl);
+  const helpOpen = Boolean(helpEl);
+  const handleListClick = (event) => {
+    setHelpEl(event.currentTarget);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleHelpClick = (event) => {
+    setHelpEl(event.currentTarget);
+  };
+  const handleListClose = () => {
+    setListEl(null);
+  };
+  const handleHelpClose = () => {
+    setHelpEl(null);
   };
 
   return (
@@ -134,33 +142,76 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                 className="header-link"
                 underline="none"
                 style={{ cursor: 'pointer' }}
-                aria-controls={open ? 'basic-menu' : undefined}
+                aria-controls={listOpen ? 'basic-menu' : undefined}
                 aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
+                aria-expanded={listOpen ? 'true' : undefined}
+                onClick={handleListClick}
               >
                 List With Us
               </Link>
               <Menu
                 id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
+                anchorEl={listEl}
+                open={listOpen}
+                onClose={handleListClose}
                 MenuListProps={{
                   'aria-labelledby': 'basic-button'
                 }}
               >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleListClose}>
                   <NextLink href="/property" passHref>
                     <Link className="header-link" color="black" underline="none">
                       List A Property
                     </Link>
                   </NextLink>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleListClose}>
                   <NextLink href="/company" passHref>
                     <Link className="header-link" color="black" underline="none">
                       List Your Company
+                    </Link>
+                  </NextLink>
+                </MenuItem>
+              </Menu>
+              <Link
+                id="help-button"
+                className="header-link"
+                underline="none"
+                style={{ cursor: 'pointer' }}
+                aria-controls={helpOpen ? 'help-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={helpOpen ? 'true' : undefined}
+                onClick={handleHelpClick}
+              >
+                Help
+              </Link>
+              <Menu
+                id="help-menu"
+                anchorEl={helpEl}
+                open={helpOpen}
+                onClose={handleHelpClose}
+                MenuListProps={{
+                  'aria-labelledby': 'help-button'
+                }}
+              >
+                <MenuItem onClick={handleHelpClose}>
+                  <NextLink href="/FAQ" passHref>
+                    <Link className="header-link" color="black" underline="none">
+                      FAQs
+                    </Link>
+                  </NextLink>
+                </MenuItem>
+                <MenuItem onClick={handleHelpClose}>
+                  <NextLink href="#" passHref>
+                    <Link className="header-link" color="black" underline="none">
+                      Support
+                    </Link>
+                  </NextLink>
+                </MenuItem>
+                <MenuItem onClick={handleHelpClose}>
+                  <NextLink href="#" passHref>
+                    <Link className="header-link" color="black" underline="none">
+                      Contact Us
                     </Link>
                   </NextLink>
                 </MenuItem>
@@ -170,11 +221,6 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                   Ad. with Us
                 </Link>
               </NextLink> */}
-              <NextLink href="/FAQ" passHref>
-                <Link className="header-link" color="white" underline="none">
-                  FAQs
-                </Link>
-              </NextLink>
               <NextLink href="/coming-soon" passHref>
                 <Link className="header-link" color="white" underline="none">
                   Coming Soon
