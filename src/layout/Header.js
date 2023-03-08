@@ -172,6 +172,13 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                     </Link>
                   </NextLink>
                 </MenuItem>
+                <MenuItem onClick={handleListClose}>
+                  <NextLink href="/company" passHref>
+                    <Link className="header-link" color="black" underline="none">
+                      Pricing
+                    </Link>
+                  </NextLink>
+                </MenuItem>
               </Menu>
               <Link
                 id="help-button"
@@ -209,7 +216,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                   </NextLink>
                 </MenuItem>
                 <MenuItem onClick={handleHelpClose}>
-                  <NextLink href="#" passHref>
+                  <NextLink href="/contact" passHref>
                     <Link className="header-link" color="black" underline="none">
                       Contact Us
                     </Link>
