@@ -96,10 +96,10 @@ function ComingSoon() {
       <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <Grid container spacing={0} direction="column" alignItems="center" justifyContent="center" sx={{ minHeight: '100vh', py: 2 }}>
-            <Grid item xs={12}>
+            <Grid container item xs={12}>
               <Image src={coming} alt="mantis" layout="fixed" width={matchDownSM ? 360 : 540} height={matchDownSM ? 310 : 420} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid container item xs={12}>
               <Stack spacing={1} justifyContent="center" alignItems="center" sx={{ mt: 0 }}>
                 <Typography variant="h1" align="center">
                   Rent MyVR is Coming Soon
@@ -109,7 +109,7 @@ function ComingSoon() {
                 </Typography> */}
               </Stack>
             </Grid>
-            <Grid item xs={12} sx={{ width: { xs: '90%', md: '40%' } }}>
+            <Grid container item xs={12} sx={{ width: { xs: '90%', md: '40%' } }}>
               <Stack direction="row" alignItems="center" justifyContent="center" spacing={{ xs: 1, sm: 2 }}>
                 <TimerBox count={days} label="day" />
                 <Typography variant="h1"> : </Typography>
@@ -120,7 +120,7 @@ function ComingSoon() {
                 <TimerBox count={seconds} label="sec" />
               </Stack>
             </Grid>
-            <Grid item xs={12} sx={{ width: { width: 380, md: '40%', lg: '30%' } }}>
+            <Grid container item xs={12} sx={{ width: { width: 380, md: '40%', lg: '30%' } }}>
               <Stack spacing={2} sx={{ mt: 2 }}>
                 <Typography color="textSecondary" align="center">
                   Get Notified when we Launch
