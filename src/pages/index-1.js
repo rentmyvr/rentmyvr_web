@@ -260,7 +260,7 @@ const countUpTheme = createTheme({
           '.imageOverlay': {
             backgroundColor: 'rgba(0, 0, 0, 0.7)',
             height: '100%',
-            position: 'absolute',
+            position: 'relative',
             width: '100%',
             top: 0
           },
@@ -1029,7 +1029,7 @@ const Index = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} pb={28} my={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
+      <Grid spacing={2} mt={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
         <ThemeProvider theme={countUpTheme}>
           <Grid item xs={12} sx={{ backgroundColor: 'transparent' }}>
             <Box className="imageOverlay">

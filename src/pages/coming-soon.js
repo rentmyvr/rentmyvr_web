@@ -18,7 +18,7 @@ let contents = [
   {
     title: 'Mobile App -',
     content:
-      'It&rsquo;s 2023, and we know most people use their phone to do just about anything! We are excited to be launching our mobile app soon. One of the key pieces that you have also asked for is texting through the app; it&rsquo;s coming!'
+      "@ 2023, and we know most people use their phone to do just about anything! We are excited to be launching our mobile app soon. One of the key pieces that you have also asked for is texting through the app; it's coming!"
   },
   {
     title: 'Chat -',
@@ -26,7 +26,7 @@ let contents = [
       'through the platform. We know you want to track your communications in one easy place. We intend to allow chat on the site for potential guests to communicate with you directly. Once we have this and the texting, you will be able to see all communication history via the contact button, texting through the app and chat all in one convenient Inbox. Managing leads and guest inquiries has never been easier.'
   },
   {
-    title: 'What is Rent My VR&rsquo;s Cancellation policy?',
+    title: "What is Rent My VR's Cancellation policy?",
     content:
       'Rent My VR is not involved in the booking of a reservation and does not institute a cancellation policy; please refer to the site you used to book your stay. For cancellation of a property or management company directory listing, you are able to login and deactivate a property at any time. We do not offer a refund for early deactivation of listings. '
   },
@@ -53,7 +53,7 @@ let contents = [
   {
     title: 'Integrations - ',
     content:
-      'We know you need simple. We know your time is money. We are working fast and furious to identify and chart out the providers you care the most about. It takes time to develop strong partners, but as we continue to grow, we have identified the need to play well with your software of choice. We don&rsquo;t have the option to choose who we can integrate with in all cases, but for any software offering an open API, we are working on an integration. We have also begun to form new and lasting relationships with some key software providers that don&rsquo;t already have an API, but are willing to partner with our development team. Stay tuned for some big announcements.'
+      "We know you need simple. We know your time is money. We are working fast and furious to identify and chart out the providers you care the most about. It takes time to develop strong partners, but as we continue to grow, we have identified the need to play well with your software of choice. We don't have the option to choose who we can integrate with in all cases, but for any software offering an open API, we are working on an integration. We have also begun to form new and lasting relationships with some key software providers that don't already have an API, but are willing to partner with our development team. Stay tuned for some big announcements."
   },
   {
     title: 'Superhost Badges - ',
@@ -68,7 +68,7 @@ let contents = [
   {
     title: 'International Expansion -',
     content:
-      'Rent My VR knew one thing when planning our launch and growth strategy - you can&rsquo;t do everything well, but you can do some things exceptionally. In an effort to provide exceptional customer service and support, we had to come up with a growth strategy that is calculated, paced, and intentional. We know there is a large demand for an international market. Be on the lookout for expansion outside of the US with a target for full global coverage by 2026.'
+      "Rent My VR knew one thing when planning our launch and growth strategy - you can't do everything well, but you can do some things exceptionally. In an effort to provide exceptional customer service and support, we had to come up with a growth strategy that is calculated, paced, and intentional. We know there is a large demand for an international market. Be on the lookout for expansion outside of the US with a target for full global coverage by 2026."
   },
   {
     title: 'Have a feature request or idea?',
