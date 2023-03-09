@@ -89,12 +89,12 @@ const Index = () => {
 
   return (
     <Page title="Rent MyVR Home">
-      <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center">
-        <Stack spacing={0} justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
+      <Grid container spacing={2} ml={0} justifyContent="center" alignItems="center">
+        <Stack spacing={0} justifyContent="center" alignItems="center" style={{ marginTop: '80px' }}>
+          <Grid item xs={12} style={{ width: '100%' }}>
             <img style={{ width: '100%' }} src="/assets/images/Coming Soon Image.png" alt="" />
           </Grid>
-          <Grid item sm={12} md={8} mb={5}>
+          <Grid item sm={10} md={8} xs={10} mb={5}>
             <Typography variant="h2" mb={2} mt={2} textAlign={'center'}>
               We&rsquo;re still building!!
             </Typography>
