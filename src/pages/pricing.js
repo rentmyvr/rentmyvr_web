@@ -161,10 +161,10 @@ const Pricing = () => {
     <Page title="Rent MyVR Home">
       <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center" bgcolor="#f4f8ff">
         <Stack spacing={0} justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
+          <Grid item>
             <img style={{ width: '100%' }} src="/assets/images/pricing.png" alt="" />
           </Grid>
-          <Grid item sm={12} md={8} mb={5}>
+          <Grid item sm={10} md={8} xs={10} mb={5}>
             <Typography my={1}>
               Sign up to create an account for free. List an unlimited number of standard property listings for free -
             </Typography>

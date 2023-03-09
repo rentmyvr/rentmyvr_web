@@ -27,7 +27,7 @@ const Company = () => {
           <Grid item xs={12}>
             <img style={{ width: '100%' }} src="/assets/images/company.png" alt="" />
           </Grid>
-          <Grid item sm={12} md={8} mb={5}>
+          <Grid item sm={10} md={8} xs={9} mb={5}>
             <Typography variant="h2" mb={2} mt={2} textAlign={'center'}>
               Why List With Us?
             </Typography>
