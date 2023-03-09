@@ -173,7 +173,7 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                   </NextLink>
                 </MenuItem>
                 <MenuItem onClick={handleListClose}>
-                  <NextLink href="/company" passHref>
+                  <NextLink href="/pricing" passHref>
                     <Link className="header-link" color="black" underline="none">
                       Pricing
                     </Link>
