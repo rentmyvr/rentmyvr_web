@@ -433,9 +433,18 @@ const Index = () => {
           </Carousel>
           {/* <ContactHeader /> */}
         </Grid>
-        <Grid container spacing={2} pl={4} pr={2} pt={1} pb={1} mt={-10} zIndex={10} direction="row" sx={{ backgroundColor: 'unset' }}>
-          <Grid container item xs={12} sm={6} md={3}>
-            <Stack direction="column" spacing={1.25}>
+        <Grid
+          container
+          spacing={0}
+          pl={4}
+          pr={2}
+          mt={-10}
+          zIndex={10}
+          direction="row"
+          sx={{ backgroundColor: 'unset', justifyContent: 'center' }}
+        >
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+            <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <Autocomplete
                 options={regions}
                 getOptionLabel={(option) => option.title}
@@ -478,8 +487,8 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid container item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+            <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
                   <DesktopDatePicker
@@ -521,8 +530,8 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid container item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+            <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
                   <DesktopDatePicker
@@ -561,7 +570,7 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid container item xs={12} sm={6} md={3}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
             <Stack direction="column" spacing={1.25} position="relative" style={{ width: '100%' }}>
               {/* <TeamOutlined className="icon" style={{position: 'absolute', top: '25px', zIndex: '10', left: '5px'}} /> */}
               <TextField
@@ -841,7 +850,7 @@ const Index = () => {
               </Popper>
             </Stack>
           </Grid>
-          <Grid container item xs={12} sm={6} md={2}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
             <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <Button variant="contained" size="large" color="primary">
                 <SearchOutlined />
@@ -958,8 +967,8 @@ const Index = () => {
 
         <Grid container item xs={12} sm={12} md={10}>
           <Grid container spacing={2} pl={2} pr={2} pt={4}>
-            <Grid container item xs={12} sm={12} md={4} style={{ width: '100' }}>
-              <Card elevation={12} square style={{ height: '100%' }}>
+            <Grid container item xs={12} sm={12} md={4} style={{ width: '100%' }}>
+              <Card elevation={12} square style={{ height: '100%', width: '100%' }}>
                 <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide1.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -982,7 +991,7 @@ const Index = () => {
               </Card>
             </Grid>
             <Grid container item xs={12} sm={12} md={4} style={{ width: '100' }}>
-              <Card elevation={12} square style={{ height: '100%' }}>
+              <Card elevation={12} square style={{ height: '100%', width: '100%' }}>
                 <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide2.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -1005,7 +1014,7 @@ const Index = () => {
               </Card>
             </Grid>
             <Grid container item xs={12} sm={12} md={4} style={{ width: '100' }}>
-              <Card elevation={12} square style={{ height: '100%' }}>
+              <Card elevation={12} square style={{ height: '100%', width: '100%' }}>
                 <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide3.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -1033,10 +1042,17 @@ const Index = () => {
 
       <Grid container mt={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
         <ThemeProvider theme={countUpTheme}>
-          <Grid container item xs={12} sx={{ backgroundColor: 'transparent' }}>
+          <Grid item xs={12} sx={{ backgroundColor: 'transparent' }}>
             <Box className="imageOverlay">
-              <Grid container spacing={0} justifyContent="center" alignItems="center">
-                <Grid container item xs={12} sm={6} md={3} style={{ justifyContent: 'center' }}>
+              <Grid container spacing={0} justifyContent="center" alignItems="center" style={{ backgroundColor: 'unset' }}>
+                <Grid
+                  item
+                  sx={{ py: { md: 0, sm: 0, xs: 3 } }}
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  style={{ justifyContent: 'center', backgroundColor: 'unset' }}
+                >
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
@@ -1048,7 +1064,14 @@ const Index = () => {
                     </Typography>
                   </Stack>
                 </Grid>
-                <Grid container item xs={12} sm={6} md={3} style={{ justifyContent: 'center' }}>
+                <Grid
+                  item
+                  sx={{ py: { md: 0, sm: 0, xs: 3 } }}
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  style={{ justifyContent: 'center', backgroundColor: 'unset' }}
+                >
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
@@ -1060,7 +1083,14 @@ const Index = () => {
                     </Typography>
                   </Stack>
                 </Grid>
-                <Grid container item xs={12} sm={6} md={3} style={{ justifyContent: 'center' }}>
+                <Grid
+                  item
+                  sx={{ py: { md: 0, sm: 0, xs: 3 } }}
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  style={{ justifyContent: 'center', backgroundColor: 'unset' }}
+                >
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
