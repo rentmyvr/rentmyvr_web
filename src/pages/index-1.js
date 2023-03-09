@@ -52,7 +52,7 @@ import ScrollTop from 'components/ScrollTop';
 import {
   EnvironmentOutlined,
   TeamOutlined,
-  TagFilled,
+  // TagFilled,
   UpOutlined,
   PlusCircleOutlined,
   MinusCircleOutlined,
@@ -69,35 +69,35 @@ let items = [
     description: 'Search listings that offer direct booking from the host and save',
     img: '/assets/images/1500x600/Image-1.png',
     btnText: 'Search Here',
-    textColor: '#fff'
+    textColor: '#ffffff'
   },
   {
     name: 'All Listing Links in One Place',
     description: 'Compare rates or compare ratings and reviews all in one place',
     img: '/assets/images/1500x600/Image-2.png',
     btnText: 'Start Your Search',
-    textColor: '#fff'
+    textColor: '#ffffff'
   },
   {
     name: 'Find a Company Who Manages Vacation Rentals',
     description: 'Looking to hire a management company? Have questions and need a professional before you book your stay?',
     img: '/assets/images/1500x600/Image-3.png',
     btnText: 'Find a Company',
-    textColor: '#fff'
+    textColor: '#ffffff'
   },
   {
     name: 'Rent My VR is Growing',
     description: 'Are you ready to list a property or your vacation rental management company with us?',
     img: '/assets/images/1500x600/Image-4.png',
     btnText: 'Get Started',
-    textColor: '#fff'
+    textColor: '#ffffff'
   },
   {
     name: 'Search All Sites With One Search',
     description: 'Book using your preferred platform once you find your dream vacation property',
     img: '/assets/images/1500x600/Image-5.png',
     btnText: 'Search Now',
-    textColor: '#fff'
+    textColor: '#ffffff'
   },
   {
     name: 'Dreaming of Where To Go Next?',
