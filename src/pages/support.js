@@ -1,6 +1,7 @@
 import { Button, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Page from 'components/Page';
+import Image from 'next/image';
 import { useState } from 'react';
 
 const Support = () => {
@@ -27,21 +28,20 @@ const Support = () => {
     <Page
       title="Contact Us"
       sx={{
-        overflow: 'hidden',
-        backgroundImage: `url(/assets/images/support.png)`,
-        backgroundPosition: 'center center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexWrap: 'wrap',
+        position: 'fixed',
+        top: '0%',
+        left: '0%',
         width: '100%',
-        height: '100%',
-        alignItems: 'center',
-        justifyContent: 'center'
+        height: '100%'
       }}
     >
-      <Box sx={{ p: { md: 21.2, sm: 13.1, xs: 18.1 } }} mt={0}>
+      <Image
+        src={'/assets/images/support.png'}
+        alt="mantis"
+        layout="fill"
+        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto', minWidth: '50%', minHeight: '50%' }}
+      />
+      <Box sx={{ p: { md: 21.2, sm: 13.1, xs: 5 } }} mt={0} position="absolute">
         <Grid
           sx={{ p: { md: 8, sm: 8, xs: 3 } }}
           justifyContent="center"
