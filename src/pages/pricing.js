@@ -160,8 +160,8 @@ const Pricing = () => {
   return (
     <Page title="Rent MyVR Home">
       <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center" bgcolor="#f4f8ff">
-        <Stack spacing={0} justifyContent="center" alignItems="center">
-          <Grid item>
+        <Stack spacing={0} justifyContent="center" alignItems="center" style={{ width: '100%' }}>
+          <Grid item style={{ width: '100%' }}>
             <img style={{ width: '100%' }} src="/assets/images/pricing.png" alt="" />
           </Grid>
           <Grid item sm={10} md={8} xs={10} mb={5}>

@@ -177,7 +177,7 @@ const Index = () => {
     <Page title="Rent MyVR Home">
       <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center" bgcolor={'#dee8fa'}>
         <Stack spacing={0} justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ width: '100%' }}>
             <img style={{ width: '100%' }} src="/assets/images/Frequently Asked Questions.png" alt="" />
           </Grid>
           <Grid item xs={12} md={8} width="100%">

@@ -24,7 +24,7 @@ const Company = () => {
     <Page title="Rent MyVR Home">
       <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center" bgcolor="#f4f8ff">
         <Stack spacing={0} justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ width: '100%' }}>
             <img style={{ width: '100%' }} src="/assets/images/company.png" alt="" />
           </Grid>
           <Grid item sm={10} md={8} xs={9} mb={5}>
