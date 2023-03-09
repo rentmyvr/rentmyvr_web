@@ -15,7 +15,6 @@ import {
   TableCell,
   TableBody,
   Paper,
-  Checkbox,
   Link
 } from '@mui/material';
 
@@ -217,7 +216,9 @@ const Pricing = () => {
                         {row.name}
                       </TableCell>
                       <TableCell align="right">
-                        <Checkbox
+                        <input
+                          type="checkbox"
+                          style={{ width: '16px', height: '16px' }}
                           checked={row.standard}
                           onClick={() => {
                             standardChange(row.name);
@@ -225,7 +226,9 @@ const Pricing = () => {
                         />
                       </TableCell>
                       <TableCell align="right">
-                        <Checkbox
+                        <input
+                          type="checkbox"
+                          style={{ width: '16px', height: '16px' }}
                           checked={row.premium}
                           onClick={() => {
                             premiumChange(row.name);

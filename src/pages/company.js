@@ -10,7 +10,7 @@ import NextLink from 'next/link';
 // assets
 import { UpOutlined } from '@ant-design/icons';
 
-const Property = () => {
+const Company = () => {
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 800 });
 
   const handleClick = (event) => {
@@ -25,34 +25,22 @@ const Property = () => {
       <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center" bgcolor="#f4f8ff">
         <Stack spacing={0} justifyContent="center" alignItems="center">
           <Grid item xs={12}>
-            <img style={{ width: '100%' }} src="/assets/images/property.png" alt="" />
+            <img style={{ width: '100%' }} src="/assets/images/company.png" alt="" />
           </Grid>
           <Grid item sm={12} md={8} mb={5}>
             <Typography variant="h2" mb={2} mt={2} textAlign={'center'}>
               Why List With Us?
             </Typography>
             <Typography mb={2} mt={2}>
-              Rent My VR is the fastest growing online directory for short term / vacation rentals. We realize many 3rd party booking sites
-              offer a variety of features, fee schedules, etc, and as a guest begins to book their stay, they may want to compare and book
-              with the site they are most comfortable using. In addition, many owners want to provide a way for a guest to book directly
-              with the host or through their own property booking site. We have provided a way to do so.
+              One of the challenges with starting a vacation rental management company is finding ways to connect with prospective owners to
+              grow your portfolio. Finding an accessible online directory of short term rental management companies is a challenge for
+              owners. While its a referral based business, often times, owners want to interview a couple management companies to compare
+              service offerings and pricing. We make it easy! We aim to provide the largest online directory of vacation rental management
+              companies.
             </Typography>
             <Typography mb={2} mt={2}>
-              We have two types of property listings - Standard and Premium.
-            </Typography>
-            <Typography mb={2} mt={2}>
-              A host can list their property, at no charge, as a Standard Property Directory Listing on Rent My VR. This allows the property
-              to show up and link to an external booking site for guests to view and discover your property listing.
-            </Typography>
-            <Typography mb={2} mt={2}>
-              For one annual flat fee, hosts can upgrade to a Premium Property Directory Listing on Rent My VR. This allows for your
-              property to be showcased in a more extensive way. We allow additional photos, video links, searchable amenities, and the
-              ability to receive direct property inquiries through this type of listing. If you are a Premium Listing customer, you are also
-              eligible for our Gold membership, allowing additional Featured Advertising to increase traffic to your property, through our
-              site ad space and social media.
-            </Typography>
-            <Typography variant="h3" mb={2} mt={5} textAlign={'center'}>
-              Creating your Standard or Premium Property Directory Listing is easy! Get started by signing up today.
+              Sign up and easily add your Management Directory Listing. Start driving more traffic to your vacation rental management
+              business today.
             </Typography>
             <Grid item sm={12} md={4} textAlign="center" style={{ margin: 'auto' }}>
               <NextLink href="/register" passHref>
@@ -80,8 +68,8 @@ const Property = () => {
   );
 };
 
-Property.getLayout = function getLayout(page) {
+Company.getLayout = function getLayout(page) {
   return <Layout variant="simple">{page}</Layout>;
 };
 
-export default Property;
+export default Company;
