@@ -1,33 +1,34 @@
 import { Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Page from 'components/Page';
+import Image from 'next/image';
 
 const Contact = () => {
   return (
     <Page
       title="Contact Us"
       sx={{
-        overflow: 'hidden',
-        backgroundImage: `url(/assets/images/contact.png)`,
-        backgroundPosition: 'center center',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        boxSizing: 'border-box',
-        display: 'flex',
-        flexWrap: 'wrap',
+        position: 'fixed',
+        top: '0%',
+        left: '0%',
         width: '100%',
-        height: '100%',
-        alignItems: 'center'
+        height: '100%'
       }}
     >
-      <Box sx={{ p: { md: 16.7, sm: 8.6, xs: 13.5 } }} mt={0}>
+      <Image
+        src={'/assets/images/contact.png'}
+        alt="mantis"
+        layout="fill"
+        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto', minWidth: '50%', minHeight: '50%' }}
+      />
+      <Box sx={{ p: { md: 21.2, sm: 13.1, xs: 5 } }} mt={0} position="absolute">
         <Grid
           sx={{ p: { md: 8, sm: 8, xs: 3 } }}
           justifyContent="center"
           style={{ backgroundColor: '#00000055', borderRadius: 10, alignItems: 'center', flexDirection: 'column' }}
         >
           <Typography variant="h1" align="center" style={{ color: 'white' }}>
-            Contact Us
+            Support
           </Typography>
           <Grid item xs={12} sm={10} lg={9} mt={2}>
             <Grid container spacing={3}>
