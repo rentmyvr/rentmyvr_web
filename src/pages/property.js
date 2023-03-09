@@ -1,10 +1,11 @@
 // material-ui
-import { Box, Fab, Fade, Grid, Stack, Typography, useScrollTrigger, Button } from '@mui/material';
+import { Box, Fab, Fade, Grid, Stack, Typography, useScrollTrigger, Button, Link } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
 import Page from 'components/Page';
 import ScrollTop from 'components/ScrollTop';
+import NextLink from 'next/link';
 
 // assets
 import { UpOutlined } from '@ant-design/icons';
@@ -54,9 +55,13 @@ const Index = () => {
               Creating your Standard or Premium Property Directory Listing is easy! Get started by signing up today.
             </Typography>
             <Grid item sm={12} md={4} textAlign="center" style={{ margin: 'auto' }}>
-              <Button size="large" variant="contained" color="primary">
-                Sign up to Get Started
-              </Button>
+              <NextLink href="/register" passHref>
+                <Link className="header-link" color="black" underline="none">
+                  <Button size="large" variant="contained" color="primary">
+                    Sign up to Get Started
+                  </Button>
+                </Link>
+              </NextLink>
             </Grid>
           </Grid>
         </Stack>
