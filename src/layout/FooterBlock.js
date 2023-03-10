@@ -364,10 +364,10 @@ const FooterBlock = ({ isFull }) => {
         </Box>
       )}
 
-      <Box sx={{ pt: isFull ? 0 : 3, pb: 3, bgcolor: '#525252', height: 'auto' }}>
+      <Box sx={{ pt: isFull ? 0 : 2, pb: 2, bgcolor: '#525252', height: 'auto' }}>
         <Container>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
+          <Grid container spacing={2} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Grid item xs={12} md={5}>
               <motion.div
                 initial={{ opacity: 0, translateY: 550 }}
                 animate={{ opacity: 1, translateY: 0 }}
@@ -378,44 +378,48 @@ const FooterBlock = ({ isFull }) => {
                 }}
               >
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
+                  <Grid item md={6} xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
                     <img style={{ width: '200px' }} src="/assets/images/image logo.png" alt="" />
                   </Grid>
-                  <Grid item xs={12}>
-                    <Link href="/register" underline="none" sx={linkSX}>
-                      <Typography variant="h3">Sign Up</Typography>
-                    </Link>
-
-                    <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
+                  <Grid item md={6} xs={12} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Typography variant="h5" sx={{ color: theme.palette.common.white }}>
                       Connect with Us on Social:
                     </Typography>
+                    <Grid>
+                      <Link href="https://www.facebook.com/rentmyvr" sx={linkSX} color="white" underline="none">
+                        <FacebookOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                      </Link>
 
-                    <Link href="https://www.facebook.com/rentmyvr" sx={linkSX} color="white" underline="none">
-                      <FacebookOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
-                    </Link>
+                      <Link href="https://www.instagram.com/rentmyvr" sx={linkSX} color="white" underline="none">
+                        <InstagramOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                      </Link>
 
-                    <Link href="https://www.instagram.com/rentmyvr" sx={linkSX} color="white" underline="none">
-                      <InstagramOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
-                    </Link>
+                      <Link href=" https://www.youtube.com/@rentmyvr" sx={linkSX} color="white" underline="none">
+                        <YoutubeOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                      </Link>
 
-                    <Link href=" https://www.youtube.com/@rentmyvr" sx={linkSX} color="white" underline="none">
-                      <YoutubeOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
-                    </Link>
+                      <Link href="https://twitter.com/rentmyvr" sx={linkSX} color="white" underline="none">
+                        <TwitterOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
+                      </Link>
 
-                    <Link href="https://twitter.com/rentmyvr" sx={linkSX} color="white" underline="none">
-                      <TwitterOutlined className="icon" style={{ fontSize: '30px', padding: '5px' }} />
-                    </Link>
-
-                    <Link href="https://www.tiktok.com/@rentmyvr.com" sx={linkSX} color="white" underline="none">
-                      <FaTiktok className="icon" style={{ fontSize: '25px' }} />
-                    </Link>
+                      <Link href="https://www.tiktok.com/@rentmyvr.com" sx={linkSX} color="white" underline="none">
+                        <FaTiktok className="icon" style={{ fontSize: '25px' }} />
+                      </Link>
+                    </Grid>
                   </Grid>
                 </Grid>
               </motion.div>
             </Grid>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={7}>
               <Grid container spacing={2}>
-                <Grid item sm={4} xs={12}>
+                <Grid item sm={3} xs={12}>
+                  <Link href="/register" underline="none" sx={linkSX}>
+                    <Typography variant="h3" style={{ textAlign: 'center' }}>
+                      Sign Up
+                    </Typography>
+                  </Link>
+                </Grid>
+                <Grid item sm={3} xs={12}>
                   <motion.div
                     initial={{ opacity: 0, translateY: 550 }}
                     animate={{ opacity: 1, translateY: 0 }}
@@ -428,7 +432,7 @@ const FooterBlock = ({ isFull }) => {
                   >
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
-                        <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
+                        <Typography variant="h5" sx={{ color: theme.palette.common.white, textAlign: 'center' }}>
                           Terms and Conditions
                         </Typography>
                       </Grid>
@@ -440,7 +444,7 @@ const FooterBlock = ({ isFull }) => {
                     </Grid>
                   </motion.div>
                 </Grid>
-                <Grid item sm={4} xs={12}>
+                <Grid item sm={3} xs={12}>
                   <motion.div
                     initial={{ opacity: 0, translateY: 550 }}
                     animate={{ opacity: 1, translateY: 0 }}
@@ -453,7 +457,7 @@ const FooterBlock = ({ isFull }) => {
                   >
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
-                        <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
+                        <Typography variant="h5" sx={{ color: theme.palette.common.white, textAlign: 'center' }}>
                           Cookie Policy
                         </Typography>
                       </Grid>
@@ -465,7 +469,7 @@ const FooterBlock = ({ isFull }) => {
                     </Grid>
                   </motion.div>
                 </Grid>
-                <Grid item sm={4} xs={12}>
+                <Grid item sm={3} xs={12}>
                   <motion.div
                     initial={{ opacity: 0, translateY: 550 }}
                     animate={{ opacity: 1, translateY: 0 }}
@@ -478,7 +482,7 @@ const FooterBlock = ({ isFull }) => {
                   >
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
-                        <Typography variant="h5" sx={{ mb: 2, color: theme.palette.common.white }}>
+                        <Typography variant="h5" sx={{ color: theme.palette.common.white, textAlign: 'center' }}>
                           Site Map
                         </Typography>
                       </Grid>
@@ -495,11 +499,11 @@ const FooterBlock = ({ isFull }) => {
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="h5" sx={{ mt: 5, color: theme.palette.common.white }}>
+              <Typography variant="h5" sx={{ mt: 3, color: theme.palette.common.white }}>
                 Disclaimer:
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{ paddingTop: '0px' }}>
               <Typography sx={{ color: theme.palette.common.white }} mb={1}>
                 Our goal is to help connect guests of vacation rentals directly to hosts by providing a more thorough and all inclusive
                 search search search search search search search search experience. We provide one platform where all Booking Site profiles
