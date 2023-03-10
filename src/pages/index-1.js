@@ -207,7 +207,7 @@ const underlineTheme = createTheme({
           background: '#1890ff none repeat scroll 0 0',
           color: '#fff',
           display: 'block',
-          height: '3px',
+          height: '0.7vw',
           left: 0,
           margin: '20px auto',
           position: 'relative',
@@ -876,28 +876,27 @@ const Index = () => {
           </Grid> */}
         </Grid>
         <Grid container spacing={2} mt={5} justifyContent="center" alignItems="center">
-          <Grid container item sm={12} md={10} justifyContent="center">
-            <Stack spacing={0} justifyContent="center" alignItems="center">
-              <Grid container item sm={12} md={12}>
-                <Typography display="inline" variant="h2" color="#1890ff">
-                  THE&nbsp;
+          <Grid container spacing={2} mt={5} pl={4} pr={2} justifyContent="center" alignItems="center">
+            <Grid container item sm={12} md={10}>
+              <Stack spacing={0} justifyContent="center" alignItems="center">
+                <Grid container item sm={12} md={10} style={{ justifyContent: 'center' }}>
+                  <Typography display="inline" variant="h2" color="#1890ff">
+                    THE&nbsp;
+                  </Typography>
+                  <Typography display="inline" variant="h2">
+                    RENT MY VR WAY
+                  </Typography>
+                </Grid>
+                <ThemeProvider theme={underlineTheme}>
+                  <Grid container></Grid>
+                </ThemeProvider>
+                <Typography variant="h4" style={{ textAlign: 'center' }}>
+                  Finally, an online directory that offers you what you have been asking for. With RentMyVR, you can do SO MUCH MORE!
                 </Typography>
-                <Typography display="inline" variant="h2">
-                  RENT MY VR WAY
-                </Typography>
-              </Grid>
-              <ThemeProvider theme={underlineTheme}>
-                <Grid container></Grid>
-              </ThemeProvider>
-            </Stack>
+              </Stack>
+            </Grid>
           </Grid>
-          <Grid container item sm={12} md={10}>
-            <Stack direction="column" alignItems="center" spacing={1.25} pl={4} pr={2}>
-              <Typography variant="h4" style={{ textAlign: 'center' }}>
-                Finally, an online directory that offers you what you have been asking for. With RentMyVR, you can do SO MUCH MORE!
-              </Typography>
-            </Stack>
-          </Grid>
+
           <Grid container item sm={12} md={10}>
             <Grid container spacing={2} pl={4} pr={2} pt={4}>
               <Grid container item sm={12} md={4} style={{ cursor: 'pointer' }}>
