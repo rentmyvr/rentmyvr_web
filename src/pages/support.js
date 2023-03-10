@@ -1,7 +1,6 @@
 import { Button, Grid, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Page from 'components/Page';
-import Image from 'next/image';
 import { useState } from 'react';
 
 const Support = () => {
