@@ -32,6 +32,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 import Carousel from 'react-material-ui-carousel';
+import NextLink from 'next/link';
 
 import { useState, useRef, useEffect } from 'react';
 
@@ -898,47 +899,59 @@ const Index = () => {
             </Stack>
           </Grid>
           <Grid container item sm={12} md={10}>
-            <Grid container spacing={1.25} pl={4} pr={2} pt={4}>
-              <Grid container item sm={12} md={4}>
-                <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-                  <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    {/* <HomeFilled sx={{ fontSize: 40 }} /> */}
-                    {/* <Rent_1 color="primary" /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-1.svg" alt="" />
-                  </Avatar>
-                  <Typography variant="h3">Search Properties</Typography>
-                  <Typography>
-                    Guests can save money when the host offers discounts for direct booking. Search vacation rentals, filter by amenities
-                    and compare pricing on the hosts&apos; different booking platforms, all from one place.
-                  </Typography>
-                </Stack>
+            <Grid container spacing={2} pl={4} pr={2} pt={4}>
+              <Grid container item sm={12} md={4} style={{ cursor: 'pointer' }}>
+                <NextLink href="#" passHref>
+                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '10px' }}>
+                    <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+                      <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
+                        {/* <HomeFilled sx={{ fontSize: 40 }} /> */}
+                        {/* <Rent_1 color="primary" /> */}
+                        <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-1.svg" alt="" />
+                      </Avatar>
+                      <Typography variant="h3">Search Properties</Typography>
+                      <Typography>
+                        Guests can save money when the host offers discounts for direct booking. Search vacation rentals, filter by
+                        amenities and compare pricing on the hosts&apos; different booking platforms, all from one place.
+                      </Typography>
+                    </Stack>
+                  </Card>
+                </NextLink>
               </Grid>
-              <Grid container item sm={12} md={4}>
-                <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-                  <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    {/* <BankFilled sx={{ fontSize: 40 }} /> */}
-                    {/* <Rent_2 color="warning" /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-3.svg" alt="" />
-                  </Avatar>
-                  <Typography variant="h3">Search Companies</Typography>
-                  <Typography>
-                    Looking for a professional who specializes in short term rentals in the area you are traveling to? Search our online
-                    directory of Short Term and Vacation Rental Management Companies
-                  </Typography>
-                </Stack>
+              <Grid container item sm={12} md={4} style={{ cursor: 'pointer' }}>
+                <NextLink href="#" passHref>
+                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '10px' }}>
+                    <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+                      <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
+                        {/* <BankFilled sx={{ fontSize: 40 }} /> */}
+                        {/* <Rent_2 color="warning" /> */}
+                        <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-3.svg" alt="" />
+                      </Avatar>
+                      <Typography variant="h3">Search Companies</Typography>
+                      <Typography>
+                        Looking for a professional who specializes in short term rentals in the area you are traveling to? Search our online
+                        directory of Short Term and Vacation Rental Management Companies
+                      </Typography>
+                    </Stack>
+                  </Card>
+                </NextLink>
               </Grid>
-              <Grid container item sm={12} md={4}>
-                <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-                  <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    {/* <AppleFilled sx={{ fontSize: 40 }} /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
-                  </Avatar>
-                  <Typography variant="h3">Why List With Us?</Typography>
-                  <Typography>
-                    Looking to Increase exposure, online traffic, and bookings to your vacation rental? Interested in driving traffic to
-                    your personal booking site, rather than using a 3rd party booking site?
-                  </Typography>
-                </Stack>
+              <Grid container item sm={12} md={4} style={{ cursor: 'pointer' }}>
+                <NextLink href="#" passHref>
+                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '10px' }}>
+                    <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+                      <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
+                        {/* <AppleFilled sx={{ fontSize: 40 }} /> */}
+                        <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
+                      </Avatar>
+                      <Typography variant="h3">Why List With Us?</Typography>
+                      <Typography>
+                        Looking to Increase exposure, online traffic, and bookings to your vacation rental? Interested in driving traffic to
+                        your personal booking site, rather than using a 3rd party booking site?
+                      </Typography>
+                    </Stack>
+                  </Card>
+                </NextLink>
               </Grid>
             </Grid>
           </Grid>
