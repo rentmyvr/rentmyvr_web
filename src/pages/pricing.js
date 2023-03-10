@@ -164,7 +164,7 @@ const Pricing = () => {
           <Grid item style={{ width: '100%' }}>
             <img style={{ width: '100%' }} src="/assets/images/pricing.png" alt="" />
           </Grid>
-          <Grid item sm={10} md={8} xs={10} mb={5}>
+          <Grid item sm={10} md={8} xs={10} my={5}>
             <Typography my={1}>
               Sign up to create an account for free. List an unlimited number of standard property listings for free -
             </Typography>
@@ -197,7 +197,7 @@ const Pricing = () => {
           </Grid>
           <Grid item sm={12} md={8} mb={2}>
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
                     <TableCell></TableCell>
@@ -220,7 +220,7 @@ const Pricing = () => {
                           type="checkbox"
                           style={{ width: '16px', height: '16px' }}
                           checked={row.standard}
-                          onClick={() => {
+                          onChange={() => {
                             standardChange(row.name);
                           }}
                         />
@@ -230,7 +230,7 @@ const Pricing = () => {
                           type="checkbox"
                           style={{ width: '16px', height: '16px' }}
                           checked={row.premium}
-                          onClick={() => {
+                          onChange={() => {
                             premiumChange(row.name);
                           }}
                         />
@@ -252,7 +252,7 @@ const Pricing = () => {
           </Grid>
           <Grid item sm={12} md={8} mb={2}>
             <Grid item style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography mb={1} variant="h4">
+              <Typography mb={2} variant="h4">
                 Have a question about Pricing?
               </Typography>
               <NextLink href="/contact" passHref>
@@ -263,8 +263,8 @@ const Pricing = () => {
                 </Link>
               </NextLink>
             </Grid>
-            <Grid item style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography mb={1} variant="h4">
+            <Grid item style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} my={5}>
+              <Typography mb={2} variant="h4">
                 Create an Account and Start Listing!
               </Typography>
               <NextLink href="/register" passHref>
