@@ -36,30 +36,30 @@ const Support = () => {
       }}
     >
       <Image
-        src={'/assets/images/support.png'}
+        src={'/assets/images/1500x1000/support.png'}
         alt="mantis"
         layout="fill"
         style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto', minWidth: '50%', minHeight: '50%' }}
       />
-      <Box sx={{ p: { md: 21.2, sm: 13.1, xs: 5 } }} mt={0} position="absolute">
+      <Box sx={{ p: { md: 21.2, sm: 13.1, xs: 5 } }} mt={0} position="absolute" style={{ width: '100%' }}>
         <Grid
           sx={{ p: { md: 8, sm: 8, xs: 3 } }}
           justifyContent="center"
           style={{ backgroundColor: '#00000055', borderRadius: 10, alignItems: 'center', flexDirection: 'column' }}
         >
           <Typography variant="h1" align="center" style={{ color: 'white' }}>
-            Support
+            Contact Our Support Team
           </Typography>
           <Grid item xs={12} sm={10} lg={9} mt={2}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth type="text" placeholder="Name" style={{ backgroundColor: 'white' }} />
+                <TextField fullWidth type="text" placeholder="Name*" style={{ backgroundColor: 'white' }} />
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField fullWidth type="text" placeholder="Company Name" style={{ backgroundColor: 'white' }} />
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth type="email" placeholder="Email Address" style={{ backgroundColor: 'white' }} />
+                <TextField fullWidth type="email" placeholder="Email Address*" style={{ backgroundColor: 'white' }} />
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField fullWidth type="number" placeholder="Phone Number" style={{ backgroundColor: 'white' }} />

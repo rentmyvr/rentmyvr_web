@@ -13,7 +13,7 @@ const Contact = () => {
         left: '0%',
         width: '100%',
         height: '100%',
-        backgroundImage: `url(/assets/images/1300x800/design-28.png)`,
+        backgroundImage: `url(/assets/images/1500x1000/contact.png)`,
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center'
@@ -37,19 +37,19 @@ const Contact = () => {
           <Grid item xs={12} sm={10} lg={9} mt={2}>
             <Grid container spacing={3}>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth type="text" placeholder="Name" style={{ backgroundColor: 'white' }} />
+                <TextField fullWidth type="text" placeholder="Name*" style={{ backgroundColor: 'white' }} />
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField fullWidth type="text" placeholder="Company Name" style={{ backgroundColor: 'white' }} />
               </Grid>
               <Grid item xs={12} md={6}>
-                <TextField fullWidth type="email" placeholder="Email Address" style={{ backgroundColor: 'white' }} />
+                <TextField fullWidth type="email" placeholder="Email Address*" style={{ backgroundColor: 'white' }} />
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField fullWidth type="number" placeholder="Phone Number" style={{ backgroundColor: 'white' }} />
               </Grid>
               <Grid item xs={12}>
-                <TextField fullWidth multiline rows={4} placeholder="Reason for Inquiry?" style={{ backgroundColor: 'white' }} />
+                <TextField fullWidth multiline rows={4} placeholder="Reason for Inquiry?*" style={{ backgroundColor: 'white' }} />
               </Grid>
             </Grid>
           </Grid>
