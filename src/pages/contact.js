@@ -1,7 +1,6 @@
 import { Button, Grid, Stack, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import Page from 'components/Page';
-import Image from 'next/image';
 
 const Contact = () => {
   return (
@@ -13,7 +12,11 @@ const Contact = () => {
         left: '0%',
         width: '100%',
         height: '100%',
-        backgroundImage: `url(/assets/images/1500x1000/contact.png)`,
+        backgroundImage: {
+          md: `url(/assets/images/1500x1000/contact.png)`,
+          sm: `url(/assets/images/1500x1000/contact.png)`,
+          xs: `url(/assets/images/600x1200/contact.png)`
+        },
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center'

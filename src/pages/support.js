@@ -32,15 +32,23 @@ const Support = () => {
         top: '0%',
         left: '0%',
         width: '100%',
-        height: '100%'
+        height: '100%',
+        backgroundImage: {
+          md: `url(/assets/images/1500x1000/support.png)`,
+          sm: `url(/assets/images/1500x1000/support.png)`,
+          xs: `url(/assets/images/600x1200/support.png)`
+        },
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center'
       }}
     >
-      <Image
+      {/* <Image
         src={'/assets/images/1500x1000/support.png'}
         alt="mantis"
         layout="fill"
         style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, margin: 'auto', minWidth: '50%', minHeight: '50%' }}
-      />
+      /> */}
       <Box sx={{ p: { md: 21.2, sm: 13.1, xs: 5 } }} mt={0} position="absolute" style={{ width: '100%' }}>
         <Grid
           sx={{ p: { md: 8, sm: 8, xs: 3 } }}
