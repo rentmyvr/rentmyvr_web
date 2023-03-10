@@ -229,7 +229,7 @@ const Index = () => {
             {faqsForHosts.map(
               (faq, i) =>
                 (faq.question.includes(search) || faq.answer.includes(search)) && (
-                  <Accordion key={i} sx={{ background: '#dee8fa!important' }}>
+                  <Accordion key={i} sx={{ background: '#dee8fa!important', width: '100%' }}>
                     <AccordionSummary
                       aria-controls="panel1a-content"
                       id="panel1a-header"

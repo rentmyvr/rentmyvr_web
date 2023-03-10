@@ -364,7 +364,7 @@ const FooterBlock = ({ isFull }) => {
         </Box>
       )}
 
-      <Box sx={{ pt: isFull ? 0 : 2, pb: 2, bgcolor: '#525252', height: 'auto' }}>
+      <Box sx={{ pt: isFull ? 0 : 5, pb: 2, bgcolor: '#525252', height: 'auto' }}>
         <Container>
           <Grid container spacing={2} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
             <Grid item xs={12} md={5}>

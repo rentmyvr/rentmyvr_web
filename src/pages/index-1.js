@@ -444,7 +444,7 @@ const Index = () => {
           direction="row"
           sx={{ backgroundColor: 'unset', justifyContent: 'center' }}
         >
-          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={0}>
             <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <Autocomplete
                 options={regions}
@@ -488,7 +488,7 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={0}>
             <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
@@ -531,7 +531,7 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={0}>
             <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
@@ -571,7 +571,7 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={0}>
             <Stack direction="column" spacing={1.25} position="relative" style={{ width: '100%' }}>
               {/* <TeamOutlined className="icon" style={{position: 'absolute', top: '25px', zIndex: '10', left: '5px'}} /> */}
               <TextField
@@ -851,7 +851,7 @@ const Index = () => {
               </Popper>
             </Stack>
           </Grid>
-          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={0}>
             <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <Button variant="contained" size="large" color="primary">
                 <SearchOutlined />
@@ -901,7 +901,7 @@ const Index = () => {
             <Grid container spacing={2} pl={4} pr={2} pt={4}>
               <Grid container item sm={12} md={4} style={{ cursor: 'pointer' }}>
                 <NextLink href="#" passHref>
-                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '10px' }}>
+                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '15px' }}>
                     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                       <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                         {/* <HomeFilled sx={{ fontSize: 40 }} /> */}
@@ -919,7 +919,7 @@ const Index = () => {
               </Grid>
               <Grid container item sm={12} md={4} style={{ cursor: 'pointer' }}>
                 <NextLink href="#" passHref>
-                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '10px' }}>
+                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '15px' }}>
                     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                       <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                         {/* <BankFilled sx={{ fontSize: 40 }} /> */}
@@ -937,7 +937,7 @@ const Index = () => {
               </Grid>
               <Grid container item sm={12} md={4} style={{ cursor: 'pointer' }}>
                 <NextLink href="#" passHref>
-                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '10px' }}>
+                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '15px' }}>
                     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
                       <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
                         {/* <AppleFilled sx={{ fontSize: 40 }} /> */}
