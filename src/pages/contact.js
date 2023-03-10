@@ -29,9 +29,9 @@ const Contact = () => {
               style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center' }}
               sx={{
                 content: {
-                  md: `url(/assets/images/1500x600/support.png)`,
-                  sm: `url(/assets/images/1500x1000/support.png)`,
-                  xs: `url(/assets/images/600x1200/support.png)`
+                  md: `url(/assets/images/1500x600/contact.png)`,
+                  sm: `url(/assets/images/1500x1000/contact.png)`,
+                  xs: `url(/assets/images/600x1200/contact.png)`
                 }
               }}
               alt="Logo"
@@ -39,7 +39,7 @@ const Contact = () => {
             <Grid
               style={{ position: 'absolute', top: '90px', width: '100%', display: 'flex', justifyContent: 'center', marginLeft: '16px' }}
             >
-              <Grid md={10} sm={9} xs={8}>
+              <Grid md={10} sm={10} xs={10}>
                 <Grid
                   sx={{ p: { md: 5, sm: 5, xs: 3 } }}
                   justifyContent="center"

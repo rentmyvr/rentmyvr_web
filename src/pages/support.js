@@ -59,7 +59,7 @@ const Support = () => {
             <Grid
               style={{ position: 'absolute', top: '90px', width: '100%', display: 'flex', justifyContent: 'center', marginLeft: '16px' }}
             >
-              <Grid md={10} sm={9} xs={8}>
+              <Grid md={10} sm={10} xs={10}>
                 <Grid
                   sx={{ p: { md: 5, sm: 5, xs: 3 } }}
                   justifyContent="center"
