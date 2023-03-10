@@ -37,7 +37,8 @@ import IconButton from 'components/@extended/IconButton';
 import Logo from 'components/logo';
 
 // assets
-import { MenuOutlined, LineOutlined } from '@ant-design/icons';
+import { MenuOutlined } from '@ant-design/icons';
+import { TreeItem, TreeView } from '@mui/lab';
 
 // ==============================|| COMPONENTS - APP BAR ||============================== //
 
@@ -62,6 +63,33 @@ function ElevationScroll({ layout, children, window }) {
     }
   });
 }
+
+const ExpandMoreIcon = () => {
+  return (
+    <svg
+      className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv"
+      focusable="false"
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      data-testid="ExpandMoreIcon"
+    >
+      <path d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"></path>
+    </svg>
+  );
+};
+const ChevronRightIcon = () => {
+  return (
+    <svg
+      className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv"
+      focusable="false"
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      data-testid="ChevronRightIcon"
+    >
+      <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+    </svg>
+  );
+};
 
 const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
   const theme = useTheme();
@@ -297,10 +325,18 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                 </IconButton>
               </Stack>
               <Drawer
-                anchor="top"
+                anchor="right"
                 open={drawerToggle}
                 onClose={drawerToggler(false)}
-                sx={{ '& .MuiDrawer-paper': { backgroundImage: 'none' } }}
+                sx={{
+                  '& .MuiDrawer-paper': {
+                    backgroundImage: 'none',
+                    borderTopLeftRadius: 15,
+                    borderBottomLeftRadius: 15,
+                    width: '70%',
+                    paddingTop: 1
+                  }
+                }}
               >
                 <Box
                   sx={{
@@ -311,98 +347,91 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                     }
                   }}
                   role="presentation"
-                  onClick={drawerToggler(false)}
-                  onKeyDown={drawerToggler(false)}
                 >
-                  <List>
+                  <Typography
+                    component="div"
+                    sx={{ textAlign: 'left', display: 'flex', justifyContent: 'center', borderBottom: '1px solid grey' }}
+                    py={1}
+                  >
+                    <Logo reverse to={session ? DEFAULT_PATH : '/'} />
+                  </Typography>
+                  <TreeView
+                    aria-label="file system navigator"
+                    defaultCollapseIcon={<ExpandMoreIcon />}
+                    defaultExpandIcon={<ChevronRightIcon />}
+                    sx={{ flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+                  >
                     <Link style={{ textDecoration: 'none' }} href={DEFAULT_PATH}>
                       <ListItemButton component="span">
-                        <ListItemIcon>
-                          <LineOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary="Dashboard" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText
+                          primary="Search Properties"
+                          primaryTypographyProps={{ variant: 'h6', color: 'text.primary', paddingLeft: 2 }}
+                        />
                       </ListItemButton>
                     </Link>
-                    <Link style={{ textDecoration: 'none' }} href="/components-overview/buttons">
+                    <Link style={{ textDecoration: 'none' }} href={DEFAULT_PATH}>
                       <ListItemButton component="span">
-                        <ListItemIcon>
-                          <LineOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary="Search Properties" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        <ListItemText
+                          primary="Management Companies"
+                          primaryTypographyProps={{ variant: 'h6', color: 'text.primary', paddingLeft: 2 }}
+                        />
                       </ListItemButton>
                     </Link>
-                    <Link style={{ textDecoration: 'none' }} href="/">
-                      <ListItemButton component="span">
-                        <ListItemIcon>
-                          <LineOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary="Management Companies" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
-                      </ListItemButton>
-                    </Link>
-                    <Link style={{ textDecoration: 'none' }} href="/">
-                      <ListItemButton component="span">
-                        <ListItemIcon>
-                          <LineOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary="List With Us" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
-                      </ListItemButton>
-                    </Link>
-                    {/* <Link style={{ textDecoration: 'none' }} href="/">
-                      <ListItemButton component="span">
-                        <ListItemIcon>
-                          <LineOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary="Advertise with us" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
-                      </ListItemButton>
-                    </Link> */}
-                    <Link style={{ textDecoration: 'none' }} href="/">
-                      <ListItemButton component="span">
-                        <ListItemIcon>
-                          <LineOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary="FAQ" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
-                        <Chip color="primary" label="v1.0" size="small" />
-                      </ListItemButton>
-                    </Link>
-                    <Link style={{ textDecoration: 'none' }} href="/">
-                      <ListItemButton component="span">
-                        <ListItemIcon>
-                          <LineOutlined />
-                        </ListItemIcon>
-                        <ListItemText primary="Coming Soon" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
-                        <Chip color="primary" label="v1.0" size="small" />
-                      </ListItemButton>
-                    </Link>
-                    {session ? (
-                      <Link style={{ textDecoration: 'none' }} href="/">
+                    <TreeItem nodeId="3" label="List With Us">
+                      <Link style={{ textDecoration: 'none' }} href="/property">
                         <ListItemButton component="span">
-                          <ListItemIcon>
-                            <LineOutlined />
-                          </ListItemIcon>
-                          <ListItemText primary="Logout" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                          <ListItemText primary="List A Property" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
                         </ListItemButton>
                       </Link>
-                    ) : (
+                      <Link style={{ textDecoration: 'none' }} href="/company">
+                        <ListItemButton component="span">
+                          <ListItemText primary="List Your Company" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        </ListItemButton>
+                      </Link>
+                      <Link style={{ textDecoration: 'none' }} href="/pricing">
+                        <ListItemButton component="span">
+                          <ListItemText primary="Pricing" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        </ListItemButton>
+                      </Link>
+                    </TreeItem>
+                    <TreeItem nodeId="4" label="Help">
+                      <Link style={{ textDecoration: 'none' }} href="/FAQ">
+                        <ListItemButton component="span">
+                          <ListItemText primary="FAQs" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        </ListItemButton>
+                      </Link>
+                      <Link style={{ textDecoration: 'none' }} href="/support">
+                        <ListItemButton component="span">
+                          <ListItemText primary="Support" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        </ListItemButton>
+                      </Link>
+                      <Link style={{ textDecoration: 'none' }} href="/contact">
+                        <ListItemButton component="span">
+                          <ListItemText primary="Contact Us" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                        </ListItemButton>
+                      </Link>
+                    </TreeItem>
+                    <Link style={{ textDecoration: 'none' }} href="/coming-soon">
+                      <ListItemButton component="span">
+                        <ListItemText
+                          primary="Coming Soon"
+                          primaryTypographyProps={{ variant: 'h6', color: 'text.primary', paddingLeft: 2 }}
+                        />
+                      </ListItemButton>
+                    </Link>
+                    {!session && (
                       <>
-                        <Link style={{ textDecoration: 'none' }} href={ACCOUNT_URL.LOGIN}>
+                        <Link style={{ textDecoration: 'none' }} href={ACCOUNT_URL}>
                           <ListItemButton component="span">
-                            <ListItemIcon>
-                              <LineOutlined />
-                            </ListItemIcon>
-                            <ListItemText primary="Login" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
-                          </ListItemButton>
-                        </Link>
-                        <Link style={{ textDecoration: 'none' }} href={ACCOUNT_URL.REGISTER}>
-                          <ListItemButton component="span">
-                            <ListItemIcon>
-                              <LineOutlined />
-                            </ListItemIcon>
-                            <ListItemText primary="Register" primaryTypographyProps={{ variant: 'h6', color: 'text.primary' }} />
+                            <ListItemText
+                              primary="Login"
+                              primaryTypographyProps={{ variant: 'h6', color: 'text.primary', paddingLeft: 2 }}
+                            />
                           </ListItemButton>
                         </Link>
                       </>
                     )}
-                  </List>
+                  </TreeView>
                 </Box>
               </Drawer>
             </Box>
