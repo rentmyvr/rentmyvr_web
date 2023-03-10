@@ -444,7 +444,7 @@ const Index = () => {
           direction="row"
           sx={{ backgroundColor: 'unset', justifyContent: 'center' }}
         >
-          <Grid item xs={10} sm={4} md={2} mt={2} mr={0}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
             <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <Autocomplete
                 options={regions}
@@ -488,7 +488,7 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid item xs={10} sm={4} md={2} mt={2} mr={0}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
             <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
@@ -531,7 +531,7 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid item xs={10} sm={4} md={2} mt={2} mr={0}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
             <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
@@ -571,7 +571,7 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid item xs={10} sm={4} md={2} mt={2} mr={0}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
             <Stack direction="column" spacing={1.25} position="relative" style={{ width: '100%' }}>
               {/* <TeamOutlined className="icon" style={{position: 'absolute', top: '25px', zIndex: '10', left: '5px'}} /> */}
               <TextField
@@ -1054,7 +1054,7 @@ const Index = () => {
 
       <Grid container mt={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
         <ThemeProvider theme={countUpTheme}>
-          <Grid item xs={12} sx={{ backgroundColor: 'transparent' }}>
+          <Grid item xs={12} sx={{ backgroundColor: 'transparent', padding: '0px' }}>
             <Box className="imageOverlay">
               <Grid container spacing={0} justifyContent="center" alignItems="center" style={{ backgroundColor: 'unset' }}>
                 <Grid
