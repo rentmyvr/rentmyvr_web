@@ -439,10 +439,9 @@ const Index = () => {
           spacing={0}
           pl={4}
           pr={2}
-          mt={-10}
           zIndex={10}
           direction="row"
-          sx={{ backgroundColor: 'unset', justifyContent: 'center' }}
+          sx={{ backgroundColor: 'unset', justifyContent: 'center', mt: { md: -10, sm: 0, xs: 0 } }}
         >
           <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
             <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
