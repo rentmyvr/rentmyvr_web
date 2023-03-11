@@ -513,7 +513,7 @@ const FooterBlock = ({ isFull }) => {
               <Typography sx={{ color: theme.palette.common.white }}>
                 All information on RentMyVR.com is to be verified by all bookings or transactions. We seek to provide only an online
                 directory. We will not be a part of your booking communication, communication, screening or agreements between hosts and
-                guests. We also will not be a part of any contract between owners management companies.
+                guests. We also will not be a part of any contract between owners and management companies.
               </Typography>
             </Grid>
           </Grid>
