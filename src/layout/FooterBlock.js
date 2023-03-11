@@ -413,8 +413,8 @@ const FooterBlock = ({ isFull }) => {
             <Grid item xs={12} md={7}>
               <Grid container spacing={2}>
                 <Grid item sm={3} xs={12}>
-                  <Link href="/register" underline="none" sx={linkSX}>
-                    <Typography variant="h3" style={{ textAlign: 'center' }}>
+                  <Link href="/register" underline="none">
+                    <Typography variant="h3" style={{ textAlign: 'center', color: 'white' }}>
                       Sign Up
                     </Typography>
                   </Link>
