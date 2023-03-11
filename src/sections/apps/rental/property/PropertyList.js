@@ -39,14 +39,14 @@ import { HeaderSort, TablePagination, TableRowSelection } from 'components/third
 import { useDispatch } from 'store';
 import { openSnackbar } from 'store/reducers/snackbar';
 // import { getProducts as getProperties } from 'store/reducers/product';
-import { fetcher, DIRECTORY_EP, errorProcessor } from 'config';
+import { CORE_URL, fetcher, DIRECTORY_EP, errorProcessor } from 'config';
 
 // assets
 import { CloseOutlined, PlusOutlined, EyeTwoTone, EditTwoTone, DeleteTwoTone } from '@ant-design/icons';
 
 // ==============================|| REACT TABLE ||============================== //
 
-function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent }) {
+function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent, router }) {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -67,7 +67,7 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent }) {
     setPageSize,
     state: { globalFilter, selectedRowIds, pageIndex, pageSize },
     preGlobalFilteredRows,
-    setGlobalFilter,
+    setGlobalFilter
     // setSortBy
   } = useTable(
     {
@@ -93,10 +93,8 @@ function ReactTable({ columns, data, getHeaderProps, renderRowSubComponent }) {
     // eslint-disable-next-line
   }, [matchDownSM]);
 
-  const router = useRouter();
-
   const handleAddProduct = () => {
-    router.push(`/apps/e-commerce/add-product`);
+    router.push(CORE_URL.PROPERTY_CREATE);
   };
 
   return (
@@ -170,13 +168,15 @@ ReactTable.propTypes = {
   columns: PropTypes.array,
   data: PropTypes.array,
   getHeaderProps: PropTypes.func,
-  renderRowSubComponent: PropTypes.any
+  renderRowSubComponent: PropTypes.any,
+  router: PropTypes.any
 };
 
 // ==============================|| PRODUCT LIST - MAIN ||============================== //
 
 const PropertyList = ({ properties = [] }) => {
   const theme = useTheme();
+  const router = useRouter();
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const [data, setData] = useState(properties);
@@ -189,73 +189,73 @@ const PropertyList = ({ properties = [] }) => {
     'casita-sep-guest-quarters': 'Casita/Sep Guest Quarters'
   };
   const roomTypes = {
-    'bedroom': 'Bedroom',
-    'casita': 'Casita',
-    'den': 'Den',
-    'office': 'Office',
+    bedroom: 'Bedroom',
+    casita: 'Casita',
+    den: 'Den',
+    office: 'Office',
     'living-room': 'Living Room',
     'family-room': 'Family Room',
-    'loft': 'Loft',
-    'studio': 'Studio'
+    loft: 'Loft',
+    studio: 'Studio'
   };
   const sleeperTypes = {
     'king-bed': 'King Bed',
     'queen-bed': 'Queen Bed',
     'double-bed': 'Double Bed',
     'twin-single-bed': 'Twin/Single Bed',
-    'futon': 'Futon',
+    futon: 'Futon',
     'sofa-sleeper': 'Sofa Sleeper',
-    'cot': 'Cot',
-    'trundle': 'Trundle',
+    cot: 'Cot',
+    trundle: 'Trundle',
     'bunk-bed': 'Bunk Bed',
     'air-mattress-floor-mattress': 'Air Mattress/Floor Mattress'
   };
   const types = {
-    'barn': 'Barn',
+    barn: 'Barn',
     'bed-and-breakfast': 'Bed and Breakfast',
-    'boat': 'Boat',
-    'bungalow': 'Bungalow',
-    'bus': 'Bus',
-    'cabin': 'Cabin',
-    'camper': 'Camper',
-    'caravan': 'Caravan',
+    boat: 'Boat',
+    bungalow: 'Bungalow',
+    bus: 'Bus',
+    cabin: 'Cabin',
+    camper: 'Camper',
+    caravan: 'Caravan',
     'casa-particulars': 'Casa Particulars',
-    'castle': 'Castle',
-    'cave': 'Cave',
-    'chalet': 'Chalet',
-    'condo': 'Condo',
-    'cottage': 'Cottage',
+    castle: 'Castle',
+    cave: 'Cave',
+    chalet: 'Chalet',
+    condo: 'Condo',
+    cottage: 'Cottage',
     'country-house': 'Country House',
-    'cycladic': 'Cycladic',
-    'damusi': 'Damusi',
+    cycladic: 'Cycladic',
+    damusi: 'Damusi',
     'earth-home': 'Earth Home',
-    'estate': 'Estate',
+    estate: 'Estate',
     'farm-house': 'Farm House',
     'guest-house': 'Guest House',
-    'hanok': 'Hanok',
+    hanok: 'Hanok',
     'historic-home': 'Historic Home',
-    'hotel': 'Hotel',
-    'house': 'House',
-    'houseboat': 'Houseboat',
-    'lodge': 'Lodge',
-    'minsus': 'Minsus',
-    'resort': 'Resort',
-    'riad': 'Riad',
-    'ryokan': 'Ryokan',
+    hotel: 'Hotel',
+    house: 'House',
+    houseboat: 'Houseboat',
+    lodge: 'Lodge',
+    minsus: 'Minsus',
+    resort: 'Resort',
+    riad: 'Riad',
+    ryokan: 'Ryokan',
     'shepherds-hut': "Shepherd's Hut",
-    'specialty': 'Specialty',
-    'studio': 'Studio',
-    'tent': 'Tent',
+    specialty: 'Specialty',
+    studio: 'Studio',
+    tent: 'Tent',
     'tiny-home': 'Tiny Home',
-    'tower': 'Tower',
-    'townhouse': 'Townhouse',
+    tower: 'Tower',
+    townhouse: 'Townhouse',
     'train-car': 'Train Car',
-    'treehouse': 'Treehouse',
-    'trulli': 'Trulli',
-    'villa': 'Villa',
-    'windmill': 'Windmill',
-    'yacht': 'Yacht',
-    'yurt': 'Yurt'
+    treehouse: 'Treehouse',
+    trulli: 'Trulli',
+    villa: 'Villa',
+    windmill: 'Windmill',
+    yacht: 'Yacht',
+    yurt: 'Yurt'
   };
 
   //   const { properties } = useSelector((state) => state.property);
@@ -270,7 +270,6 @@ const PropertyList = ({ properties = [] }) => {
         }, {});
         console.log('sleeper_types====');
         console.log(dd);
-
       },
       (err) => {
         errorProcessor(err, () => {}, dispatch, openSnackbar);
@@ -335,11 +334,13 @@ const PropertyList = ({ properties = [] }) => {
       {
         Header: 'Type',
         accessor: (row) => types[row.type],
-        disableSortBy: false
+        disableSortBy: false,
+        className: 'cell-center'
       },
       {
         Header: 'Space',
-        accessor: (row) => bookedSpace[row.space]
+        accessor: (row) => bookedSpace[row.space],
+        className: 'cell-left'
       },
       // {
       //   Header: 'Hosted By',
@@ -369,13 +370,13 @@ const PropertyList = ({ properties = [] }) => {
       {
         Header: 'Room/Sleeper Type',
         accessor: (row) => roomTypes[row.room_type],
-        className: 'cell-right',
+        className: 'cell-left',
         // eslint-disable-next-line
         Cell: ({ row }) => {
           // eslint-disable-next-line
           const { room_type, sleeper_type } = row.original;
           return (
-            <Stack direction="row" spacing={1.5} alignItems="center">
+            <Stack direction="row" spacing={1.5} sx={{ float: 'left' }}>
               <Stack spacing={0}>
                 <Typography variant="subtitle1">{roomTypes[room_type]}</Typography>
                 <Typography variant="caption" color="textSecondary">
@@ -398,20 +399,20 @@ const PropertyList = ({ properties = [] }) => {
       {
         Header: '$/Night',
         accessor: 'price_night',
-        className: 'cell-right',
+        className: 'cell-center',
         // eslint-disable-next-line
         Cell: ({ value }) => <NumberFormat value={value} displayType="text" thousandSeparator prefix="$" />
       },
       {
         Header: 'Contact',
         accessor: 'email',
-        className: 'cell-right',
+        className: 'cell-left',
         // eslint-disable-next-line
         Cell: ({ row }) => {
           // eslint-disable-next-line
           const { email, phone } = row.original;
           return (
-            <Stack direction="row" spacing={1.5} alignItems="center">
+            <Stack direction="row" spacing={1.5} sx={{ float: 'left' }}>
               <Stack spacing={0}>
                 <Typography variant="subtitle1">{email}</Typography>
                 <Typography variant="caption" color="textSecondary">
@@ -466,6 +467,8 @@ const PropertyList = ({ properties = [] }) => {
                   color="primary"
                   onClick={(e) => {
                     e.stopPropagation();
+                    // eslint-disable-next-line
+                    router.push({ pathname: CORE_URL.PROPERTY_CREATE, query: { id: row.original.id } });
                   }}
                 >
                   <EditTwoTone twoToneColor={theme.palette.primary.main} />
@@ -501,6 +504,7 @@ const PropertyList = ({ properties = [] }) => {
             data={data}
             getHeaderProps={(column) => column.getSortByToggleProps()}
             renderRowSubComponent={renderRowSubComponent}
+            router={router}
           />
         </ScrollX>
       </MainCard>

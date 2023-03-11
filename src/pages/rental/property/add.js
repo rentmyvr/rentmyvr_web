@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 // next
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
 // material-ui
@@ -74,7 +74,7 @@ import UploadMultiFile from 'components/third-party/dropzone/MultiFile';
 // import { set } from 'date-fns';
 
 // project import
-import { fetcher, CORE_EP, DIRECTORY_EP, errorProcessor, successProcessor, warningProcessor } from 'config';
+import { fetcher, CORE_EP, CORE_URL, DIRECTORY_EP, errorProcessor, successProcessor, warningProcessor } from 'config';
 
 // ==============================|| ADD NEW PRODUCT - MAIN ||============================== //
 
@@ -129,6 +129,136 @@ const emptyProperty = {
   stage: 0
 };
 
+const BOOKING_SITES = [
+  { name: 'air-bnb', label: 'Air BNB' },
+  { name: 'vrbo', label: 'VRBO' },
+  { name: 'google-vacation-rental', label: 'Google Vacation Rental' },
+  { name: 'flipkey', label: 'Flipkey' },
+  { name: 'windmu', label: 'Windmu' },
+  { name: 'booking', label: 'Booking.com' },
+  { name: 'expedia', label: 'Expedia' },
+  { name: 'housetrip', label: 'Housetrip' },
+  { name: 'rent-by-owner', label: 'Rent By Owner' },
+  { name: 'holidaylettings', label: 'HolidayLettings' },
+  { name: 'traveloka', label: 'Traveloka' },
+  { name: 'trip', label: 'Trip.com' },
+  { name: 'agoda', label: 'Agoda' },
+  { name: 'glamping', label: 'Glamping.com' },
+  { name: 'despegar-decolar', label: 'Despegar/Decolar' },
+  { name: 'edreams', label: 'eDreams' },
+  { name: 'pegipegi', label: 'PegiPegi' },
+  { name: 'rakuten', label: 'Rakuten' },
+  { name: 'riparide', label: 'Riparide' },
+  { name: 'anyplace', label: 'Anyplace' },
+  { name: 'furniturefinders', label: 'furnitureFinders' },
+  { name: '9flats', label: '9flats' },
+  { name: 'coliving', label: 'Coliving.com' },
+  { name: 'instant-world-booking', label: 'Instant World Booking' },
+  { name: 'only-apartments', label: 'Only-Apartments' }
+];
+
+const SOCIAL_MEDIAS = [
+  { name: 'facebook', label: 'Facebook' },
+  { name: 'instagram', label: 'Instagram' },
+  { name: 'tiktok', label: 'TikTok' },
+  { name: 'youtube', label: 'YouTube' },
+  { name: 'twitter', label: 'Twitter' },
+  { name: 'google-business', label: 'GoogleBusiness' },
+  { name: 'yelp', label: 'Yelp' }
+];
+
+const TYPES = [
+  { id: 'house', label: 'House' },
+  { id: 'condo', label: 'Condo' },
+  { id: 'studio', label: 'Studio' },
+  { id: 'cabin', label: 'Cabin' },
+  { id: 'townhouse', label: 'Townhouse' },
+  { id: 'hotel', label: 'Hotel' },
+  { id: 'cottage', label: 'Cottage' },
+  { id: 'bungalow', label: 'Bungalow' },
+  { id: 'villa', label: 'Villa' },
+  { id: 'caravan', label: 'Caravan' },
+  { id: 'camper', label: 'Camper' },
+  { id: 'resort', label: 'Resort' },
+  { id: 'chalet', label: 'Chalet' },
+  { id: 'guest-house', label: 'Guest House' },
+  { id: 'farm-house', label: 'Farm House' },
+  { id: 'lodge', label: 'Lodge' },
+  { id: 'estate', label: 'Estate' },
+  { id: 'bed-and-breakfast', label: 'Bed and Breakfast' },
+  { id: 'country-house', label: 'Country House' },
+  { id: 'boat', label: 'Boat' },
+  { id: 'houseboat', label: 'Houseboat' },
+  { id: 'yacht', label: 'Yacht' },
+  { id: 'barn', label: 'Barn' },
+  { id: 'tower', label: 'Tower' },
+  { id: 'castle', label: 'Castle' },
+  { id: 'historic-home', label: 'Historic Home' },
+  { id: 'treehouse', label: 'Treehouse' },
+  { id: 'tiny-home', label: 'Tiny Home' },
+  { id: 'earth-home', label: 'Earth Home' },
+  { id: 'tent', label: 'Tent' },
+  { id: 'cave', label: 'Cave' },
+  { id: 'yurt', label: 'Yurt' },
+  { id: 'ryokan', label: 'Ryokan' },
+  { id: 'cycladic', label: 'Cycladic' },
+  { id: 'casa-particulars', label: 'Casa Particulars' },
+  { id: 'windmill', label: 'Windmill' },
+  { id: 'riad', label: 'Riad' },
+  { id: 'trulli', label: 'Trulli' },
+  { id: 'shepherds-hut', label: "Shepherd's Hut" },
+  { id: 'hanok', label: 'Hanok' },
+  { id: 'minsus', label: 'Minsus' },
+  { id: 'bus', label: 'Bus' },
+  { id: 'train-car', label: 'Train Car' },
+  { id: 'damusi', label: 'Damusi' },
+  { id: 'specialty', label: 'Specialty' }
+];
+
+const SPACE = [
+  { id: 'entire-house', label: 'Entire House' },
+  { id: 'private-room', label: 'Private Room' },
+  { id: 'casita-sep-guest-quarters', label: 'Casita/Sep Guest Quarters' }
+];
+
+const ROOM_TYPES = [
+  { id: 'bedroom', label: 'Bedroom' },
+  { id: 'casita', label: 'Casita' },
+  { id: 'den', label: 'Den' },
+  { id: 'office', label: 'Office' },
+  { id: 'living-room', label: 'Living Room' },
+  { id: 'family-room', label: 'Family Room' },
+  { id: 'loft', label: 'Loft' },
+  { id: 'studio', label: 'Studio' }
+];
+
+const SLEEPER_TYPES = [
+  { id: 'king-bed', label: 'King Bed' },
+  { id: 'queen-bed', label: 'Queen Bed' },
+  { id: 'double-bed', label: 'Double Bed' },
+  { id: 'twin-single-bed', label: 'Twin/Single Bed' },
+  { id: 'futon', label: 'Futon' },
+  { id: 'sofa-sleeper', label: 'Sofa Sleeper' },
+  { id: 'cot', label: 'Cot' },
+  { id: 'trundle', label: 'Trundle' },
+  { id: 'bunk-bed', label: 'Bunk Bed' },
+  { id: 'air-mattress-floor-mattress', label: 'Air Mattress/Floor Mattress' }
+];
+
+const rawToForm = (val) => {
+  let v = { ...val };
+  v.address = { ...val.address, state: val.address.city.state_name };
+  let x = TYPES.filter((v) => v.id === val.type);
+  v.type = x.length > 0 ? x[0] : {};
+  x = SPACE.filter((v) => v.id === val.space);
+  v.space = x.length > 0 ? x[0] : {};
+  x = ROOM_TYPES.filter((v) => v.id === val.room_type);
+  v.room_type = x.length > 0 ? x[0] : {};
+  x = SLEEPER_TYPES.filter((v) => v.id === val.sleeper_type);
+  v.sleeper_type = x.length > 0 ? x[0] : {};
+  return v;
+};
+
 const formToRaw = (val) => {
   let v = { ...val };
   v.address = { ...val.address, city: val.address.city.id, city_id: val.address.city.id };
@@ -156,7 +286,9 @@ const formToRaw = (val) => {
 
 function PropertyAdd({ property = emptyProperty }) {
   const { data: session } = useSession();
+  const router = useRouter();
   const dispatch = useDispatch();
+  const [proper, setProper] = useState(property);
   const [allCities, setAllCities] = useState([]);
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
@@ -190,123 +322,10 @@ function PropertyAdd({ property = emptyProperty }) {
   const [stepErrors, setStepErrors] = useState([]);
   // const [optional, setOptional] = useState(new Set());
 
-  const isCreating = !property.id;
+  const isCreating = !property.id && !router.query.id;
 
-  const BOOKING_SITES = [
-    { name: 'air-bnb', label: 'Air BNB' },
-    { name: 'vrbo', label: 'VRBO' },
-    { name: 'google-vacation-rental', label: 'Google Vacation Rental' },
-    { name: 'flipkey', label: 'Flipkey' },
-    { name: 'windmu', label: 'Windmu' },
-    { name: 'booking', label: 'Booking.com' },
-    { name: 'expedia', label: 'Expedia' },
-    { name: 'housetrip', label: 'Housetrip' },
-    { name: 'rent-by-owner', label: 'Rent By Owner' },
-    { name: 'holidaylettings', label: 'HolidayLettings' },
-    { name: 'traveloka', label: 'Traveloka' },
-    { name: 'trip', label: 'Trip.com' },
-    { name: 'agoda', label: 'Agoda' },
-    { name: 'glamping', label: 'Glamping.com' },
-    { name: 'despegar-decolar', label: 'Despegar/Decolar' },
-    { name: 'edreams', label: 'eDreams' },
-    { name: 'pegipegi', label: 'PegiPegi' },
-    { name: 'rakuten', label: 'Rakuten' },
-    { name: 'riparide', label: 'Riparide' },
-    { name: 'anyplace', label: 'Anyplace' },
-    { name: 'furniturefinders', label: 'furnitureFinders' },
-    { name: '9flats', label: '9flats' },
-    { name: 'coliving', label: 'Coliving.com' },
-    { name: 'instant-world-booking', label: 'Instant World Booking' },
-    { name: 'only-apartments', label: 'Only-Apartments' }
-  ];
-
-  const SOCIAL_MEDIAS = [
-    { name: 'facebook', label: 'Facebook' },
-    { name: 'instagram', label: 'Instagram' },
-    { name: 'tiktok', label: 'TikTok' },
-    { name: 'youtube', label: 'YouTube' },
-    { name: 'twitter', label: 'Twitter' },
-    { name: 'google-business', label: 'GoogleBusiness' },
-    { name: 'yelp', label: 'Yelp' }
-  ];
-
-  const TYPES = [
-    { id: 'house', label: 'House' },
-    { id: 'condo', label: 'Condo' },
-    { id: 'studio', label: 'Studio' },
-    { id: 'cabin', label: 'Cabin' },
-    { id: 'townhouse', label: 'Townhouse' },
-    { id: 'hotel', label: 'Hotel' },
-    { id: 'cottage', label: 'Cottage' },
-    { id: 'bungalow', label: 'Bungalow' },
-    { id: 'villa', label: 'Villa' },
-    { id: 'caravan', label: 'Caravan' },
-    { id: 'camper', label: 'Camper' },
-    { id: 'resort', label: 'Resort' },
-    { id: 'chalet', label: 'Chalet' },
-    { id: 'guest-house', label: 'Guest House' },
-    { id: 'farm-house', label: 'Farm House' },
-    { id: 'lodge', label: 'Lodge' },
-    { id: 'estate', label: 'Estate' },
-    { id: 'bed-and-breakfast', label: 'Bed and Breakfast' },
-    { id: 'country-house', label: 'Country House' },
-    { id: 'boat', label: 'Boat' },
-    { id: 'houseboat', label: 'Houseboat' },
-    { id: 'yacht', label: 'Yacht' },
-    { id: 'barn', label: 'Barn' },
-    { id: 'tower', label: 'Tower' },
-    { id: 'castle', label: 'Castle' },
-    { id: 'historic-home', label: 'Historic Home' },
-    { id: 'treehouse', label: 'Treehouse' },
-    { id: 'tiny-home', label: 'Tiny Home' },
-    { id: 'earth-home', label: 'Earth Home' },
-    { id: 'tent', label: 'Tent' },
-    { id: 'cave', label: 'Cave' },
-    { id: 'yurt', label: 'Yurt' },
-    { id: 'ryokan', label: 'Ryokan' },
-    { id: 'cycladic', label: 'Cycladic' },
-    { id: 'casa-particulars', label: 'Casa Particulars' },
-    { id: 'windmill', label: 'Windmill' },
-    { id: 'riad', label: 'Riad' },
-    { id: 'trulli', label: 'Trulli' },
-    { id: 'shepherds-hut', label: "Shepherd's Hut" },
-    { id: 'hanok', label: 'Hanok' },
-    { id: 'minsus', label: 'Minsus' },
-    { id: 'bus', label: 'Bus' },
-    { id: 'train-car', label: 'Train Car' },
-    { id: 'damusi', label: 'Damusi' },
-    { id: 'specialty', label: 'Specialty' }
-  ];
-
-  const STATUS = [
-    { id: 'entire-house', label: 'Entire House' },
-    { id: 'private-room', label: 'Private Room' },
-    { id: 'casita-sep-guest-quarters', label: 'Casita/Sep Guest Quarters' }
-  ];
-
-  const ROOM_TYPES = [
-    { id: 'bedroom', label: 'Bedroom' },
-    { id: 'casita', label: 'Casita' },
-    { id: 'den', label: 'Den' },
-    { id: 'office', label: 'Office' },
-    { id: 'living-room', label: 'Living Room' },
-    { id: 'family-room', label: 'Family Room' },
-    { id: 'loft', label: 'Loft' },
-    { id: 'studio', label: 'Studio' }
-  ];
-
-  const SLEEPER_TYPES = [
-    { id: 'king-bed', label: 'King Bed' },
-    { id: 'queen-bed', label: 'Queen Bed' },
-    { id: 'double-bed', label: 'Double Bed' },
-    { id: 'twin-single-bed', label: 'Twin/Single Bed' },
-    { id: 'futon', label: 'Futon' },
-    { id: 'sofa-sleeper', label: 'Sofa Sleeper' },
-    { id: 'cot', label: 'Cot' },
-    { id: 'trundle', label: 'Trundle' },
-    { id: 'bunk-bed', label: 'Bunk Bed' },
-    { id: 'air-mattress-floor-mattress', label: 'Air Mattress/Floor Mattress' }
-  ];
+  // console.log('===== =====');
+  // console.log(property);
 
   const partOne = [
     'name',
@@ -363,6 +382,7 @@ function PropertyAdd({ property = emptyProperty }) {
   const handleNext = (touched, event, formErrors, setFieldValue) => {
     console.log(touched);
     console.log(formErrors);
+    console.log(stage);
 
     if (stage === 0) {
       let target = event.target;
@@ -529,6 +549,21 @@ function PropertyAdd({ property = emptyProperty }) {
   };
 
   useEffect(() => {
+    if (!property.id && router.query.id) {
+      // eslint-disable-next-line
+      fetcher(DIRECTORY_EP.PROPERTY_DETAIL.format(router.query.id), 'get', session, null, null, res => {
+          setProper(res.data);
+          setBookingSites(res.data.booking_sites);
+          setSocialMediaLinks(res.data.social_media);
+          console.log('---------');
+          console.log(res.data);
+        },
+        (err) => {
+          errorProcessor(err, () => {}, dispatch, openSnackbar);
+        }
+      );
+    }
+
     // eslint-disable-next-line
     fetcher(CORE_EP.CITY_LIST, 'get', session, null, null, res => {
         setAllCities(res.data);
@@ -578,7 +613,8 @@ function PropertyAdd({ property = emptyProperty }) {
   }, []);
 
   const formik = useFormik({
-    initialValues: property,
+    initialValues: rawToForm(proper),
+    enableReinitialize: true,
     validationSchema: Yup.object().shape({
       name: Yup.string().max(128).required('Please provide a name or label for the Property/Rental'),
       type: Yup.object()
@@ -612,7 +648,7 @@ function PropertyAdd({ property = emptyProperty }) {
         street: Yup.string().required('Please enter the street').min(1),
         number: Yup.string().required('Please enter the number').min(1)
       }),
-      stage: Yup.number().min(3, 'Success Stage').max(3, 'Success Stage'),
+      stage: Yup.number().min(3, 'Stage MUST be at least').max(3, 'Stage MUST be at most'),
       room_type: Yup.object()
         .shape({ id: Yup.string().required('Room type is Required').min(1) })
         .nullable()
@@ -629,13 +665,14 @@ function PropertyAdd({ property = emptyProperty }) {
       console.log(val);
       console.log('========== : 2 : ===========');
 
-      const URL = isCreating ? DIRECTORY_EP.PROPERTY_CREATE : DIRECTORY_EP.PROPERTY_UPDATE.format(property.id);
+      const URL = isCreating ? DIRECTORY_EP.PROPERTY_CREATE : DIRECTORY_EP.PROPERTY_UPDATE.format(proper.id);
 
       // eslint-disable-next-line
       fetcher(URL, isCreating ? 'post' : 'put', session, null, val, (res) => {
           const msg = isCreating ? 'Property/Rental Created Successfully' : 'Property/Rental Updated Successfully';
           successProcessor(msg, dispatch, openSnackbar);
           setSubmitting(false);
+          window.location.href = CORE_URL.PROPERTY_LIST;
           // if (isCreating) {
           //   if (typeof setData === 'function') {
           //     setData([...data, res.data]);
@@ -714,15 +751,15 @@ function PropertyAdd({ property = emptyProperty }) {
                           value={values.type}
                           onChange={(event, newValue) => setFieldValue('type', newValue)}
                           options={TYPES}
-                          getOptionLabel={(label) => label.label}
+                          getOptionLabel={(label) => label.label || ''}
                           isOptionEqualToValue={(option, value) => option.id === value.id}
                           renderInput={(params) => (
                             <TextField
                               {...params}
-                              error={Boolean(touched.type && errors.type)}
-                              helperText={touched.type && errors.type}
                               placeholder="Type"
                               variant="outlined"
+                              error={Boolean(touched.type && errors.type)}
+                              helperText={touched.type && errors.type?.id}
                             />
                           )}
                         />
@@ -746,9 +783,7 @@ function PropertyAdd({ property = emptyProperty }) {
                           </Grid>
                           {touched.pictures && errors.pictures && (
                             <Grid item xs={12}>
-                              <FormHelperText error id="standard-weight-helper-text-password-login">
-                                {errors.pictures}
-                              </FormHelperText>
+                              <FormHelperText error>{errors.pictures}</FormHelperText>
                             </Grid>
                           )}
                         </Grid>
@@ -773,9 +808,7 @@ function PropertyAdd({ property = emptyProperty }) {
                           </Grid>
                           {touched.video && errors.video && (
                             <Grid item xs={12}>
-                              <FormHelperText error id="standard-weight-helper-text-password-login">
-                                {errors.video}
-                              </FormHelperText>
+                              <FormHelperText error>{errors.video}</FormHelperText>
                             </Grid>
                           )}
                         </Grid>
@@ -783,26 +816,28 @@ function PropertyAdd({ property = emptyProperty }) {
 
                       <Grid item xs={12} sm={6}>
                         <InputLabel htmlFor="property-space">Space</InputLabel>
-                        <Autocomplete
-                          disablePortal
-                          fullWidth
-                          id="property-space"
-                          name="space"
-                          value={values.space}
-                          onChange={(event, newValue) => setFieldValue('space', newValue)}
-                          options={STATUS}
-                          getOptionLabel={(label) => label.label}
-                          isOptionEqualToValue={(option, value) => option.id === value.id}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              error={Boolean(touched.space && errors.space)}
-                              helperText={touched.space && errors.space}
-                              placeholder="Space Booked"
-                              variant="outlined"
-                            />
-                          )}
-                        />
+                        <FormControl fullWidth error={Boolean(touched.space && errors.space)}>
+                          <Autocomplete
+                            disablePortal
+                            fullWidth
+                            id="property-space"
+                            name="space"
+                            value={values.space}
+                            onChange={(event, newValue) => setFieldValue('space', newValue)}
+                            options={SPACE}
+                            getOptionLabel={(label) => label.label || ''}
+                            isOptionEqualToValue={(option, value) => option.id === value.id}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                placeholder="Booked Space"
+                                variant="outlined"
+                                error={Boolean(touched.space && errors.space)}
+                                helperText={touched.space && errors.space?.id}
+                              />
+                            )}
+                          />
+                        </FormControl>
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Stack spacing={1.25}>
@@ -1188,7 +1223,7 @@ function PropertyAdd({ property = emptyProperty }) {
                             <TextField
                               {...params}
                               error={Boolean(touched.room_type && errors.room_type)}
-                              helperText={touched.room_type && errors.room_type}
+                              helperText={touched.room_type && errors.room_type?.id}
                               placeholder="Select Room Type"
                               variant="outlined"
                             />
@@ -1226,7 +1261,7 @@ function PropertyAdd({ property = emptyProperty }) {
                               {...params}
                               name="sleeper_type"
                               error={Boolean(touched.sleeper_type && errors.sleeper_type)}
-                              helperText={touched.sleeper_type && errors.sleeper_type}
+                              helperText={touched.sleeper_type && errors.sleeper_type?.id}
                               placeholder="Select Sleeper Type"
                               variant="outlined"
                             />
