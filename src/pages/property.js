@@ -31,20 +31,20 @@ const Property = () => {
             <Typography variant="h2" mb={2} mt={2} textAlign={'center'}>
               Why List With Us?
             </Typography>
-            <Typography mb={2} mt={2} sx={{ fontSize: { md: '1rem', sm: '1rem', xs: '0.875rem' } }}>
+            <Typography mb={2} mt={2} sx={{ fontSize: { md: '1.2rem', sm: '1.2rem', xs: '1rem' } }}>
               Rent My VR is the fastest growing online directory for short term / vacation rentals. We realize many 3rd party booking sites
               offer a variety of features, fee schedules, etc, and as a guest begins to book their stay, they may want to compare and book
               with the site they are most comfortable using. In addition, many owners want to provide a way for a guest to book directly
               with the host or through their own property booking site. We have provided a way to do so.
             </Typography>
-            <Typography mb={2} mt={2}>
+            <Typography mb={2} mt={2} sx={{ fontSize: { md: '1.2rem', sm: '1m', xs: '1rem' } }}>
               We have two types of property listings - Standard and Premium.
             </Typography>
-            <Typography mb={2} mt={2}>
+            <Typography mb={2} mt={2} sx={{ fontSize: { md: '1.2rem', sm: '1m', xs: '1rem' } }}>
               A host can list their property, at no charge, as a Standard Property Directory Listing on Rent My VR. This allows the property
               to show up and link to an external booking site for guests to view and discover your property listing.
             </Typography>
-            <Typography mb={2} mt={2}>
+            <Typography mb={2} mt={2} sx={{ fontSize: { md: '1.2rem', sm: '1m', xs: '1rem' } }}>
               For one annual flat fee, hosts can upgrade to a Premium Property Directory Listing on Rent My VR. This allows for your
               property to be showcased in a more extensive way. We allow additional photos, video links, searchable amenities, and the
               ability to receive direct property inquiries through this type of listing. If you are a Premium Listing customer, you are also
