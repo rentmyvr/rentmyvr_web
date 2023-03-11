@@ -15,9 +15,7 @@ import {
   TableCell,
   TableBody,
   Paper,
-  Link,
-  styled,
-  tableCellClasses
+  Link
 } from '@mui/material';
 import CustomButton from 'components/CustomButton';
 
@@ -44,26 +42,6 @@ const Pricing = () => {
     return { name, standard, premium };
   }
 
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: '#1890ff',
-      color: theme.palette.common.white
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14
-    }
-  }));
-
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-      border: 0
-    }
-  }));
-
   const rows = [
     createData('Free Support', true, true),
     createData('Main Image Upload', true, true),
@@ -74,8 +52,8 @@ const Pricing = () => {
     createData('Link to All Property Booking Sites', false, true),
     createData('Preferred Listing Placement', false, true),
     createData('Property Description', false, true),
-    createData('Ultimited Inquiries/ Leads through Contact Button', false, true),
-    createData('Ultimited Images', false, true),
+    createData('Unlimited Inquiries/ Leads through Contact Button', false, true),
+    createData('Unlimited Images', false, true),
     createData('Link to Video or Virtual Tour', false, true),
     createData('Advanced Amenities and Categories', false, true),
     createData('Advanced Search Functionality', false, true)
@@ -88,19 +66,22 @@ const Pricing = () => {
           <Grid item style={{ width: '100%' }}>
             <img style={{ width: '100%' }} src="/assets/images/pricing.png" alt="" />
           </Grid>
-          <Grid item sm={10} md={8} xs={10} mt={5} ml={2}>
+          <Grid item sm={10} md={10} xs={10} mt={5} ml={2}>
             <Typography mb={5} variant="h4" style={{ textAlign: 'center' }}>
               Whether you are looking to drive more traffic to your management company or your property listing, check out our flex pricing
               module below.
             </Typography>
-            <Typography mb={1}>
+            <Typography mb={1} sx={{ fontSize: { md: '1.2rem', sm: '1.2rem', xs: '1rem' }, textAlign: 'center' }}>
               Sign up to create an account for free. List an unlimited number of standard property listings for free
             </Typography>
-            <Typography mb={1}> No hidden fees, booking commissions, or fees to the host or the guest.</Typography>
-            <Typography mb={1}>
+            <Typography mb={1} sx={{ fontSize: { md: '1.2rem', sm: '1.2rem', xs: '1rem' }, textAlign: 'center' }}>
+              {' '}
+              No hidden fees, booking commissions, or fees to the host or the guest.
+            </Typography>
+            <Typography mb={1} sx={{ fontSize: { md: '1.2rem', sm: '1.2rem', xs: '1rem' }, textAlign: 'center' }}>
               Boost your listing by upgrading to a premium property listing, and choose the pricing module that best suits you.
             </Typography>
-            <Typography mb={1}>
+            <Typography mb={1} sx={{ fontSize: { md: '1.2rem', sm: '1.2rem', xs: '1rem' }, textAlign: 'center' }}>
               Whether you are looking to drive more traffic to your management company or your property listing, check out our flex pricing
               module below.
             </Typography>
@@ -144,34 +125,34 @@ const Pricing = () => {
           <Grid item sm={12} md={8} mb={2} xs={12} ml={3} mr={1}>
             <TableContainer component={Paper}>
               <Table aria-label="simple table">
-                <TableHead>
-                  <StyledTableRow>
-                    <StyledTableCell></StyledTableCell>
-                    <StyledTableCell align="right" style={{ textTransform: 'none', fontSize: '0.9rem' }}>
+                <TableHead style={{ backgroundColor: '#dcd8d8' }}>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell align="right" style={{ textTransform: 'none', fontSize: '0.9rem' }}>
                       Standard Listing
-                    </StyledTableCell>
-                    <StyledTableCell align="right" style={{ textTransform: 'none', fontSize: '0.9rem' }}>
+                    </TableCell>
+                    <TableCell align="right" style={{ textTransform: 'none', fontSize: '0.9rem' }}>
                       Premium Listing
-                    </StyledTableCell>
-                  </StyledTableRow>
+                    </TableCell>
+                  </TableRow>
                 </TableHead>
                 <TableBody>
                   {rows.map((row) => (
-                    <StyledTableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                    <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                       <TableCell component="th" scope="row">
                         {row.name}
                       </TableCell>
                       <TableCell align="center">
-                        {(row.standard && <img src="https://thecustomizewindows.com/Downloads/Media/16.png" alt="" />) || (
-                          <img src="https://thecustomizewindows.com/Downloads/Media/17.png" alt="" />
-                        )}
+                        {(row.standard && (
+                          <img style={{ width: '20px', height: '20px' }} src="/assets/images/icons/check.png" alt="" />
+                        )) || <img style={{ width: '15px', height: '15px' }} src="/assets/images/icons/close.png" alt="" />}
                       </TableCell>
                       <TableCell align="center">
-                        {(row.premium && <img src="https://thecustomizewindows.com/Downloads/Media/16.png" alt="" />) || (
-                          <img src="https://thecustomizewindows.com/Downloads/Media/17.png" alt="" />
+                        {(row.premium && <img style={{ width: '20px', height: '20px' }} src="/assets/images/icons/check.png" alt="" />) || (
+                          <img style={{ width: '15px', height: '15px' }} src="/assets/images/icons/close.png" alt="" />
                         )}
                       </TableCell>
-                    </StyledTableRow>
+                    </TableRow>
                   ))}
                 </TableBody>
               </Table>

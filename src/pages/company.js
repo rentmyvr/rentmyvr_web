@@ -38,7 +38,7 @@ const Company = () => {
               service offerings and pricing. We make it easy! We aim to provide the largest online directory of vacation rental management
               companies.
             </Typography>
-            <Typography mb={2} mt={2}>
+            <Typography mb={2} mt={2} sx={{ fontSize: { md: '1rem', sm: '1rem', xs: '0.875rem' } }}>
               Sign up and easily add your Management Directory Listing. Start driving more traffic to your vacation rental management
               business today.
             </Typography>
