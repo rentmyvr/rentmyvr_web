@@ -13,7 +13,7 @@ const CustomButton = ({ text }) => {
             position: relative;
             padding: 20px 46px;
             text-align: center;
-            color: #0505A9;
+            color: #1890ff;
             font-size: 16px;
             font-weight: bold;
             background-color: transparent;
@@ -31,7 +31,7 @@ const CustomButton = ({ text }) => {
             top: 0;
             width: 100%;
             height: 100%;
-            border: 2px solid #0505A9;
+            border: 2px solid #1890ff;
             border-radius: 30px;
           }
           .blob-btn:after {
@@ -77,7 +77,7 @@ const CustomButton = ({ text }) => {
             top: 2px;
             width: 25%;
             height: 100%;
-            background: #0505A9;
+            background: #1890ff;
             border-radius: 100%;
             transform: translate3d(0, 150%, 0) scale(1.7);
             transition: transform 0.45s;
