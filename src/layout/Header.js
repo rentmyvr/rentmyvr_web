@@ -300,13 +300,13 @@ const Header = ({ handleDrawerOpen, layout = 'landing', ...others }) => {
                     </Button>
                   </NextLink>
                 )}
-                {layout !== 'component' && (
+                {/* {layout !== 'component' && (
                   <NextLink href="/components-overview/buttons" passHref>
                     <Button variant="outlined" size="small" color="warning" sx={{ mt: 0.5, height: 28 }}>
                       All Components
                     </Button>
                   </NextLink>
-                )}
+                )} */}
 
                 <IconButton
                   color="inherit"
