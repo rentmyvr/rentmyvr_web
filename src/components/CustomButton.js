@@ -142,4 +142,8 @@ const CustomButton = ({ text }) => {
   );
 };
 
+CustomButton.propTypes = {
+  text: PropTypes.string
+};
+
 export default CustomButton;
