@@ -51,8 +51,11 @@ const Property = () => {
               eligible for our Gold membership, allowing additional Featured Advertising to increase traffic to your property, through our
               site ad space and social media.
             </Typography>
-            <Typography variant="h3" mb={2} mt={5} textAlign={'center'}>
-              Creating your Standard or Premium Property Directory Listing is easy! Get started by signing up today.
+            <Typography variant="h3" mt={5} textAlign={'center'}>
+              Creating your Standard or Premium Property Directory Listing is easy!
+            </Typography>
+            <Typography variant="h3" mb={2} textAlign={'center'}>
+              Get started by signing up today.
             </Typography>
             <Grid item sm={12} md={4} textAlign="center" style={{ margin: 'auto' }}>
               <NextLink href="/register" passHref>
