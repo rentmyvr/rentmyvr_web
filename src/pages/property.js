@@ -57,7 +57,7 @@ const Property = () => {
             <Typography variant="h3" mb={2} textAlign={'center'}>
               Get started by signing up today.
             </Typography>
-            <Grid item sm={12} md={4} textAlign="center" style={{ margin: 'auto' }}>
+            <Grid item sm={12} textAlign="center" my={2}>
               <NextLink href="/register" passHref>
                 <Link className="header-link" color="black" underline="none">
                   <Button size="large" variant="contained" color="primary">

@@ -19,6 +19,7 @@ import {
   styled,
   tableCellClasses
 } from '@mui/material';
+import CustomButton from 'components/CustomButton';
 
 // project imports
 import Layout from 'layout';
@@ -136,9 +137,7 @@ const Pricing = () => {
             </Typography>
             <NextLink href="/register" passHref>
               <Link className="header-link" color="black" underline="none">
-                <Button size="large" variant="contained" color="primary">
-                  Get Started
-                </Button>
+                <CustomButton text="Get Started" />
               </Link>
             </NextLink>
           </Grid>
