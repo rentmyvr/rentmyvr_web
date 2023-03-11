@@ -31,7 +31,7 @@ const Property = () => {
             <Typography variant="h2" mb={2} mt={2} textAlign={'center'}>
               Why List With Us?
             </Typography>
-            <Typography mb={2} mt={2} sx={{ fontSize: { md: '1rem', sm: '0.875rem', xs: '0.875rem' } }}>
+            <Typography mb={2} mt={2} sx={{ fontSize: { md: '1rem', sm: '1rem', xs: '0.875rem' } }}>
               Rent My VR is the fastest growing online directory for short term / vacation rentals. We realize many 3rd party booking sites
               offer a variety of features, fee schedules, etc, and as a guest begins to book their stay, they may want to compare and book
               with the site they are most comfortable using. In addition, many owners want to provide a way for a guest to book directly

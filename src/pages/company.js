@@ -31,7 +31,7 @@ const Company = () => {
             <Typography variant="h2" mb={2} mt={2} textAlign={'center'}>
               Why List With Us?
             </Typography>
-            <Typography mb={2} mt={2}>
+            <Typography mb={2} mt={2} sx={{ fontSize: { md: '1rem', sm: '1rem', xs: '0.875rem' } }}>
               One of the challenges with starting a vacation rental management company is finding ways to connect with prospective owners to
               grow your portfolio. Finding an accessible online directory of short term rental management companies is a challenge for
               owners. While its a referral based business, often times, owners want to interview a couple management companies to compare
