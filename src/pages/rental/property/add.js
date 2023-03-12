@@ -159,12 +159,13 @@ const BOOKING_SITES = [
 
 const SOCIAL_MEDIAS = [
   { name: 'facebook', label: 'Facebook' },
-  { name: 'instagram', label: 'Instagram' },
-  { name: 'tiktok', label: 'TikTok' },
-  { name: 'youtube', label: 'YouTube' },
-  { name: 'twitter', label: 'Twitter' },
   { name: 'google-business', label: 'GoogleBusiness' },
-  { name: 'yelp', label: 'Yelp' }
+  { name: 'instagram', label: 'Instagram' },
+  { name: 'pinterest', label: 'Pinterest' },
+  { name: 'tiktok', label: 'TikTok' },
+  { name: 'twitter', label: 'Twitter' },
+  { name: 'yelp', label: 'Yelp' },
+  { name: 'youtube', label: 'YouTube' }
 ];
 
 const TYPES = [
@@ -216,10 +217,20 @@ const TYPES = [
 ];
 
 const SPACE = [
+  { id: 'casita-sep-guest-quarters', label: 'Casita/Sep Guest Quarters' },
   { id: 'entire-house', label: 'Entire House' },
-  { id: 'private-room', label: 'Private Room' },
-  { id: 'casita-sep-guest-quarters', label: 'Casita/Sep Guest Quarters' }
+  { id: 'partial', label: 'Partial' },
+  { id: 'private-room', label: 'Private Room' }
 ];
+
+const SUITABILITY = [
+  { id: '30-day-booking', label: 'Minimum 30 Day Booking' },
+  { id: 'night-booking-option', label: 'Single Night Booking Options' },
+  { id: 'night-stay', label: 'Minimum Night Stay (days)' },
+  { id: 'seasonal-rental', label: 'Seasonal/ Mid Term Rental' }
+];
+
+console.log(SUITABILITY);
 
 const ROOM_TYPES = [
   { id: 'bedroom', label: 'Bedroom' },
