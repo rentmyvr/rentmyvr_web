@@ -31,11 +31,16 @@ export const CORE_URL = {
   CONTACT: '/contact/',
   CONNECT_GMAIL: `${process.env.NEXT_PUBLIC_BACKEND_BASEURL}/google/authorisaction/`,
 
-  PROPERTY_CREATE: '/rental/property/add',
+  COMPANY_CREATE: '/company/add/',
+  // COMPANY_UPDATE: '/company/add/',
+  COMPANY_LIST: '/company/list/',
+  COMPANY_DETAIL: '/company/{id}/',
+
+  PROPERTY_CREATE: '/rental/property/add/',
   PROPERTY_LIST: '/rental/property/list/',
   PROPERTY_LIST_MINE: '/rental/property/list-mine/',
 
-  PROFILE_CREATE: '/accounts/user/new',
+  PROFILE_CREATE: '/accounts/user/new/',
   PROFILE_UPDATE: '/accounts/user/{id}/',
   PROFILE_LIST: '/accounts/user/list/',
   PROFILE_DETAIL: '/accounts/user/{id}/?tab={tab}'
@@ -110,9 +115,7 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE;
 export const api = Axios.create({
   baseURL: API_BASE,
   timeout: 1100000,
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  headers: { 'Content-Type': 'application/json' }
 });
 
 export const fetcher = async (url, method = 'get', session, params = null, data = null, success = null, failure = null, upload = false) => {

@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 const CustomButton = ({ text }) => {
   return (
     <div>
@@ -138,6 +140,10 @@ const CustomButton = ({ text }) => {
       </div>
     </div>
   );
+};
+
+CustomButton.propTypes = {
+  text: PropTypes.string
 };
 
 export default CustomButton;

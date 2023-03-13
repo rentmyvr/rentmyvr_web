@@ -1,7 +1,7 @@
 // material-ui
 // import { useTheme } from '@mui/material/styles';
 import { Box } from '@mui/material';
-const logo_bg_image = '/assets/images/icon.svg';
+// const logo_bg_image = '/assets/images/icon.svg';
 // ==============================|| AUTH BLUR BACK SVG ||============================== //
 
 const AuthBackground = () => {
