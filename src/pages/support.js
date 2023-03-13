@@ -42,7 +42,7 @@ const Support = () => {
   return (
     <Page title="Support Us">
       <Grid container spacing={2} mt={8} mb={-1} justifyContent="center" alignItems="center" bgcolor="#f4f8ff">
-        <Stack spacing={0} justifyContent="center" alignItems="center">
+        <Stack spacing={0} justifyContent="center" alignItems="center" style={{ width: '100%' }}>
           <Grid item xs={12} style={{ width: '100%' }}>
             <Box
               component="img"
@@ -59,7 +59,7 @@ const Support = () => {
             <Grid
               style={{ position: 'absolute', top: '90px', width: '100%', display: 'flex', justifyContent: 'center', marginLeft: '16px' }}
             >
-              <Grid md={10} sm={10} xs={10}>
+              <Grid md={7} sm={8} xs={9}>
                 <Grid
                   sx={{ p: { md: 5, sm: 5, xs: 3 } }}
                   justifyContent="center"

@@ -22,7 +22,7 @@ const Contact = () => {
   return (
     <Page title="Rent MyVR Home">
       <Grid container spacing={2} mt={8} mb={-1} justifyContent="center" alignItems="center" bgcolor="#f4f8ff">
-        <Stack spacing={0} justifyContent="center" alignItems="center">
+        <Stack spacing={0} justifyContent="center" alignItems="center" style={{ width: '100%' }}>
           <Grid item xs={12} style={{ width: '100%' }}>
             <Box
               component="img"
@@ -39,14 +39,14 @@ const Contact = () => {
             <Grid
               style={{ position: 'absolute', top: '90px', width: '100%', display: 'flex', justifyContent: 'center', marginLeft: '16px' }}
             >
-              <Grid md={10} sm={10} xs={10}>
+              <Grid md={7} sm={8} xs={9}>
                 <Grid
-                  sx={{ p: { md: 5, sm: 5, xs: 3 } }}
+                  sx={{ p: { md: 3, sm: 5, xs: 3 } }}
                   justifyContent="center"
                   style={{ backgroundColor: '#00000055', borderRadius: 10, alignItems: 'center', flexDirection: 'column' }}
                 >
                   <Typography variant="h1" align="center" style={{ color: 'white' }}>
-                    Support
+                    Contact Us
                   </Typography>
                   <Grid item fullWidth mt={2}>
                     <Grid container spacing={3}>
@@ -63,7 +63,7 @@ const Contact = () => {
                         <TextField fullWidth type="number" placeholder="Phone Number" style={{ backgroundColor: 'white' }} />
                       </Grid>
                       <Grid item xs={12}>
-                        <TextField fullWidth multiline rows={4} placeholder="Reason for Inquiry?*" style={{ backgroundColor: 'white' }} />
+                        <TextField fullWidth multiline rows={3} placeholder="Reason for Inquiry?*" style={{ backgroundColor: 'white' }} />
                       </Grid>
                     </Grid>
                   </Grid>
