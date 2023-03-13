@@ -15,6 +15,7 @@ import {
   Card,
   CardHeader,
   CardContent,
+  Checkbox,
   Chip,
   // Collapse,
   Avatar,
@@ -39,7 +40,7 @@ import {
   // Popover,
   Radio,
   RadioGroup,
-  Slider,
+  // Slider,
   Stack,
   Step,
   StepLabel,
@@ -92,11 +93,11 @@ const emptyProperty = {
   no_of_bedrooms: 0,
   no_of_bathrooms: 0,
   is_pet_allowed: true,
-  suitability: true,
+  suitability: [],
   description: '',
   host_note: '',
-  room_type: null,
-  sleeper_type: null,
+  room_type: { sleepers: [] },
+  // sleeper_type: null,
   price_night: 0.0,
   address: {
     street: '',
@@ -107,6 +108,7 @@ const emptyProperty = {
   email: '',
   phone: '',
   logo: null,
+  room_types: [],
   accessibility: [],
   activities: [],
   bathrooms: [],
@@ -230,8 +232,6 @@ const SUITABILITY = [
   { id: 'seasonal-rental', label: 'Seasonal/ Mid Term Rental' }
 ];
 
-console.log(SUITABILITY);
-
 const ROOM_TYPES = [
   { id: 'bedroom', label: 'Bedroom' },
   { id: 'casita', label: 'Casita' },
@@ -243,30 +243,34 @@ const ROOM_TYPES = [
   { id: 'studio', label: 'Studio' }
 ];
 
-const SLEEPER_TYPES = [
-  { id: 'king-bed', label: 'King Bed' },
-  { id: 'queen-bed', label: 'Queen Bed' },
-  { id: 'double-bed', label: 'Double Bed' },
-  { id: 'twin-single-bed', label: 'Twin/Single Bed' },
-  { id: 'futon', label: 'Futon' },
-  { id: 'sofa-sleeper', label: 'Sofa Sleeper' },
-  { id: 'cot', label: 'Cot' },
-  { id: 'trundle', label: 'Trundle' },
-  { id: 'bunk-bed', label: 'Bunk Bed' },
-  { id: 'air-mattress-floor-mattress', label: 'Air Mattress/Floor Mattress' }
-];
+// const SLEEPER_TYPES = [
+//   { id: 'king-bed', label: 'King Bed' },
+//   { id: 'queen-bed', label: 'Queen Bed' },
+//   { id: 'double-bed', label: 'Double Bed' },
+//   { id: 'twin-single-bed', label: 'Twin/Single Bed' },
+//   { id: 'futon', label: 'Futon' },
+//   { id: 'sofa-sleeper', label: 'Sofa Sleeper' },
+//   { id: 'cot', label: 'Cot' },
+//   { id: 'trundle', label: 'Trundle' },
+//   { id: 'bunk-bed', label: 'Bunk Bed' },
+//   { id: 'air-mattress-floor-mattress', label: 'Air Mattress/Floor Mattress' }
+// ];
 
 const rawToForm = (val) => {
   let v = { ...val };
   v.address = { ...val.address, state: val.address.city.state_name };
+
   let x = TYPES.filter((v) => v.id === val.type);
   v.type = x.length > 0 ? x[0] : {};
+
   x = SPACE.filter((v) => v.id === val.space);
   v.space = x.length > 0 ? x[0] : {};
-  x = ROOM_TYPES.filter((v) => v.id === val.room_type);
-  v.room_type = x.length > 0 ? x[0] : {};
-  x = SLEEPER_TYPES.filter((v) => v.id === val.sleeper_type);
-  v.sleeper_type = x.length > 0 ? x[0] : {};
+
+  let rt_ids = val.room_types.map((x) => x.id);
+  v.room_types = ROOM_TYPES.filter((v) => rt_ids.includes(v.id));
+
+  // x = SLEEPER_TYPES.filter((v) => v.id === val.sleeper_type);
+  // v.sleeper_type = x.length > 0 ? x[0] : {};
   return v;
 };
 
@@ -319,6 +323,11 @@ function PropertyAdd({ property = emptyProperty }) {
   const [features, setFeatures] = useState([]);
   const [activities, setActivities] = useState([]);
   const [accessibility, setAccessibility] = useState([]);
+  const [sleepers, setSleepers] = useState([]);
+  const [propDetailDialog, setPropDetailDialog] = useState(false);
+  const [propDetail, setPropDetail] = useState(null);
+  const [propDetails, setPropDetails] = useState([]);
+  const [propDetailError, setPropDetailError] = useState(null);
   const [bookingSiteDialog, setBookingSiteDialog] = useState(false);
   const [bookingSite, setBookingSite] = useState(null);
   const [bookingSites, setBookingSites] = useState([]);
@@ -463,26 +472,12 @@ function PropertyAdd({ property = emptyProperty }) {
     setSocialMediaLinkError(null);
   };
 
-  const markGuest = [
-    { value: 5, label: '5 Guest' },
-    { value: 20, label: '20 Guest' },
-    { value: 30, label: '30 Guest' },
-    { value: 45, label: '45 Guest' }
-  ];
-
-  const markBedroom = [
-    { value: 5, label: '5 Bedrooms' },
-    { value: 20, label: '20 Bedrooms' },
-    { value: 30, label: '30 Bedrooms' },
-    { value: 45, label: '45 Bedrooms' }
-  ];
-
-  const markBathrooms = [
-    { value: 5, label: '5 Bathrooms' },
-    { value: 20, label: '20 Bathrooms' },
-    { value: 30, label: '30 Bathrooms' },
-    { value: 45, label: '45 Bathrooms' }
-  ];
+  // const markBathrooms = [
+  //   { value: 5, label: '5 Bathrooms' },
+  //   { value: 20, label: '20 Bathrooms' },
+  //   { value: 30, label: '30 Bathrooms' },
+  //   { value: 45, label: '45 Bathrooms' }
+  // ];
 
   const isUrl = (str) => {
     try {
@@ -600,6 +595,7 @@ function PropertyAdd({ property = emptyProperty }) {
     // eslint-disable-next-line
     fetcher(DIRECTORY_EP.PROPERTY_FORM_ITEMS, 'get', session, null, null, res => {
         console.log('Items***** ', res.data);
+        setSleepers(res.data.sleepers);
         setServices(res.data.services);
         setSpaces(res.data.spaces);
         setEssentials(res.data.essentials);
@@ -752,28 +748,30 @@ function PropertyAdd({ property = emptyProperty }) {
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <InputLabel htmlFor="property-type">Type</InputLabel>
-                        <Autocomplete
-                          // freeSolo
-                          disablePortal
-                          fullWidth
-                          id="property-type"
-                          name="type"
-                          value={values.type}
-                          onChange={(event, newValue) => setFieldValue('type', newValue)}
-                          options={TYPES}
-                          getOptionLabel={(label) => label.label || ''}
-                          isOptionEqualToValue={(option, value) => option.id === value.id}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              placeholder="Type"
-                              variant="outlined"
-                              error={Boolean(touched.type && errors.type)}
-                              helperText={touched.type && errors.type?.id}
-                            />
-                          )}
-                        />
+                        <Stack spacing={1.25}>
+                          <InputLabel htmlFor="property-type">Type</InputLabel>
+                          <Autocomplete
+                            // freeSolo
+                            disablePortal
+                            fullWidth
+                            id="property-type"
+                            name="type"
+                            value={values.type}
+                            onChange={(event, newValue) => setFieldValue('type', newValue)}
+                            options={TYPES}
+                            getOptionLabel={(label) => label.label || ''}
+                            isOptionEqualToValue={(option, value) => option.id === value.id}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                placeholder="Type"
+                                variant="outlined"
+                                error={Boolean(touched.type && errors.type)}
+                                helperText={touched.type && errors.type?.id}
+                              />
+                            )}
+                          />
+                        </Stack>
                       </Grid>
 
                       <Grid item xs={12} sm={6}>
@@ -826,29 +824,31 @@ function PropertyAdd({ property = emptyProperty }) {
                       </Grid>
 
                       <Grid item xs={12} sm={6}>
-                        <InputLabel htmlFor="property-space">Space</InputLabel>
-                        <FormControl fullWidth error={Boolean(touched.space && errors.space)}>
-                          <Autocomplete
-                            disablePortal
-                            fullWidth
-                            id="property-space"
-                            name="space"
-                            value={values.space}
-                            onChange={(event, newValue) => setFieldValue('space', newValue)}
-                            options={SPACE}
-                            getOptionLabel={(label) => label.label || ''}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => (
-                              <TextField
-                                {...params}
-                                placeholder="Booked Space"
-                                variant="outlined"
-                                error={Boolean(touched.space && errors.space)}
-                                helperText={touched.space && errors.space?.id}
-                              />
-                            )}
-                          />
-                        </FormControl>
+                        <Stack spacing={1.25}>
+                          <InputLabel htmlFor="property-space">Space</InputLabel>
+                          <FormControl fullWidth error={Boolean(touched.space && errors.space)}>
+                            <Autocomplete
+                              disablePortal
+                              fullWidth
+                              id="property-space"
+                              name="space"
+                              value={values.space}
+                              onChange={(event, newValue) => setFieldValue('space', newValue)}
+                              options={SPACE}
+                              getOptionLabel={(label) => label.label || ''}
+                              isOptionEqualToValue={(option, value) => option.id === value.id}
+                              renderInput={(params) => (
+                                <TextField
+                                  {...params}
+                                  placeholder="Booked Space"
+                                  variant="outlined"
+                                  error={Boolean(touched.space && errors.space)}
+                                  helperText={touched.space && errors.space?.id}
+                                />
+                              )}
+                            />
+                          </FormControl>
+                        </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <Stack spacing={1.25}>
@@ -864,74 +864,52 @@ function PropertyAdd({ property = emptyProperty }) {
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-phone">Contact Phone</InputLabel>
-                          <TextField
-                            fullWidth
-                            id="property-phone"
-                            placeholder="Contact Phone"
-                            {...getFieldProps('phone')}
-                            error={Boolean(touched.phone && errors.phone)}
-                            helperText={touched.phone && errors.phone}
-                          />
+                        <Stack spacing={0} direction="row">
+                          <Grid item xs={9} sm={10}>
+                            <Stack spacing={1.25}>
+                              <InputLabel htmlFor="property-phone">Contact Phone</InputLabel>
+                              <TextField
+                                fullWidth
+                                id="property-phone"
+                                placeholder="Contact Phone"
+                                {...getFieldProps('phone')}
+                                error={Boolean(touched.phone && errors.phone)}
+                                helperText={touched.phone && errors.phone}
+                              />
+                            </Stack>
+                          </Grid>
+                          <Grid item xs={3} sm={2}>
+                            <Stack spacing={1.25}>
+                              <InputLabel htmlFor="property-hide-phone">Hide Phone</InputLabel>
+                              <Checkbox id="property-hide-phone" checked={true} {...getFieldProps('hide_phone')} />
+                            </Stack>
+                          </Grid>
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-email">Contact Email</InputLabel>
-                          <TextField
-                            fullWidth
-                            id="property-email"
-                            placeholder="Contact Email"
-                            {...getFieldProps('email')}
-                            error={Boolean(touched.email && errors.email)}
-                            helperText={touched.email && errors.email}
-                          />
+                        <Stack spacing={1.25} direction="row">
+                          <Grid item xs={9} sm={10}>
+                            <Stack spacing={1.25}>
+                              <InputLabel htmlFor="property-email">Contact Email</InputLabel>
+                              <TextField
+                                fullWidth
+                                id="property-email"
+                                placeholder="Contact Email"
+                                {...getFieldProps('email')}
+                                error={Boolean(touched.email && errors.email)}
+                                helperText={touched.email && errors.email}
+                              />
+                            </Stack>
+                          </Grid>
+                          <Grid item xs={3} sm={2}>
+                            <Stack spacing={1.25}>
+                              <InputLabel htmlFor="property-hide-phone">Hide Email</InputLabel>
+                              <Checkbox id="property-hide-email" checked={true} {...getFieldProps('hide_email')} />
+                            </Stack>
+                          </Grid>
                         </Stack>
                       </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-no-of-guest">No of Guest</InputLabel>
-                          <FormControl fullWidth error={Boolean(touched.max_no_of_guest && errors.max_no_of_guest)}>
-                            <Slider
-                              {...getFieldProps('max_no_of_guest')}
-                              aria-label="Small steps"
-                              defaultValue={0}
-                              // getAriaValueText={guestValue}
-                              step={1}
-                              min={0}
-                              max={49}
-                              marks={markGuest}
-                              // valueLabelDisplay="on"
-                              valueLabelDisplay="auto"
-                              color={touched.max_no_of_guest && errors.max_no_of_guest ? 'error' : 'primary'}
-                            />
-                            <FormHelperText>{touched.max_no_of_guest && errors.max_no_of_guest}</FormHelperText>
-                          </FormControl>
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <InputLabel htmlFor="property-no-of-bedrooms">No of Bedrooms</InputLabel>
-                          <FormControl fullWidth error={Boolean(touched.no_of_bedrooms && errors.no_of_bedrooms)}>
-                            <Slider
-                              {...getFieldProps('no_of_bedrooms')}
-                              aria-label="Small steps"
-                              defaultValue={0}
-                              // getAriaValueText={bedroomValue}
-                              step={1}
-                              min={0}
-                              max={49}
-                              marks={markBedroom}
-                              valueLabelDisplay="auto"
-                              // valueLabelDisplay="on"
-                              color={touched.no_of_bedrooms && errors.no_of_bedrooms ? 'error' : 'primary'}
-                            />
-                            <FormHelperText>{touched.no_of_bedrooms && errors.no_of_bedrooms}</FormHelperText>
-                          </FormControl>
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
+                      {/* <Grid item xs={12} sm={6}>
                         <Stack spacing={1} sx={{ py: 4 }}>
                           <InputLabel htmlFor="property-no-of-bathrooms">No of Bathrooms</InputLabel>
                           <FormControl fullWidth error={Boolean(touched.no_of_bathrooms && errors.no_of_bathrooms)}>
@@ -951,6 +929,51 @@ function PropertyAdd({ property = emptyProperty }) {
                             />
                             <FormHelperText>{touched.no_of_bathrooms && errors.no_of_bathrooms}</FormHelperText>
                           </FormControl>
+                        </Stack>
+                      </Grid> */}
+                      <Grid item xs={12} sm={6}>
+                        <Stack spacing={1.25} sx={{ py: 3 }}>
+                          <InputLabel htmlFor="property-no-of-guest">No of Guest</InputLabel>
+                          <TextField
+                            fullWidth
+                            type="number"
+                            id="property-no-of-guest"
+                            placeholder="No of Guest"
+                            {...getFieldProps('max_no_of_guest')}
+                            // InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
+                            error={Boolean(touched.max_no_of_guest && errors.max_no_of_guest)}
+                            helperText={touched.max_no_of_guest && errors.max_no_of_guest}
+                          />
+                        </Stack>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Stack spacing={1.25} sx={{ py: 3 }}>
+                          <InputLabel htmlFor="property-no-of-bedrooms">No of Bedrooms</InputLabel>
+                          <TextField
+                            fullWidth
+                            type="number"
+                            id="property-no-of-bedrooms"
+                            placeholder="No of Bedrooms"
+                            {...getFieldProps('no_of_bedrooms')}
+                            // InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
+                            error={Boolean(touched.no_of_bedrooms && errors.no_of_bedrooms)}
+                            helperText={touched.no_of_bedrooms && errors.no_of_bedrooms}
+                          />
+                        </Stack>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Stack spacing={1.25} sx={{ py: 3 }}>
+                          <InputLabel htmlFor="property-no-of-bathrooms">No of Bathrooms</InputLabel>
+                          <TextField
+                            fullWidth
+                            type="number"
+                            id="property-no-of-bathrooms"
+                            placeholder="No of Bathrooms"
+                            {...getFieldProps('no_of_bathrooms')}
+                            // InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment> }}
+                            error={Boolean(touched.no_of_bathrooms && errors.no_of_bathrooms)}
+                            helperText={touched.no_of_bathrooms && errors.no_of_bathrooms}
+                          />
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
@@ -1036,6 +1059,40 @@ function PropertyAdd({ property = emptyProperty }) {
                       </Grid>
 
                       <Grid item xs={12} sm={6}>
+                        <Card>
+                          <CardHeader
+                            avatar=<Avatar sx={{ bgcolor: red[500] }}>P</Avatar>
+                            action={
+                              <IconButton onClick={() => setPropDetailDialog(true)}>
+                                <PlusOutlined />
+                              </IconButton>
+                            }
+                            title="Property Details"
+                            subheader="Provide Room details as it applies"
+                          />
+                          <CardContent sx={{ py: 0 }}>
+                            <List sx={{ p: 0 }}>
+                              {bookingSites.map((x, i) => (
+                                <ListItem divider={bookingSites.length > i + 1} key={`booking-site-${i}`}>
+                                  <ListItemText primary={x?.label} secondary={x?.site} />
+                                  <Stack direction="row" alignItems="center" spacing={0.75}>
+                                    <CloseOutlined
+                                      onClick={() => {
+                                        let bs = bookingSites.filter((b) => b.id !== x.id);
+                                        setFieldValue('booking_sites', bs);
+                                        setBookingSites(bs);
+                                      }}
+                                    />
+                                  </Stack>
+                                </ListItem>
+                              ))}
+                            </List>
+                            <FormHelperText sx={{ color: red[500] }}>{touched.booking_sites && errors.booking_sites}</FormHelperText>
+                          </CardContent>
+                        </Card>
+                      </Grid>
+
+                      <Grid item xs={12} sm={6}>
                         <Stack spacing={1.25}>
                           <RadioGroup row name="row-radio-buttons-group">
                             <FormControlLabel
@@ -1058,28 +1115,32 @@ function PropertyAdd({ property = emptyProperty }) {
                         </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Stack spacing={1.25}>
-                          <RadioGroup row name="property-suitability">
-                            <FormControlLabel
-                              defaultChecked={values.suitability}
-                              // checked={values.suitability}
-                              value={values.suitability}
-                              onChange={handleChange}
-                              control={<Radio />}
-                              label="Suitability"
-                            />
-                            <FormControlLabel
-                              defaultChecked={!values.suitability}
-                              // checked={!values.suitability}
-                              value={values.suitability}
-                              onChange={handleChange}
-                              control={<Radio />}
-                              label="Not Suitability"
-                            />
-                          </RadioGroup>
-                        </Stack>
+                        <InputLabel htmlFor="property-suitability">Suitability</InputLabel>
+                        <FormControl fullWidth error={Boolean(touched.suitability && errors.suitability)}>
+                          <Autocomplete
+                            fullWidth
+                            multiple
+                            disablePortal
+                            id="property-suitability"
+                            name="suitability"
+                            options={SUITABILITY}
+                            value={values.suitability}
+                            onBlur={handleBlur}
+                            onChange={(event, newValue) => setFieldValue('suitability', newValue)}
+                            getOptionLabel={(label) => label.label || ''}
+                            isOptionEqualToValue={(option, value) => option.id === value.id}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                error={Boolean(touched.suitability && errors.suitability)}
+                                helperText={touched.suitability && errors.suitability}
+                                placeholder="Select options that applies"
+                                variant="outlined"
+                              />
+                            )}
+                          />
+                        </FormControl>
                       </Grid>
-
                       <Grid item xs={12}>
                         <CardHeader title="Address" />
                         <Divider />
@@ -1204,81 +1265,85 @@ function PropertyAdd({ property = emptyProperty }) {
                         </Stack>
                       </Grid>
 
-                      <Grid item xs={12} sm={6}>
-                        <InputLabel htmlFor="property-room_type">Room Type</InputLabel>
-                        <Autocomplete
-                          fullWidth
-                          multiple={false}
-                          id="property-room_type"
-                          options={ROOM_TYPES}
-                          value={values.room_type}
-                          name="room_type"
-                          onBlur={handleBlur}
-                          onChange={(event, newValue) => setFieldValue('room_type', newValue)}
-                          getOptionLabel={(label) => label.label || ''}
-                          isOptionEqualToValue={(option, value) => option.id === value.id}
-                          renderTags={(value, getTagProps) =>
-                            value.map((option, index) => (
-                              <span key={index}>
-                                <Chip
-                                  {...getTagProps({ index })}
-                                  variant="combined"
-                                  label={option.label}
-                                  deleteIcon={<CloseOutlined style={{ fontSize: '0.75rem' }} />}
-                                  sx={{ color: 'text.primary' }}
-                                />
-                              </span>
-                            ))
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              error={Boolean(touched.room_type && errors.room_type)}
-                              helperText={touched.room_type && errors.room_type?.id}
-                              placeholder="Select Room Type"
-                              variant="outlined"
-                            />
-                          )}
-                        />
+                      {/* <Grid item xs={12} sm={6}>
+                        <Stack spacing={1.25}>
+                          <InputLabel htmlFor="property-room_type">Room Type</InputLabel>
+                          <Autocomplete
+                            fullWidth
+                            multiple={false}
+                            id="property-room_type"
+                            options={ROOM_TYPES}
+                            value={values.room_type}
+                            name="room_type"
+                            onBlur={handleBlur}
+                            onChange={(event, newValue) => setFieldValue('room_type', newValue)}
+                            getOptionLabel={(label) => label.label || ''}
+                            isOptionEqualToValue={(option, value) => option.id === value.id}
+                            renderTags={(value, getTagProps) =>
+                              value.map((option, index) => (
+                                <span key={index}>
+                                  <Chip
+                                    {...getTagProps({ index })}
+                                    variant="combined"
+                                    label={option.label}
+                                    deleteIcon={<CloseOutlined style={{ fontSize: '0.75rem' }} />}
+                                    sx={{ color: 'text.primary' }}
+                                  />
+                                </span>
+                              ))
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                error={Boolean(touched.room_type && errors.room_type)}
+                                helperText={touched.room_type && errors.room_type?.id}
+                                placeholder="Select Room Type"
+                                variant="outlined"
+                              />
+                            )}
+                          />
+                        </Stack>
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <InputLabel htmlFor="property-sleeper_type">Sleeper Type</InputLabel>
-                        <Autocomplete
-                          fullWidth
-                          multiple={false}
-                          id="property-sleeper_type"
-                          options={SLEEPER_TYPES}
-                          value={values.sleeper_type}
-                          name="sleeper_type"
-                          getOptionLabel={(label) => label.label || ''}
-                          isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
-                          onBlur={handleBlur}
-                          onChange={(event, newValue) => setFieldValue('sleeper_type', newValue)}
-                          renderTags={(value, getTagProps) =>
-                            value.map((option, index) => (
-                              <span key={index}>
-                                <Chip
-                                  {...getTagProps({ index })}
-                                  variant="combined"
-                                  label={option.label}
-                                  deleteIcon={<CloseOutlined style={{ fontSize: '0.75rem' }} />}
-                                  sx={{ color: 'text.primary' }}
-                                />
-                              </span>
-                            ))
-                          }
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              name="sleeper_type"
-                              error={Boolean(touched.sleeper_type && errors.sleeper_type)}
-                              helperText={touched.sleeper_type && errors.sleeper_type?.id}
-                              placeholder="Select Sleeper Type"
-                              variant="outlined"
-                            />
-                          )}
-                        />
-                      </Grid>
+                        <Stack spacing={1.25}>
+                          <InputLabel htmlFor="property-room_type-sleepers">Sleeper Type</InputLabel>
+                          <Autocomplete
+                            fullWidth
+                            multiple={false}
+                            id="property-room_type-sleepers"
+                            options={sleepers}
+                            value={values.room_type.sleepers}
+                            name="room_type.sleepers"
+                            getOptionLabel={(label) => label.label || ''}
+                            isOptionEqualToValue={(option, value) => option.id === value.id || option.id === ''}
+                            onBlur={handleBlur}
+                            onChange={(event, newValue) => setFieldValue('room_type.sleepers', newValue)}
+                            renderTags={(value, getTagProps) =>
+                              value.map((option, index) => (
+                                <span key={index}>
+                                  <Chip
+                                    {...getTagProps({ index })}
+                                    variant="combined"
+                                    label={option.label}
+                                    deleteIcon={<CloseOutlined style={{ fontSize: '0.75rem' }} />}
+                                    sx={{ color: 'text.primary' }}
+                                  />
+                                </span>
+                              ))
+                            }
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                name="room_type.sleepers"
+                                error={Boolean(touched.room_type?.sleepers && errors.room_type?.sleepers)}
+                                helperText={touched.room_type?.sleepers && errors.room_type?.sleepers?.id}
+                                placeholder="Select Sleepers that apply"
+                                variant="outlined"
+                              />
+                            )}
+                          />
+                        </Stack>
+                      </Grid> */}
                     </Grid>
                   )}
 
@@ -1772,6 +1837,120 @@ function PropertyAdd({ property = emptyProperty }) {
                   </Grid>
                 </Grid>
               </DialogContent>
+
+              {/* Property Detail Add Dialog */}
+              <Dialog
+                fullWidth
+                maxWidth="sm"
+                open={propDetailDialog}
+                TransitionComponent={SlideUp}
+                keepMounted
+                onClose={handleBookingClose}
+              >
+                <DialogTitle>Add Rooms</DialogTitle>
+                <DialogContent>
+                  <Grid container spacing={1} sx={{ px: 2, pb: 0, mb: 0 }}>
+                    <Grid item xs={12}>
+                      <InputLabel htmlFor="property-room-type">Room Type</InputLabel>
+                      <Autocomplete
+                        fullWidth
+                        id="property-room-type"
+                        options={ROOM_TYPES}
+                        value={propDetail}
+                        getOptionLabel={(label) => label.label}
+                        isOptionEqualToValue={(option, value) => option.name === value.name}
+                        onChange={(event, newValue) => setPropDetail((prev) => ({ ...prev, ...newValue }))}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            name="property_details"
+                            error={Boolean(propDetailError?.name)}
+                            helperText={propDetailError?.name}
+                            placeholder="Select Room Type"
+                            variant="outlined"
+                          />
+                        )}
+                        renderTags={(value, getTagProps) =>
+                          value.map((option, index) => (
+                            <span key={index}>
+                              <Chip
+                                {...getTagProps({ index })}
+                                variant="combined"
+                                label={option.label}
+                                deleteIcon={<CloseOutlined style={{ fontSize: '0.75rem' }} />}
+                                sx={{ color: 'text.primary' }}
+                              />
+                            </span>
+                          ))
+                        }
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Stack spacing={1.25}>
+                        <InputLabel htmlFor="property-sleepers">Sleepers</InputLabel>
+                        <Autocomplete
+                          multiple={true}
+                          fullWidth
+                          id="property-sleepers"
+                          options={[]}
+                          value={sleepers}
+                          getOptionLabel={(label) => label.label}
+                          isOptionEqualToValue={(option, value) => option.name === value.name}
+                          onChange={(event, newValue) => {
+                            console.log(newValue);
+                            setSleepers((prev) => [...prev, ...newValue]);
+                          }}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              name="property_details"
+                              error={Boolean(propDetailError?.name)}
+                              helperText={propDetailError?.name}
+                              placeholder="Select Room Type"
+                              variant="outlined"
+                            />
+                          )}
+                          renderTags={(value, getTagProps) =>
+                            value.map((option, index) => (
+                              <span key={index}>
+                                <Chip
+                                  {...getTagProps({ index })}
+                                  variant="combined"
+                                  label={option.label}
+                                  deleteIcon={<CloseOutlined style={{ fontSize: '0.75rem' }} />}
+                                  sx={{ color: 'text.primary' }}
+                                />
+                              </span>
+                            ))
+                          }
+                        />
+                      </Stack>
+                    </Grid>
+                  </Grid>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleBookingClose}>Close</Button>
+                  <Button
+                    onClick={() => {
+                      if (!checkSiteError(bookingSite)) {
+                        // console.log('Goo to go...');
+                        // console.log(bookingSite);
+                        // console.log(bookingSites);
+                        setFieldValue('booking_sites', [...bookingSites, bookingSite]);
+                        setBookingSites([...bookingSites, bookingSite]);
+                        setBookingSite(null);
+                        successProcessor('Booking Site Successfully Added', dispatch, openSnackbar);
+                      } else {
+                        console.log('Nope!!!');
+                      }
+                    }}
+                  >
+                    Add
+                  </Button>
+                </DialogActions>
+              </Dialog>
+
 
               {/* Booking Site Add Dialog */}
               <Dialog

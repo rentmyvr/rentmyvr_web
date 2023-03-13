@@ -59,7 +59,7 @@ function ComingSoon() {
   const dispatch = useDispatch();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const time = new Date(Date.parse('03/14/2023'));
+  const time = new Date(Date.parse('04/03/2023'));
   time.setSeconds(time.getSeconds());
 
   const { seconds, minutes, hours, days } = useTimer({ expiryTimestamp: time });
