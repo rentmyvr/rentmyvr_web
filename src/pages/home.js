@@ -32,6 +32,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 import Carousel from 'react-material-ui-carousel';
+import NextLink from 'next/link';
 
 import { useState, useRef, useEffect } from 'react';
 
@@ -52,7 +53,7 @@ import ScrollTop from 'components/ScrollTop';
 import {
   EnvironmentOutlined,
   TeamOutlined,
-  TagFilled,
+  // TagFilled,
   UpOutlined,
   PlusCircleOutlined,
   MinusCircleOutlined,
@@ -69,35 +70,35 @@ let items = [
     description: 'Search listings that offer direct booking from the host and save',
     img: '/assets/images/1500x600/Image-1.png',
     btnText: 'Search Here',
-    textColor: '#fff'
+    textColor: '#ffffff'
   },
   {
     name: 'All Listing Links in One Place',
     description: 'Compare rates or compare ratings and reviews all in one place',
     img: '/assets/images/1500x600/Image-2.png',
     btnText: 'Start Your Search',
-    textColor: '#fff'
+    textColor: '#ffffff'
   },
   {
     name: 'Find a Company Who Manages Vacation Rentals',
     description: 'Looking to hire a management company? Have questions and need a professional before you book your stay?',
     img: '/assets/images/1500x600/Image-3.png',
     btnText: 'Find a Company',
-    textColor: '#fff'
+    textColor: '#ffffff'
   },
   {
     name: 'Rent My VR is Growing',
     description: 'Are you ready to list a property or your vacation rental management company with us?',
     img: '/assets/images/1500x600/Image-4.png',
     btnText: 'Get Started',
-    textColor: '#fff'
+    textColor: '#ffffff'
   },
   {
     name: 'Search All Sites With One Search',
     description: 'Book using your preferred platform once you find your dream vacation property',
     img: '/assets/images/1500x600/Image-5.png',
     btnText: 'Search Now',
-    textColor: '#fff'
+    textColor: '#ffffff'
   },
   {
     name: 'Dreaming of Where To Go Next?',
@@ -178,7 +179,7 @@ const CarouselItem = ({ item }) => {
         xs={10}
         sm={4}
         md={3}
-        style={{ background: 'rgba(0, 0, 0, 0.5)', textAlign: 'center', borderRadius: '5px' }}
+        style={{ background: 'rgba(0, 0, 0, 0.5)', textAlign: 'center', borderRadius: '5px', justifyContent: 'center' }}
         ml={{ md: 15, sm: 10, xs: 7 }}
         mr={{ md: 15, sm: 10, xs: 7 }}
         p={{ md: 5, sm: 3, xs: 3 }}
@@ -206,7 +207,7 @@ const underlineTheme = createTheme({
           background: '#1890ff none repeat scroll 0 0',
           color: '#fff',
           display: 'block',
-          height: '3px',
+          height: '0.7vw',
           left: 0,
           margin: '20px auto',
           position: 'relative',
@@ -433,9 +434,17 @@ const Index = () => {
           </Carousel>
           {/* <ContactHeader /> */}
         </Grid>
-        <Grid container spacing={2} pl={4} pr={2} pt={1} pb={1} mt={-10} zIndex={10} direction="row" sx={{ backgroundColor: 'unset' }}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Stack direction="column" spacing={1.25}>
+        <Grid
+          container
+          spacing={0}
+          pl={4}
+          pr={2}
+          zIndex={10}
+          direction="row"
+          sx={{ backgroundColor: 'unset', justifyContent: 'center', mt: { md: -10, sm: 0, xs: 0 } }}
+        >
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+            <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <Autocomplete
                 options={regions}
                 getOptionLabel={(option) => option.title}
@@ -478,8 +487,8 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid container item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+            <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
                   <DesktopDatePicker
@@ -521,8 +530,8 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid container item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+            <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Stack spacing={3}>
                   <DesktopDatePicker
@@ -561,8 +570,8 @@ const Index = () => {
               /> */}
             </Stack>
           </Grid>
-          <Grid container item xs={12} sm={6} md={3}>
-            <Stack direction="column" spacing={1.25} position="relative">
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={2}>
+            <Stack direction="column" spacing={1.25} position="relative" style={{ width: '100%' }}>
               {/* <TeamOutlined className="icon" style={{position: 'absolute', top: '25px', zIndex: '10', left: '5px'}} /> */}
               <TextField
                 fullWidth
@@ -841,8 +850,8 @@ const Index = () => {
               </Popper>
             </Stack>
           </Grid>
-          <Grid container item xs={12} sm={6} md={2}>
-            <Stack direction="column" spacing={1.25}>
+          <Grid item xs={10} sm={4} md={2} mt={2} mr={0}>
+            <Stack direction="column" spacing={1.25} style={{ width: '100%' }}>
               <Button variant="contained" size="large" color="primary">
                 <SearchOutlined />
                 &nbsp;Search
@@ -866,70 +875,81 @@ const Index = () => {
           </Grid> */}
         </Grid>
         <Grid container spacing={2} mt={5} justifyContent="center" alignItems="center">
-          <Grid container item sm={12} md={10}>
-            <Stack spacing={0} justifyContent="center" alignItems="center">
-              <Grid container item sm={12} md={10}>
-                <Typography display="inline" variant="h2" color="#1890ff">
-                  THE&nbsp;
+          <Grid container spacing={2} mt={5} pl={4} pr={2} justifyContent="center" alignItems="center">
+            <Grid container item sm={12} md={10}>
+              <Stack spacing={0} justifyContent="center" alignItems="center" style={{ width: '100%' }}>
+                <Grid container item sm={12} md={10} style={{ justifyContent: 'center' }}>
+                  <Typography display="inline" variant="h2" color="#1890ff">
+                    THE&nbsp;
+                  </Typography>
+                  <Typography display="inline" variant="h2">
+                    RENT MY VR WAY
+                  </Typography>
+                </Grid>
+                <ThemeProvider theme={underlineTheme}>
+                  <Grid container></Grid>
+                </ThemeProvider>
+                <Typography variant="h4" style={{ textAlign: 'center' }}>
+                  Finally, an online directory that offers you what you have been asking for. With RentMyVR, you can do SO MUCH MORE!
                 </Typography>
-                <Typography display="inline" variant="h2">
-                  RENT MY VR WAY
-                </Typography>
-              </Grid>
-              <ThemeProvider theme={underlineTheme}>
-                <Grid container></Grid>
-              </ThemeProvider>
-            </Stack>
+              </Stack>
+            </Grid>
           </Grid>
+
           <Grid container item sm={12} md={10}>
-            <Stack direction="column" alignItems="center" spacing={1.25} pl={4} pr={2}>
-              <Typography variant="h4" style={{ textAlign: 'center' }}>
-                Finally, an online directory that offers you what you have been asking for. With RentMyVR, you can do SO MUCH MORE!
-              </Typography>
-            </Stack>
-          </Grid>
-          <Grid container item sm={12} md={10}>
-            <Grid container spacing={1.25} pl={4} pr={2} pt={4}>
-              <Grid container item sm={12} md={4}>
-                <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-                  <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    {/* <HomeFilled sx={{ fontSize: 40 }} /> */}
-                    {/* <Rent_1 color="primary" /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-1.svg" alt="" />
-                  </Avatar>
-                  <Typography variant="h3">Search Properties</Typography>
-                  <Typography>
-                    Guests can save money when the host offers discounts for direct booking. Search vacation rentals, filter by amenities
-                    and compare pricing on the hosts&apos; different booking platforms, all from one place.
-                  </Typography>
-                </Stack>
+            <Grid container spacing={2} pl={4} pr={2} pt={4}>
+              <Grid container item sm={12} md={4} style={{ cursor: 'pointer' }}>
+                <NextLink href="#" passHref>
+                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '15px' }}>
+                    <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+                      <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
+                        {/* <HomeFilled sx={{ fontSize: 40 }} /> */}
+                        {/* <Rent_1 color="primary" /> */}
+                        <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-1.svg" alt="" />
+                      </Avatar>
+                      <Typography variant="h3">Search Properties</Typography>
+                      <Typography>
+                        Guests can save money when the host offers discounts for direct booking. Search vacation rentals, filter by
+                        amenities and compare pricing on the hosts&apos; different booking platforms, all from one place.
+                      </Typography>
+                    </Stack>
+                  </Card>
+                </NextLink>
               </Grid>
-              <Grid container item sm={12} md={4}>
-                <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-                  <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    {/* <BankFilled sx={{ fontSize: 40 }} /> */}
-                    {/* <Rent_2 color="warning" /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-3.svg" alt="" />
-                  </Avatar>
-                  <Typography variant="h3">Search Companies</Typography>
-                  <Typography>
-                    Looking for a professional who specializes in short term rentals in the area you are traveling to? Search our online
-                    directory of Short Term and Vacation Rental Management Companies
-                  </Typography>
-                </Stack>
+              <Grid container item sm={12} md={4} style={{ cursor: 'pointer' }}>
+                <NextLink href="#" passHref>
+                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '15px' }}>
+                    <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+                      <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
+                        {/* <BankFilled sx={{ fontSize: 40 }} /> */}
+                        {/* <Rent_2 color="warning" /> */}
+                        <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-3.svg" alt="" />
+                      </Avatar>
+                      <Typography variant="h3">Search Companies</Typography>
+                      <Typography>
+                        Looking for a professional who specializes in short term rentals in the area you are traveling to? Search our online
+                        directory of Short Term and Vacation Rental Management Companies
+                      </Typography>
+                    </Stack>
+                  </Card>
+                </NextLink>
               </Grid>
-              <Grid container item sm={12} md={4}>
-                <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
-                  <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
-                    {/* <AppleFilled sx={{ fontSize: 40 }} /> */}
-                    <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
-                  </Avatar>
-                  <Typography variant="h3">Why List With Us?</Typography>
-                  <Typography>
-                    Looking to Increase exposure, online traffic, and bookings to your vacation rental? Interested in driving traffic to
-                    your personal booking site, rather than using a 3rd party booking site?
-                  </Typography>
-                </Stack>
+              <Grid container item sm={12} md={4} style={{ cursor: 'pointer' }}>
+                <NextLink href="#" passHref>
+                  <Card elevation={5} style={{ height: '100%', width: '100%', padding: '15px' }}>
+                    <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}>
+                      <Avatar sx={{ width: 60, height: 60, bgcolor: '#1890ff' }}>
+                        {/* <AppleFilled sx={{ fontSize: 40 }} /> */}
+                        <img style={{ width: '90px' }} src="/assets/images/icons/rentmyvr/rent-2.svg" alt="" />
+                      </Avatar>
+                      <Typography variant="h3">Why List With Us?</Typography>
+                      <Typography>
+                        Looking to Increase exposure, online traffic, and bookings to your vacation rental? Interested in driving traffic to
+                        your personal booking site, rather than using a 3rd party booking site?
+                      </Typography>
+                    </Stack>
+                  </Card>
+                </NextLink>
               </Grid>
             </Grid>
           </Grid>
@@ -937,7 +957,7 @@ const Index = () => {
         <Grid container spacing={2} mt={5} pl={4} pr={2} justifyContent="center" alignItems="center">
           <Grid container item sm={12} md={10}>
             <Stack spacing={0} justifyContent="center" alignItems="center">
-              <Grid container item sm={12} md={10}>
+              <Grid container item sm={12} md={10} style={{ justifyContent: 'center' }}>
                 <Typography display="inline" variant="h2" color="#1890ff">
                   Featured&nbsp;
                 </Typography>
@@ -946,7 +966,7 @@ const Index = () => {
                 </Typography>
               </Grid>
               <ThemeProvider theme={underlineTheme}>
-                <Grid></Grid>
+                <Grid container></Grid>
               </ThemeProvider>
               <Typography variant="h4" style={{ textAlign: 'center' }}>
                 Check out some of our favorite properties! We love themes and the fun concepts our hosts come up with for their properties.
@@ -957,9 +977,9 @@ const Index = () => {
         </Grid>
 
         <Grid container item xs={12} sm={12} md={10}>
-          <Grid container spacing={2} pl={4} pr={2} pt={4}>
-            <Grid container item xs={12} sm={12} md={4}>
-              <Card elevation={12} square style={{ height: '100%' }}>
+          <Grid container spacing={2} pl={2} pr={2} pt={4}>
+            <Grid container item xs={12} sm={12} md={4} style={{ width: '100%' }}>
+              <Card elevation={12} square style={{ height: '100%', width: '100%' }}>
                 <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide1.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -981,8 +1001,8 @@ const Index = () => {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid container item xs={12} sm={12} md={4}>
-              <Card elevation={12} square style={{ height: '100%' }}>
+            <Grid container item xs={12} sm={12} md={4} style={{ width: '100' }}>
+              <Card elevation={12} square style={{ height: '100%', width: '100%' }}>
                 <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide2.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -1004,8 +1024,8 @@ const Index = () => {
                 </CardActions>
               </Card>
             </Grid>
-            <Grid container item xs={12} sm={12} md={4}>
-              <Card elevation={12} square style={{ height: '100%' }}>
+            <Grid container item xs={12} sm={12} md={4} style={{ width: '100' }}>
+              <Card elevation={12} square style={{ height: '100%', width: '100%' }}>
                 <CardMedia sx={{ height: 240, m: 1.5, mb: 0 }} image="/assets/images/slide3.png" title="green iguana" />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -1031,12 +1051,19 @@ const Index = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} mt={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
+      <Grid container mt={6} sx={{ width: '100%' }} justifyContent="center" alignItems="center">
         <ThemeProvider theme={countUpTheme}>
-          <Grid container item xs={12} sx={{ backgroundColor: 'transparent' }}>
+          <Grid item xs={12} sx={{ backgroundColor: 'transparent', padding: '0px' }}>
             <Box className="imageOverlay">
-              <Grid container spacing={0} justifyContent="center" alignItems="center">
-                <Grid container item xs={12} sm={6} md={3}>
+              <Grid container spacing={0} justifyContent="center" alignItems="center" style={{ backgroundColor: 'unset' }}>
+                <Grid
+                  item
+                  sx={{ py: { md: 0, sm: 0, xs: 3 } }}
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  style={{ justifyContent: 'center', backgroundColor: 'unset' }}
+                >
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
@@ -1048,7 +1075,14 @@ const Index = () => {
                     </Typography>
                   </Stack>
                 </Grid>
-                <Grid container item xs={12} sm={6} md={3}>
+                <Grid
+                  item
+                  sx={{ py: { md: 0, sm: 0, xs: 3 } }}
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  style={{ justifyContent: 'center', backgroundColor: 'unset' }}
+                >
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />
@@ -1060,7 +1094,14 @@ const Index = () => {
                     </Typography>
                   </Stack>
                 </Grid>
-                <Grid item xs={12} sm={6} md={3}>
+                <Grid
+                  item
+                  sx={{ py: { md: 0, sm: 0, xs: 3 } }}
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  style={{ justifyContent: 'center', backgroundColor: 'unset' }}
+                >
                   <Stack direction="column" spacing={2} justifyContent="center" alignItems="center">
                     {/* <HomeFilled className="icon" /> */}
                     <img style={{ width: '60px' }} src="/assets/images/icons/Home.svg" alt="" />

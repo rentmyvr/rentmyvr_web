@@ -23,14 +23,14 @@ const pages = {
       icon: icons.HomeOutlined,
       target: false
     },
-    // {
-    //   id: 'properties',
-    //   title: <FormattedMessage id="properties" />,
-    //   type: 'item',
-    //   url: CORE_URL.PROPERTY_LIST,
-    //   icon: icons.ShopOutlined,
-    //   target: false
-    // },
+    {
+      id: 'company',
+      title: <FormattedMessage id="company" />,
+      type: 'item',
+      url: CORE_URL.COMPANY_LIST,
+      icon: icons.ShopOutlined,
+      target: false
+    },
     {
       id: 'properties',
       title: <FormattedMessage id="properties" />,

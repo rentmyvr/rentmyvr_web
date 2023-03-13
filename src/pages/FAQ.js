@@ -177,10 +177,10 @@ const Index = () => {
     <Page title="Rent MyVR Home">
       <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center" bgcolor={'#dee8fa'}>
         <Stack spacing={0} justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
+          <Grid item xs={12} style={{ width: '100%' }}>
             <img style={{ width: '100%' }} src="/assets/images/Frequently Asked Questions.png" alt="" />
           </Grid>
-          <Grid item xs={12} md={8} width="100%">
+          <Grid container xs={10} md={8} sm={9} style={{ marginLeft: '16px' }}>
             <TextField
               fullWidth
               // variant="filled"
@@ -199,7 +199,7 @@ const Index = () => {
               }}
             />
           </Grid>
-          <Grid item sm={12} md={8} mb={5}>
+          <Grid container xs={10} md={8} sm={9} pb={2} style={{ marginLeft: '16px' }}>
             <Typography variant="h2" mb={2} mt={2}>
               FAQs for Guests
             </Typography>
@@ -229,7 +229,7 @@ const Index = () => {
             {faqsForHosts.map(
               (faq, i) =>
                 (faq.question.includes(search) || faq.answer.includes(search)) && (
-                  <Accordion key={i} sx={{ background: '#dee8fa!important' }}>
+                  <Accordion key={i} sx={{ background: '#dee8fa!important', width: '100%' }}>
                     <AccordionSummary
                       aria-controls="panel1a-content"
                       id="panel1a-header"

@@ -1,10 +1,11 @@
 // material-ui
-import { Box, Fab, Fade, Grid, Stack, Typography, useScrollTrigger } from '@mui/material';
+import { Box, Button, Fab, Fade, Grid, Link, Stack, Typography, useScrollTrigger } from '@mui/material';
 
 // project imports
 import Layout from 'layout';
 import Page from 'components/Page';
 import ScrollTop from 'components/ScrollTop';
+import NextLink from 'next/link';
 
 // assets
 import { UpOutlined } from '@ant-design/icons';
@@ -18,7 +19,7 @@ let contents = [
   {
     title: 'Mobile App -',
     content:
-      "@ 2023, and we know most people use their phone to do just about anything! We are excited to be launching our mobile app soon. One of the key pieces that you have also asked for is texting through the app; it's coming!"
+      "It's 2023, and we know most people use their phone to do just about anything! We are excited to be launching our mobile app soon. One of the key pieces that you have also asked for is texting through the app; it's coming!"
   },
   {
     title: 'Chat -',
@@ -89,12 +90,12 @@ const Index = () => {
 
   return (
     <Page title="Rent MyVR Home">
-      <Grid container spacing={2} mt={6} justifyContent="center" alignItems="center">
-        <Stack spacing={0} justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
+      <Grid container spacing={2} ml={0} justifyContent="center" alignItems="center">
+        <Stack spacing={0} justifyContent="center" alignItems="center" style={{ marginTop: '80px' }}>
+          <Grid item xs={12} style={{ width: '100%' }}>
             <img style={{ width: '100%' }} src="/assets/images/Coming Soon Image.png" alt="" />
           </Grid>
-          <Grid item sm={12} md={8} mb={5}>
+          <Grid item sm={10} md={8} xs={10} mb={5}>
             <Typography variant="h2" mb={2} mt={2} textAlign={'center'}>
               We&rsquo;re still building!!
             </Typography>
@@ -110,6 +111,15 @@ const Index = () => {
                 <Typography display="inline">{content.content}</Typography>
               </Grid>
             ))}
+          </Grid>
+          <Grid item sm={10} md={8} xs={10} mb={5}>
+            <NextLink href="mailto:info@rentmyvr.com" passHref>
+              <Link className="header-link" color="black" underline="none">
+                <Button size="large" variant="contained" color="primary">
+                  Contact Us
+                </Button>
+              </Link>
+            </NextLink>
           </Grid>
         </Stack>
       </Grid>
