@@ -81,11 +81,11 @@ const Pricing = () => {
             <Typography mb={1} sx={{ fontSize: { md: '1.2rem', sm: '1.2rem', xs: '1rem' }, textAlign: 'center' }}>
               Boost your listing by upgrading to a premium property listing, and choose the pricing module that best suits you.
             </Typography>
-            <Typography mb={1} sx={{ fontSize: { md: '1.2rem', sm: '1.2rem', xs: '1rem' }, textAlign: 'center' }}>
+            <Typography mb={4} sx={{ fontSize: { md: '1.2rem', sm: '1.2rem', xs: '1rem' }, textAlign: 'center' }}>
               Whether you are looking to drive more traffic to your management company or your property listing, check out our flex pricing
               module below.
             </Typography>
-            <ul style={{ fontSize: '1.1rem' }}>
+            <ul style={{ fontSize: '1.1rem', paddingLeft: '3rem' }}>
               <li>
                 <Box>
                   List your company/{' '}
